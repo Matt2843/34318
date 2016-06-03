@@ -6,18 +6,22 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class Client {
+public class Client extends Thread {
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
 
-	private String serverIP;
+	private String host;
 	private int port;
 
 	private Socket connection;
 
 	public Client(String host, int port) {
-		serverIP = host;
+		this.host = host;
 		this.port = port;
+	}
+	
+	@Override
+	public void run() {
 		try {
 			connectToServer();
 			configureStreams();
@@ -25,6 +29,7 @@ public class Client {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		super.run();
 	}
 
 	private void whileConnected() throws IOException {
@@ -32,11 +37,12 @@ public class Client {
 		do {
 			try {
 				message = input.readObject().toString();
+				System.out.println("FROM SERVER: " + message);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} while (message.equals("DISCONNECTCODE"));
+		} while (!message.equals("DISCONNECTCODE"));
 		cleanUp();
 	}
 
@@ -47,7 +53,7 @@ public class Client {
 	}
 
 	private void connectToServer() throws IOException {
-		connection = new Socket(InetAddress.getByName(serverIP), port);
+		connection = new Socket(InetAddress.getByName(host), port);
 	}
 
 	public void sendMessage(String message) {

@@ -3,21 +3,30 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
-public class Server {
+public class Server extends Thread {
+	private ArrayList<Connection> activeUsers = new ArrayList<Connection>();
 	
 	private ServerSocket server;
 	private Socket connection;
-
+	private int port;
+	
 	private boolean running = true;
 
 	public Server(int port) {
+		this.port = port;
+	}
+	
+	@Override
+	public void run() {
 		try {
 			server = new ServerSocket(port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		sleepMode();
+		super.run();
 	}
 
 	private void sleepMode() {
@@ -37,7 +46,7 @@ public class Server {
 			connection = server.accept();
 			Connection newClient = new Connection(connection);
 			newClient.start();
-			newClient.sendMessage("HELLO FROM SERVER");
+			activeUsers.add(newClient);
 			try {
 				Thread.sleep(150);
 			} catch(InterruptedException e) {
@@ -53,6 +62,10 @@ public class Server {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public ArrayList<Connection> getActiveUsers() {
+		return activeUsers;
 	}
 
 }

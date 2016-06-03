@@ -24,8 +24,13 @@ public class Connection extends Thread {
 	public void run() {
 		super.run();
 		try {
+			String message = "";
 			configureStreams();
-		} catch (IOException e) {
+			do {
+				message = (String) input.readObject();
+				System.out.println(message);
+			} while (!message.equals("DISCONNECTFLAG"));
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			cleanUp();
@@ -49,7 +54,6 @@ public class Connection extends Thread {
 	}
 
 	public void sendMessage(String message) {
-		System.out.println("FROM SERVER: Attemptring to send message " + message);
 		try {
 			output.writeObject(message);
 			output.flush();
