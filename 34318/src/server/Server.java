@@ -34,9 +34,11 @@ public class Server {
 
 	private void waitForConnection() throws IOException {
 		while(running) {
+			System.out.println("Waiting for someone to connect ...");
 			connection = server.accept();
 			Connection newClient = new Connection(connection);
 			newClient.start();
+			newClient.sendMessage("HELLO FROM SERVER");
 			try {
 				Thread.sleep(150);
 			} catch(InterruptedException e) {

@@ -6,26 +6,26 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Connection extends Thread {
-	
+
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
-	
+
 	private boolean alive = true;
-	
-	private String clientIP = "";
+
+	private String clientIP;
 	private Socket client;
 
 	public Connection(Socket connection) {
 		this.client = connection;
 		clientIP = client.getRemoteSocketAddress().toString();
 	}
-	
+
 	@Override
 	public void run() {
 		super.run();
 		try {
 			configureStreams();
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			cleanUp();
@@ -47,7 +47,23 @@ public class Connection extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+	public void sendMessage(String message) {
+		System.out.println("FROM SERVER: Attemptring to send message " + message);
+		try {
+			output.writeObject(message);
+			output.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean isClientAlive() {
+		return alive;
+	}
+
+	public String getClientIP() {
+		return clientIP;
+	}
 
 }
