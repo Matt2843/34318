@@ -49,7 +49,7 @@ public class Connection extends Thread {
 	}
 
 	public void sendMessage(String message) {
-		System.out.println("FROM SERVER: Attemptring to send message " + message);
+		System.out.println("Attempting to send message " + message + " to client.");
 		try {
 			output.writeObject(message);
 			output.flush();
