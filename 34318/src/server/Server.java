@@ -9,7 +9,7 @@ public class Server {
 	private ServerSocket server;
 	private Socket connection;
 
-	private boolean running = false;
+	private boolean running = true;
 
 	public Server(int port) {
 		try {
@@ -24,7 +24,6 @@ public class Server {
 		try {
 			waitForConnection();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			cleanUp();
