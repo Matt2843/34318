@@ -42,7 +42,7 @@ public class Client extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} while (message.equals("DISCONNECTCODE"));
+		} while (!message.equals("DISCONNECTCODE"));
 		cleanUp();
 	}
 
