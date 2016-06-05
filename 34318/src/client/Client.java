@@ -14,6 +14,8 @@ public class Client extends Thread {
 	private int port;
 
 	private Socket connection;
+	
+	private String sessionID = ""; // Think of smart inital value.
 
 	public Client(String host, int port) {
 		this.host = host;
@@ -37,13 +39,26 @@ public class Client extends Thread {
 		do {
 			try {
 				message = input.readObject().toString();
+				decodeMessage(message);
 				System.out.println("FROM SERVER: " + message);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} while (!message.equals("DISCONNECTCODE"));
 		cleanUp();
+	}
+
+	private void decodeMessage(String message) {
+		String msgSplit[] = message.split("#");
+		switch (msgSplit[0]) {
+		case "L104":
+			sessionID = msgSplit[1]; 
+			System.out.println(sessionID);
+			break;
+		default:
+			break;
+		}
+		
 	}
 
 	private void configureStreams() throws IOException {
@@ -73,6 +88,10 @@ public class Client extends Thread {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String getSessionID() {
+		return sessionID;
 	}
 
 }

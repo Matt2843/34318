@@ -14,18 +14,20 @@ public class Connection extends Thread {
 
 	private String clientIP;
 	private Socket client;
+	
+	private String sessionID = "";
 
-	public Connection(Socket connection) {
-		this.client = connection;
+	public Connection(Socket connection, String sessionID) {
+		this.client = connection; this.sessionID = sessionID;
 		clientIP = client.getRemoteSocketAddress().toString();
 	}
 
 	@Override
 	public void run() {
-		super.run();
 		try {
 			String message = "";
 			configureStreams();
+			sendMessage("L104#" + sessionID); // Identify User Code: L104, maybe add a greetUser handshake method.
 			do {
 				message = (String) input.readObject();
 				System.out.println(message);
@@ -36,7 +38,7 @@ public class Connection extends Thread {
 			cleanUp();
 		}
 	}
-
+	
 	private void configureStreams() throws IOException {
 		output = new ObjectOutputStream(client.getOutputStream());
 		output.flush();

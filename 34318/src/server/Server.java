@@ -3,10 +3,11 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Server extends Thread {
-	private ArrayList<Connection> activeUsers = new ArrayList<Connection>();
+	
+	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>();
 	
 	private ServerSocket server;
 	private Socket connection;
@@ -44,9 +45,13 @@ public class Server extends Thread {
 		while(running) {
 			System.out.println("Waiting for someone to connect ...");
 			connection = server.accept();
-			Connection newClient = new Connection(connection);
+			String sessionID = SU.generateSessionID();
+			while(activeUsers.containsKey(sessionID)) {
+				sessionID = SU.generateSessionID();
+			}
+			Connection newClient = new Connection(connection, sessionID);
 			newClient.start();
-			activeUsers.add(newClient);
+			activeUsers.put(sessionID, newClient);
 			try {
 				Thread.sleep(150);
 			} catch(InterruptedException e) {
@@ -63,8 +68,12 @@ public class Server extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void main(String[] args) {
+		
+	}
 
-	public ArrayList<Connection> getActiveUsers() {
+	public HashMap<String, Connection> getActiveUsers() {
 		return activeUsers;
 	}
 

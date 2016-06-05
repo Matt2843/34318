@@ -1,5 +1,10 @@
 package server;
 
-public class Slave {
-//Penis fra pjort
+public class Slave extends Thread {
+	
+	@Override
+	public void run() {
+		
+	}
+	
 }

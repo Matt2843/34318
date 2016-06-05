@@ -12,8 +12,6 @@ public class ServerEngine {
 		Client t = new Client("localhost", 1234);
 		t.start();
 		Thread.sleep(100);
-		s.getActiveUsers().get(0).sendMessage("Hello there from server");
-		Thread.sleep(100);
 		t.sendMessage("Greetings from client!");
 
 	}
