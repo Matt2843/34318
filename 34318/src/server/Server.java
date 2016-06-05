@@ -45,9 +45,9 @@ public class Server extends Thread {
 		while(running) {
 			System.out.println("Waiting for someone to connect ...");
 			connection = server.accept();
-			String sessionID = SU.generateSessionID();
+			String sessionID = SU.generateSessionID(5);
 			while(activeUsers.containsKey(sessionID)) {
-				sessionID = SU.generateSessionID();
+				sessionID = SU.generateSessionID(5);
 			}
 			Connection newClient = new Connection(connection, sessionID);
 			newClient.start();
