@@ -14,7 +14,7 @@ public class ServerEngine {
 		Thread.sleep(100);
 		t.sendMessage("Greetings from client!");
 		t.sendMessage("Hello Hello");
-		t.sendMessage("L100#");
+		t.sendMessage("L100");
 	}
 
 }
