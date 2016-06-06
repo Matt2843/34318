@@ -60,7 +60,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		JBCancel.addMouseListener(this);
 		
         setResizable(false);
-        setLocationRelativeTo(parent);
 	}
 	
 	private void setDefaultProperties(){
