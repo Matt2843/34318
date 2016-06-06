@@ -13,6 +13,7 @@ public class Slave extends Thread {
 		String msgSplit[] = message.getString().split("#");
 		switch (msgSplit[0]) {
 		case "L100": // Login
+			System.out.println("Login request received.");
 			break;
 		case "L101": // Create User
 			break;

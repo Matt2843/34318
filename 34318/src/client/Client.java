@@ -43,7 +43,7 @@ public class Client extends Thread {
 			try {
 				message = (Message<String, Object>) input.readObject();
 				decodeMessage(message.getString());
-				System.out.println("FROM SERVER: " + message);
+				System.out.println("FROM SERVER: " + message.getString());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -56,12 +56,10 @@ public class Client extends Thread {
 		switch (msgSplit[0]) {
 		case "L104":
 			sessionID = msgSplit[1]; 
-			System.out.println(sessionID);
 			break;
 		default:
 			break;
 		}
-		
 	}
 
 	private void configureStreams() throws IOException {
@@ -74,11 +72,24 @@ public class Client extends Thread {
 		connection = new Socket(InetAddress.getByName(host), port);
 	}
 
-	public void sendMessage(String message) {
+	public void sendMessage(String msg) {
+		String message = msg + "#" + sessionID;
+		Message<String, Object> m = new Message<String, Object>(message);
 		try {
-			output.writeObject(message);
+			output.writeObject(m);
 			output.flush();
-		} catch (IOException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sendMessage(String msg, Object object) {
+		String message = msg + "#" + sessionID;
+		Message<String, Object> m = new Message<String, Object>(message, object);
+		try {
+			output.writeObject(m);
+			output.flush();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

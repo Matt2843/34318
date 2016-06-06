@@ -13,7 +13,8 @@ public class ServerEngine {
 		t.start();
 		Thread.sleep(100);
 		t.sendMessage("Greetings from client!");
-
+		t.sendMessage("Hello Hello");
+		t.sendMessage("L100#");
 	}
 
 }

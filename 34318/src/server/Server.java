@@ -3,10 +3,10 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Server extends Thread {
-	
 	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>();
 	
 	private ServerSocket server;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import utility.Message;
 
@@ -18,6 +19,9 @@ public class Connection extends Thread {
 	private Socket client;
 	
 	private String sessionID;
+	
+	private Slave slave = new Slave();
+	public static ArrayList<String> tasks = new ArrayList<String>();
 
 	public Connection(Socket connection, String sessionID) {
 		this.client = connection; this.sessionID = sessionID;
@@ -31,9 +35,11 @@ public class Connection extends Thread {
 			Message<String, Object> message;
 			configureStreams();
 			greetUser();
+			slave.start();
 			do {
 				message = (Message<String, Object>) input.readObject();
-				System.out.println(message);
+				System.out.println(message.getString());
+				slave.decode(message);
 			} while (!message.getString().substring(0, 5).equals("L103"));
 		} catch (Exception e) {
 			e.printStackTrace();
