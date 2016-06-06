@@ -40,7 +40,7 @@ public class DialogNewUser extends JDialog implements ActionListener, MouseListe
 		
 		int i = 0;
 		c.anchor = GridBagConstraints.NORTHWEST;	
-		addC(JLCreateNewUser,0,i,1);i++;  c.insets = new Insets(2,2,2,2);
+		addC(JLCreateNewUser,0,i,2);i++;  c.insets = new Insets(2,2,2,2);
 		addC(JLUsername,0,i,1); i++;
 		addC(JTUsername,0,i,2); i++; c.insets = new Insets(10,2,2,2);
 		addC(JLPassword,0,i,1); i++;
@@ -63,7 +63,6 @@ public class DialogNewUser extends JDialog implements ActionListener, MouseListe
 		this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
 		this.pack();
 		this.setLocationRelativeTo(null);
-		this.setVisible(true);
 	}
 	
 	private void setJComponents(){

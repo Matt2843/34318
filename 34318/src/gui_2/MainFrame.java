@@ -13,13 +13,11 @@ public class MainFrame extends JFrame {
 	
 	private GreenPanel test;
 	private BlackPanel test2;
-
+	private pinkPanel test3;
 	public MainFrame() {
 		setFrameProperties();
-		test = new GreenPanel(this);
-		test2 = new BlackPanel(this);
-		addPanel(test);
-		addPanel(test2);
+		test3 = new pinkPanel(this);
+		addPanel(test3);
 	}
 
 	private void addPanel(JPanel panel) {

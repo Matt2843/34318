@@ -59,7 +59,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		JBLogin.addMouseListener(this);
 		JBCancel.addMouseListener(this);
 		
-		pack();
         setResizable(false);
         setLocationRelativeTo(parent);
 	}
@@ -68,6 +67,9 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
     	this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
     	this.setUndecorated(true);
     	this.setPreferredSize(new Dimension(500,300));
+    	this.pack();
+    	this.setLocationRelativeTo(null);
+    	
     }
 	
 	private void setJComponents(){
@@ -133,6 +135,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		if (e.getSource() == JLNewUser){
 			this.setVisible(false);
 			DNewUser = new DialogNewUser(parent);
+			DNewUser.setVisible(true);
 		}
 		if (e.getSource() == JBLogin){
 			login();
