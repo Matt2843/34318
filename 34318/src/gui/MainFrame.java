@@ -21,7 +21,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    JPLeft = new PanelLeft(this);
 	    JPRight = new PanelRight(this);
 	    /*addC(JPLeft,0,0,1,1);
-	    addC(JPRight,1,0,1,1);
+	    addC(JPRight,1,0,1,2);
 	    mainFrameSetVisible();*/
 	}
 	
