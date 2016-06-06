@@ -44,7 +44,7 @@ public class Client extends Thread {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		} while (!message.equals("DISCONNECTCODE"));
+		} while (!message.substring(0, 5).equals("K100") || !message.substring(0, 5).equals("K101"));
 		cleanUp();
 	}
 

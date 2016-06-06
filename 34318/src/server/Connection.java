@@ -27,16 +27,21 @@ public class Connection extends Thread {
 		try {
 			String message = "";
 			configureStreams();
-			sendMessage("L104#" + sessionID); // Identify User Code: L104, maybe add a greetUser handshake method.
+			greetUser();
 			do {
 				message = (String) input.readObject();
 				System.out.println(message);
-			} while (!message.equals("DISCONNECTFLAG"));
+			} while (!message.substring(0, 5).equals("L103"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			cleanUp();
 		}
+	}
+	
+	// Identify User Code: L104, maybe add a greetUser handshake method.
+	private void greetUser() {
+		sendMessage("L104#" + sessionID);
 	}
 	
 	private void configureStreams() throws IOException {

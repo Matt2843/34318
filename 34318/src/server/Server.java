@@ -14,6 +14,7 @@ public class Server extends Thread {
 	private int port;
 	
 	private boolean running = true;
+	private String serverStatus = "Ready...";
 
 	public Server(int port) {
 		this.port = port;
@@ -26,11 +27,11 @@ public class Server extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		sleepMode();
+		initializeServer();
 		super.run();
 	}
 
-	private void sleepMode() {
+	private void initializeServer() {
 		try {
 			waitForConnection();
 		} catch (IOException e) {
@@ -43,7 +44,6 @@ public class Server extends Thread {
 
 	private void waitForConnection() throws IOException {
 		while(running) {
-			System.out.println("Waiting for someone to connect ...");
 			connection = server.accept();
 			String sessionID = SU.generateSessionID(5);
 			while(activeUsers.containsKey(sessionID)) {
@@ -67,10 +67,6 @@ public class Server extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static void main(String[] args) {
-		
 	}
 
 	public HashMap<String, Connection> getActiveUsers() {
