@@ -6,4 +6,14 @@ public interface GeneralProperties {
 
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static Dimension frameSize = new Dimension((screenSize.width / 3)*2, (screenSize.height / 4)*3);
+	public static Dimension panelLeftSize = new Dimension((frameSize.width/3), (frameSize.height));
+	public static Dimension panelRightSize = new Dimension((frameSize.width/3)*2, (frameSize.height));
+	public static Dimension panelLeftOverviewSize = new Dimension((panelLeftSize.width),(panelLeftSize.height/10)*9);
+	public static Dimension panelLeftTabSize = new Dimension(panelLeftSize.height/10, panelLeftSize.width/2);
+	
+	public static int panelLeftTabSizeHeight = panelLeftSize.height/10;
+	public static int panelLeftOverviewSizeHeight = panelLeftSize.height/10*9;
+	public static int panelLeftWidth = panelLeftSize.width;
+	
+	
 }

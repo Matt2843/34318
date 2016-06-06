@@ -1,15 +1,21 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
 public class PanelLeftPublic extends JPanel implements MouseListener {
-	private PanelLeft parent;
+	private MainFrame parent;
 	
-	public PanelLeftPublic(PanelLeft parent){
+	public PanelLeftPublic(MainFrame parent){
 		this.parent = parent;
+		setDefaultProperties();
+	}
+	
+	private void setDefaultProperties(){
+		this.setBackground(Color.white);
 	}
 
 	@Override

@@ -193,7 +193,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	
 	public void removePanel() {
 		this.panel.setVisible(false);
-		this.validate();
 	}
 
 	public void addPanel(JPanel pan) {
@@ -223,8 +222,9 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 }
 	
 	public void login(){
-		if (false){
-			
+		if (true){
+			this.setVisible(false);
+			parent.mainFrameSetVisible();
 		}
 		else{
 			DMessage = new DialogMessage(parent, "Wrong login");

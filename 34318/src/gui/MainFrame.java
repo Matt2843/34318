@@ -20,9 +20,9 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    setDefaultProperties();
 	    JPLeft = new PanelLeft(this);
 	    JPRight = new PanelRight(this);
-	    /*addC(JPLeft,0,0,1,1);
+	    addC(JPLeft,0,0,1,1);
 	    addC(JPRight,1,0,1,2);
-	    mainFrameSetVisible();*/
+	    this.validate();
 	}
 	
 	private void addC(JComponent comp, int x, int y, int height, int width) {
@@ -36,7 +36,10 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	private void setDefaultProperties(){	
 		this.setUndecorated(true);
 		this.getContentPane().setBackground(Color.white);
+		this.setLayout(new GridBagLayout());
 		this.setPreferredSize(GeneralProperties.frameSize);
+		this.pack();
+		this.setLocationRelativeTo(null);
 	}
 	
 	public void mainFrameSetVisible(){
