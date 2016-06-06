@@ -26,42 +26,40 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private MainFrame parent;
 	private GridBagConstraints c = new GridBagConstraints();
 	private JPanel panel = new JPanel(new GridBagLayout());
+	private JPanel JPLogin, JPNewUser;
 	private JTextField JTUsername;
 	private JPasswordField Password;
-	private JLabel JLLogin, JLUsername, JLPassword, JLNewUser;
+	private JLabel JLLogin, JLUsername, JLPassword, JLNewUser, JLForgotPassword;
 	private JButton JBLogin, JBCancel;
 	private String username, password, info;
     private Insets normalInsets = new Insets(2,2,2,2);
     private Insets biggerInsets = new Insets(10,2,2,2);
     
-    private DialogNewUser DNewUser;
-    private DialogWrongLogin DWrongLogin;
+    private JLabel JLCreateNewUser, JLNewUsername, JLNewPassword, JLRepeatPassword;
+	private JTextField JTNewUsername;
+	private JPasswordField NewPassword, RepeatPassword;
+	private JButton JBCreate, JBNewCancel;
+	private String newUsername, newPassword, repeatPassword;
+    
+    private DialogMessage DMessage;
 	
 	public DialogLogin(MainFrame parent){
 		this.parent = parent;
 		setDefaultProperties();
 		setJComponents();
-		
-		int i = 0;
-		c.anchor = GridBagConstraints.NORTHWEST;
-        addC(JLLogin,0,i,1);i++; c.insets = biggerInsets;
-        addC(JLUsername, 0,i,1);i++;c.insets = biggerInsets;
-        addC(JTUsername,0,i,2);i++;
-        addC(JLPassword,0,i,1);i++;
-        addC(Password,0,i,2);i++; c.insets = biggerInsets;
-        addC(JLNewUser,0,i,1);i++; c.insets = normalInsets;
-        addC(JBLogin,0,i,1);
-        addC(JBCancel,1,i,1);
-        this.add(panel);
-		
-		Password.addActionListener(this);
-		JLNewUser.addMouseListener(this);
-		JBLogin.addMouseListener(this);
-		JBCancel.addMouseListener(this);
-		
+		setJPLogin();
+		setJPNewUser();
+		panel = JPLogin;
+		this.add(panel);		
         setResizable(false);
 	}
 	
+	private void addC(JPanel p, JComponent comp, int x, int y, int width){
+    	c.gridx = x;
+		c.gridy = y;
+		c.gridwidth = width;
+		p.add(comp, c);
+}
 	private void setDefaultProperties(){
     	this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
     	this.setUndecorated(true);
@@ -92,19 +90,83 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		JLNewUser.setForeground(Color.blue);
 		setJLabel(JLNewUser,14);
 		
+		JLForgotPassword = new JLabel("Forgot password?");
+		setJLabel(JLForgotPassword,10);
+		
 		JBLogin = new JButton("Login");
 		setJButton(JBLogin);
 		
 		JBCancel = new JButton("Cancel");
-		setJButton(JBCancel);		
+		setJButton(JBCancel);
+		
+		JLCreateNewUser = new JLabel("<HTML><U>Create new user</U></HTML>");
+		setJLabel(JLCreateNewUser,25);
+		
+		JLNewUsername = new JLabel("Username");
+		setJLabel(JLNewUsername,14);
+		
+		JLNewPassword = new JLabel("Password");
+		setJLabel(JLNewPassword,14);
+		
+		JLRepeatPassword = new JLabel("Repeat Password");
+		setJLabel(JLRepeatPassword,14);
+		
+		JTNewUsername = new JTextField(20);
+		setJTextField(JTNewUsername);
+		
+		NewPassword = new JPasswordField(20);
+		setJTextField(NewPassword);
+		
+		RepeatPassword = new JPasswordField(20);
+		setJTextField(RepeatPassword);
+		
+		JBCreate = new JButton("Create");
+		setJButton(JBCreate);
+		
+		JBNewCancel = new JButton("Cancel");
+		setJButton(JBNewCancel);
 	}
 
-	 private void addC(JComponent comp, int x, int y, int width){
-	    	c.gridx = x;
-			c.gridy = y;
-			c.gridwidth = width;
-			panel.add(comp, c);
-	    }
+	private void setJPLogin(){
+		JPLogin = new JPanel(new GridBagLayout());
+		int i = 0;
+		c.anchor = GridBagConstraints.NORTHWEST;
+        addC(JPLogin, JLLogin,0,i,1);i++; c.insets = biggerInsets;
+        addC(JPLogin, JLUsername, 0,i,1);i++;c.insets = biggerInsets;
+        addC(JPLogin, JTUsername,0,i,2);i++;
+        addC(JPLogin, JLPassword,0,i,1);i++;
+        addC(JPLogin, Password,0,i,2);i++; c.insets = biggerInsets;
+        addC(JPLogin, JLNewUser,0,i,1);i++; c.insets = normalInsets;
+        addC(JPLogin,JLForgotPassword,0,i,1);i++; c.insets = biggerInsets;
+        addC(JPLogin, JBLogin,0,i,1);
+        addC(JPLogin, JBCancel,1,i,1);
+        
+		
+		Password.addActionListener(this);
+		JLNewUser.addMouseListener(this);
+		JLForgotPassword.addMouseListener(this);
+		JBLogin.addMouseListener(this);
+		JBCancel.addMouseListener(this);
+	}
+
+	private void setJPNewUser(){
+		JPNewUser = new JPanel(new GridBagLayout());
+		int i = 0;
+		c.anchor = GridBagConstraints.NORTHWEST;	
+		addC(JPNewUser, JLCreateNewUser,0,i,2);i++;  c.insets = new Insets(2,2,2,2);
+		addC(JPNewUser, JLNewUsername,0,i,1); i++;
+		addC(JPNewUser, JTNewUsername,0,i,2); i++; c.insets = new Insets(10,2,2,2);
+		addC(JPNewUser, JLNewPassword,0,i,1); i++;
+		addC(JPNewUser, NewPassword,0,i,2); i++;
+		addC(JPNewUser, JLRepeatPassword,0,i,1); i++;
+		addC(JPNewUser, RepeatPassword,0,i,2);i++;
+		addC(JPNewUser, JBCreate,0,i,1); 
+		addC(JPNewUser, JBNewCancel,1,i,1);
+		
+		RepeatPassword.addActionListener(this);
+		JBCreate.addMouseListener(this);
+		JBNewCancel.addMouseListener(this);
+	}
 	
 	private void setJTextField(JTextField name){
 		name.setFont(new Font("SansSerif", Font.ITALIC, 14));
@@ -129,18 +191,66 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
     	return info;
     }
 	
+	public void removePanel() {
+		this.panel.setVisible(false);
+		this.validate();
+	}
+
+	public void addPanel(JPanel pan) {
+		removePanel();
+		panel = pan;
+		this.add(panel);
+		panel.setVisible(true);
+		this.validate();
+		this.pack();
+	}
+	
+	private void createNewUser(){
+		
+		if(false){
+			this.setVisible(false);
+        	parent.mainFrameSetVisible();
+		}
+		else if (false){
+			DMessage = new DialogMessage(parent, "User already exists");
+			DMessage.setAlwaysOnTop(true);
+		}
+		else{
+			DMessage = new DialogMessage(parent, "Passwords doesn't match");
+			DMessage.setAlwaysOnTop(true);
+		}
+	
+}
+	
+	public void login(){
+		if (false){
+			
+		}
+		else{
+			DMessage = new DialogMessage(parent, "Wrong login");
+			DMessage.setAlwaysOnTop(true);
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JLNewUser){
-			this.setVisible(false);
-			DNewUser = new DialogNewUser(parent);
-			DNewUser.setVisible(true);
+			addPanel(JPNewUser);
+		}
+		if (e.getSource() == JLForgotPassword){
+			System.exit(0);
 		}
 		if (e.getSource() == JBLogin){
 			login();
 		}
 		if (e.getSource() == JBCancel){
 			System.exit(0);
+		}
+		if (e.getSource() == JBCreate){
+			createNewUser();
+		}
+		if ( e.getSource() == JBNewCancel){
+			addPanel(JPLogin);
 		}
 		
 	}
@@ -175,16 +285,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			login();
 		}
 		
-	}
-	
-	public void login(){
-		if (false){
-			
-		}
-		else{
-			this.setVisible(false);
-			DWrongLogin = new DialogWrongLogin(parent);
-		}
 	}
 
 }
