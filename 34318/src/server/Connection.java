@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import utility.Message;
+
 public class Connection extends Thread {
 
 	private ObjectInputStream input;
@@ -15,23 +17,24 @@ public class Connection extends Thread {
 	private String clientIP;
 	private Socket client;
 	
-	private String sessionID = "";
+	private String sessionID;
 
 	public Connection(Socket connection, String sessionID) {
 		this.client = connection; this.sessionID = sessionID;
 		clientIP = client.getRemoteSocketAddress().toString();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		try {
-			String message = "";
+			Message<String, Object> message;
 			configureStreams();
 			greetUser();
 			do {
-				message = (String) input.readObject();
+				message = (Message<String, Object>) input.readObject();
 				System.out.println(message);
-			} while (!message.substring(0, 5).equals("L103"));
+			} while (!message.getString().substring(0, 5).equals("L103"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -61,10 +64,21 @@ public class Connection extends Thread {
 	}
 
 	public void sendMessage(String message) {
+		Message<String, Object> m = new Message<String, Object>(message);
 		try {
-			output.writeObject(message);
+			output.writeObject(m);
 			output.flush();
-		} catch (IOException e) {
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendMessage(String message, Object object) {
+		Message<String, Object> m = new Message<String, Object>(message, object);
+		try {
+			output.writeObject(m);
+			output.flush();
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

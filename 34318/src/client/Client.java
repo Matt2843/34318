@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import utility.Message;
+
 public class Client extends Thread {
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
@@ -34,17 +36,18 @@ public class Client extends Thread {
 		super.run();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void whileConnected() throws IOException {
-		String message = "";
+		Message<String, Object> message = null;
 		do {
 			try {
-				message = input.readObject().toString();
-				decodeMessage(message);
+				message = (Message<String, Object>) input.readObject();
+				decodeMessage(message.getString());
 				System.out.println("FROM SERVER: " + message);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		} while (!message.substring(0, 5).equals("K100") || !message.substring(0, 5).equals("K101"));
+		} while (!message.getString().substring(0, 5).equals("K100") || !message.getString().substring(0, 5).equals("K101"));
 		cleanUp();
 	}
 
