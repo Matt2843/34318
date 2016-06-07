@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -11,57 +12,27 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public class PanelRight extends JPanel implements ActionListener, MouseListener {
-	private JPanel panel = new JPanel(new GridBagLayout());
+public class PanelRight extends JPanel{
+	MainFrame parent;
+	private JPanel ChatButtom, C1,C2;
 	private JTextArea JTChat = new JTextArea();
 	
 	public PanelRight(MainFrame parent){
+		this.parent = parent;
 		setDefaultProperties();
-		this.add(panel);
+		setComponents();
 	}
 	
 	private void setDefaultProperties(){
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.orange);
+		this.setLayout(new BorderLayout());
 		this.setPreferredSize(GeneralProperties.panelRightSize);
 		this.setVisible(true);
 		this.validate();
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+	
+	private void setComponents(){
 		
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

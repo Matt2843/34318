@@ -12,16 +12,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 public class PanelLeft extends JPanel {
 	private MainFrame parent;
-	private GridBagConstraints c = new GridBagConstraints();
-	private JLabel JLPublic, JLPrivate;
+	private JPanel JPPublic, JPPrivate;
+	private ImageIcon IPublic, IPrivate;
 	private JPanel ShownPanel,TabPanel;
+	private JTabbedPane tabbedPanel;
 	
 	
 	private PanelLeftPublic PLPublic = new PanelLeftPublic(parent);
@@ -29,11 +32,10 @@ public class PanelLeft extends JPanel {
 	
 	public PanelLeft(MainFrame parent){
 		setDefaultProperties();
-		setJComponents();
-		TabPanel.add(JLPublic);
-		TabPanel.add(JLPrivate);
-		this.add(TabPanel, BorderLayout.NORTH);
-		this.add(ShownPanel,BorderLayout.CENTER);
+		setComponents();
+		tabbedPanel.addTab("Public",IPublic,JPPublic);
+		tabbedPanel.addTab("Private", IPrivate, JPPrivate);
+		this.add(tabbedPanel, BorderLayout.CENTER);
 		this.validate();
 	}
 	
@@ -44,18 +46,19 @@ public class PanelLeft extends JPanel {
 		this.validate();
 	}
 	
-	private void setJComponents(){
-		JLPublic = new JLabel("Public",JLabel.CENTER);
-		setJLabel(JLPublic);
+	private void setComponents(){
+		JPPublic = new JPanel();
+		JPPublic.setBackground(Color.blue);
 		
-		JLPrivate = new JLabel("Private",JLabel.CENTER);
-		setJLabel(JLPrivate);
+		JPPrivate = new JPanel();
+		JPPrivate.setBackground(Color.red);
 		
-		ShownPanel = new JPanel();
-		ShownPanel.setBackground(Color.red);
+		IPrivate = new ImageIcon("private.png");
 		
-		TabPanel = new JPanel(new GridLayout(1,2));
-		TabPanel.setPreferredSize(GeneralProperties.panelLeftTabPanelSize);
+		IPublic = new ImageIcon("public.png");
+		
+		tabbedPanel = new JTabbedPane();
+		
 	}
 	
 	private void setJLabel(JLabel name){

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	private DialogLogin DLogin;
 	private GridBagConstraints c = new GridBagConstraints();
 	private JPanel panel = new JPanel(new GridBagLayout()), JPLeft, JPRight;
+	public static ImageIcon IPublic = new ImageIcon("public.png");
 	
 	public MainFrame(){
 		DLogin = new DialogLogin(this);
