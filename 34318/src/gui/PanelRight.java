@@ -15,7 +15,6 @@ import javax.swing.JTextArea;
 public class PanelRight extends JPanel{
 	MainFrame parent;
 	private JPanel ChatButtom, C1,C2;
-	private JTextArea JTChat = new JTextArea();
 	
 	public PanelRight(MainFrame parent){
 		this.parent = parent;

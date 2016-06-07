@@ -22,7 +22,6 @@ import javax.swing.JTabbedPane;
 public class PanelLeft extends JPanel {
 	private MainFrame parent;
 	private JPanel JPPublic, JPPrivate;
-	private ImageIcon IPublic, IPrivate;
 	private JPanel ShownPanel,TabPanel;
 	private JTabbedPane tabbedPanel;
 	
@@ -33,8 +32,8 @@ public class PanelLeft extends JPanel {
 	public PanelLeft(MainFrame parent){
 		setDefaultProperties();
 		setComponents();
-		tabbedPanel.addTab("Public",IPublic,JPPublic);
-		tabbedPanel.addTab("Private", IPrivate, JPPrivate);
+		tabbedPanel.addTab("Public",parent.IPublic,JPPublic);
+		tabbedPanel.addTab("Private", parent.IPrivate, JPPrivate);
 		this.add(tabbedPanel, BorderLayout.CENTER);
 		this.validate();
 	}
@@ -53,9 +52,6 @@ public class PanelLeft extends JPanel {
 		JPPrivate = new JPanel();
 		JPPrivate.setBackground(Color.red);
 		
-		IPrivate = new ImageIcon("private.png");
-		
-		IPublic = new ImageIcon("public.png");
 		
 		tabbedPanel = new JTabbedPane();
 		
