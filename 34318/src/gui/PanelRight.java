@@ -22,7 +22,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener 
 	
 	private void setDefaultProperties(){
 		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.white);
+		this.setBackground(Color.orange);
 		this.setPreferredSize(GeneralProperties.panelRightSize);
 		this.setVisible(true);
 		this.validate();
