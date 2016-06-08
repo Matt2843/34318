@@ -40,6 +40,7 @@ public class PanelLeft extends JPanel {
 	
 	private void setDefaultProperties(){
 		this.setLayout(new BorderLayout());
+		this.setBackground(Color.white);
 		this.setPreferredSize(GeneralProperties.panelLeftSize);
 		this.setVisible(true);
 		this.validate();
@@ -47,12 +48,13 @@ public class PanelLeft extends JPanel {
 	
 	private void setComponents(){
 		JPPublic = new JPanel();
-		JPPublic.setBackground(Color.blue);
+		JPPublic.setBackground(Color.green);
 		
 		JPPrivate = new JPanel();
 		JPPrivate.setBackground(Color.red);
 				
 		tabbedPanel = new JTabbedPane();
+		tabbedPanel.setBackground(Color.white);
 		
 	}
 }

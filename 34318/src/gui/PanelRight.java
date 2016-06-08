@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
@@ -28,11 +29,14 @@ import javax.swing.SwingConstants;
 
 public class PanelRight extends JPanel{
 	MainFrame parent;
-	private JPanel C1,C2,C3,C4, ChatBottom, Menu, JPSmiley,JPFile;
+	private String[] Chats = {"Chat 1", "Chat 2", "Chat 3", "Chat 4"};
+	private JPanel C1,C2,C3,C4,C1Tab, ChatBottom, Menu, JPSmiley,JPFile;
 	private JTabbedPane TabbedPanel, TabbedPanelBottom;
-	private JLabel JLSmiley, JLFile;
+	private JLabel JLSmiley, JLFile, JLClose;
 	private JButton JBSend;
 	private JTextArea JTText;
+	private GridBagConstraints c = new GridBagConstraints();
+	private int tabCounter = 0;
 	
 	
 	public PanelRight(MainFrame parent){
@@ -40,7 +44,7 @@ public class PanelRight extends JPanel{
 		this.setBackground(Color.white);
 		setDefaultProperties();
 		setComponents();
-		createTabbedPanels();
+		//createTabbedPanels();
 		makeBottomPanel();
 		this.add(TabbedPanel,BorderLayout.NORTH);
 		//this.add(TabbedPanelBottom, BorderLayout.CENTER);
@@ -55,11 +59,7 @@ public class PanelRight extends JPanel{
 	}
 	
 	private void setComponents(){
-		C1 = new JPanel();
-		C2 = new JPanel();
-		C3 = new JPanel();
-		C4 = new JPanel();
-		
+
 		ChatBottom = new JPanel(new BorderLayout());
 		ChatBottom.setPreferredSize(GeneralProperties.panelRightBottomSize);
 		ChatBottom.setBackground(Color.white);
@@ -78,23 +78,68 @@ public class PanelRight extends JPanel{
 		TabbedPanel = new JTabbedPane();
 		TabbedPanel.setPreferredSize(GeneralProperties.panelRightTopSize);
 				
-		JLSmiley = new JLabel(parent.ISmiley, SwingConstants.LEFT);
-		JLFile = new JLabel(parent.IFile,SwingConstants.LEFT);
+		JLSmiley = new JLabel(parent.ISmiley);
+		JLFile = new JLabel(parent.IFile);
+		
 		JBSend = new JButton("Send");
 		JBSend.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		JTText = new JTextArea(5,10);
-		System.out.println(GeneralProperties.panelRightBottomSize);
+		
+		JTText = new JTextArea();
+		for (int i = 0; i < Chats.length; i++){
+			addTab();
+		}
 	}
 	
 	private void createTabbedPanels(){
-		TabbedPanel.addTab("Chat1",parent.IClose, C1);
-		TabbedPanel.addTab("Chat2",C2);
-		TabbedPanel.addTab("Chat3",C3);
-		TabbedPanel.addTab("Chat4",C4);
-		
+
 //		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
 //		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
 //		TabbedPanelBottom.addTab("",parent.IFile,JPFile);
+	}
+	
+	private void addTab(){
+		final JPanel content = new JPanel();
+		C1 = new JPanel();
+		JLClose = new JLabel(parent.IClose);		
+		JLClose.addMouseListener(new MouseListener() {
+		      
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int closeTabNumber = TabbedPanel.indexOfComponent(content);
+		        TabbedPanel.removeTabAt(closeTabNumber);
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		    });
+		
+		C1Tab = new JPanel(new BorderLayout());
+		C1Tab.add(new JLabel("Chat" + (++tabCounter) + "    "),BorderLayout.WEST);
+		C1Tab.add(JLClose,BorderLayout.EAST);
+		TabbedPanel.addTab(null, content);
+		TabbedPanel.setTabComponentAt(TabbedPanel.getTabCount() - 1, C1Tab);
 	}
 	
 	
