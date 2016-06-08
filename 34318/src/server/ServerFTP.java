@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerFTP extends Thread {
-	public static final int BUFFER_SIZE = 100;
+	public static final int BUFFER_SIZE = 10000;
 
 	@Override
 	public void run() {
@@ -17,14 +17,14 @@ public class ServerFTP extends Thread {
 
 			while (true) {
 				Socket s = serverSocket.accept();
-				saveFile(s);
+				uploadFile(s);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void saveFile(Socket socket) throws Exception {
+	private void uploadFile(Socket socket) throws Exception {
 		ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 		ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 		FileOutputStream fileOutputStream = null;

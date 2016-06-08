@@ -21,9 +21,10 @@ public class ClientFTP {
 			ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
 			outputStream.writeObject(file.getName());
-
+			outputStream.flush();
+			
 			FileInputStream fileInputStream = new FileInputStream(file);
-			byte [] buffer = new byte[100]; //Størrelsen af bufferen
+			byte [] buffer = new byte[10000]; //Størrelsen af bufferen
 			Integer bytesRead = 0;
 
 			while ((bytesRead = fileInputStream.read(buffer)) > 0) {
@@ -37,5 +38,29 @@ public class ClientFTP {
 		}
 
 	}
+private void uploadFile(String path, String targetRoom){
+	String fileName = null;
 
+	try {
+		fileName = args[0];
+	} catch (Exception e) {
+		File file = new File(path);
+		output.writeObject(file.getName());
+		output.flush();
+		
+		FileInputStream fileInputStream = new FileInputStream(file);
+		byte [] buffer = new byte[10000]; //Størrelsen af bufferen
+		Integer bytesRead = 0;
+
+		while ((bytesRead = fileInputStream.read(buffer)) > 0) {
+			output.writeObject(bytesRead);
+			output.writeObject(Arrays.copyOf(buffer, buffer.length));
+		}
+
+		input.close();
+		output.close();
+		System.exit(0);   
+}
+}
 }  
+
