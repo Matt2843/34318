@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -19,7 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class PanelRight extends JPanel implements ActionListener, MouseListener{
+public class PanelRight extends JPanel implements ActionListener, MouseListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	MainFrame parent;
@@ -28,7 +30,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	private JTabbedPane TabbedPanel;
 	private JLabel JLSmiley, JLFile, JLClose;
 	private JButton JBSend;
-	private JTextField JTText;
+	private JTextArea JTText;
 	private int tabCounter = 0, chatCounter = 0;
 	
 	
@@ -83,8 +85,8 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		JBSend.setBackground(Color.WHITE);
 		JBSend.addMouseListener(this);
 		
-		JTText = new JTextField(200);
-		JTText.addActionListener(this);
+		JTText = new JTextArea();
+		JTText.addKeyListener(this);
 		//JTText.addActionListener(this);
 		
 		for (int i = 0; i < Chats.length; i++){
@@ -171,7 +173,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		Menu.add(new JLabel(),BorderLayout.CENTER);
 		ChatBottom.add(Menu, BorderLayout.NORTH);
 		ChatBottom.add(JTText,BorderLayout.CENTER);
-		//ChatBottom.add(JBSend, BorderLayout.EAST);
+		ChatBottom.add(JBSend, BorderLayout.EAST);
 		
 //		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
 //		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
@@ -223,6 +225,26 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		if (e.getSource() == JTText){
 			sendText();
 		}
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == e.VK_ENTER){
+			sendText();
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }
