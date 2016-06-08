@@ -22,18 +22,19 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class PanelRight extends JPanel implements ActionListener, MouseListener, KeyListener{
+public class PanelRight extends JPanel implements MouseListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	MainFrame parent;
 	private String[] Chats = {"Chat 1", "Chat 2", "Chat 3", "Chat 4"};
-	private JPanel ChatTab, ChatBottom, Menu, JPPictures, JPSmiley,JPFile;
+	private JPanel ChatTab, ChatBottom, Menu, JPPictures, JPSmiley,JPFile, JPUsers;
 	private JTabbedPane TabbedPanel;
 	private JLabel JLSmiley, JLFile, JLClose;
 	private JButton JBSend;
 	private JTextArea JTText;
 	private int tabCounter = 0, chatCounter = 0;
 	private JScrollPane scrollPane;
+	private String id = "Username";
 	
 	
 	public PanelRight(MainFrame parent){
@@ -43,7 +44,6 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 		setComponents();
 		makeBottomPanel();
 		this.add(TabbedPanel,BorderLayout.NORTH);
-		//this.add(TabbedPanelBottom, BorderLayout.CENTER);
 		this.add(ChatBottom,BorderLayout.CENTER);
 	}
 	
@@ -89,8 +89,8 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 		
 		JTText = new JTextArea();
 		JTText.addKeyListener(this);
+		JTText.setLineWrap(true);
 		scrollPane = new JScrollPane(JTText);
-		//JTText.addActionListener(this);
 		
 		for (int i = 0; i < Chats.length; i++){
 			addTab();
@@ -100,28 +100,10 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 	
 	private void addTab(){
 		final JPanel content = new JPanel(new BorderLayout());
+		makeUsersTab("Indsæt ID her");
 		JTextArea JTText = new JTextArea();
 		JTText.setLineWrap(true);
 		JTText.setText(Chats[chatCounter]);chatCounter++;
-		
-		JPanel JPUsers = new JPanel(new GridLayout(30,1));
-		JPUsers.setPreferredSize(GeneralProperties.panelUsersSize);
-		JPUsers.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPUsers.setBackground(Color.WHITE);
-		JPanel JUsersIcons = new JPanel(new GridLayout(1,3));
-		JUsersIcons.setOpaque(false);
-		JUsersIcons.add(new JLabel(parent.IAdd));
-		JUsersIcons.add(new JLabel(parent.IBlock)); JUsersIcons.add(new JLabel());
-		JPanel JPUsersTop = new JPanel(new BorderLayout());
-		JLabel JLUsers = new JLabel("  Users");
-		JLUsers.setFont(new Font("SansSerif", Font.BOLD, 14));
-		JPUsersTop.add(JLUsers,BorderLayout.WEST);
-		JPUsersTop.add(new JLabel(),BorderLayout.CENTER);
-		JPUsersTop.add(JUsersIcons,BorderLayout.EAST);
-		JPUsersTop.setBackground(Color.WHITE);
-	
-		JPUsers.add(JPUsersTop);
-		
 		content.add(JTText,BorderLayout.CENTER);
 		content.add(JPUsers,BorderLayout.EAST);
 		JLClose = new JLabel(parent.IClose);		
@@ -168,6 +150,26 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 		TabbedPanel.setTabComponentAt(TabbedPanel.getTabCount() - 1, ChatTab);
 	}
 	
+		private JPanel makeUsersTab(String ID){
+		JPUsers = new JPanel(new GridLayout(30,1));
+		JPUsers.setPreferredSize(GeneralProperties.panelUsersSize);
+		JPUsers.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPUsers.setBackground(Color.WHITE);
+		JPanel JUsersIcons = new JPanel(new GridLayout(1,3));
+		JUsersIcons.setOpaque(false);
+		JUsersIcons.add(new JLabel(parent.IAdd));
+		JUsersIcons.add(new JLabel(parent.IBlock)); JUsersIcons.add(new JLabel());
+		JPanel JPUsersTop = new JPanel(new BorderLayout());
+		JLabel JLUsers = new JLabel("  Users");
+		JLUsers.setFont(new Font("SansSerif", Font.BOLD, 14));
+		JPUsersTop.add(JLUsers,BorderLayout.WEST);
+		JPUsersTop.add(new JLabel(),BorderLayout.CENTER);
+		JPUsersTop.add(JUsersIcons,BorderLayout.EAST);
+		JPUsersTop.setBackground(Color.WHITE);	
+		JPUsers.add(JPUsersTop);
+		return JPUsers;
+	}
+	
 	
 	private void makeBottomPanel(){
 		JPPictures.add(JLSmiley);
@@ -178,17 +180,18 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 		ChatBottom.add(scrollPane,BorderLayout.CENTER);
 		ChatBottom.add(JBSend, BorderLayout.EAST);
 		
-//		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
-//		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
-//		TabbedPanelBottom.addTab("",parent.IFile,JPFile);
 	}
 	
 	private void sendText(){
 		String message = JTText.getText();
 		System.out.println(message);
 		JTText.setText(null);
-		int selectedTac = TabbedPanel.getSelectedIndex();
-		//TabbedPanel.setComponentAt(selectedTab,);
+		int selectedTab = TabbedPanel.getSelectedIndex();
+		JPanel panel = new JPanel(new BorderLayout());
+		JTextArea chat = new JTextArea(id + ":   " + message); chat.setEditable(false); chat.setLineWrap(true);
+		panel.add(chat,BorderLayout.CENTER);
+		panel.add(makeUsersTab("Indsæt ID"),BorderLayout.EAST);
+		TabbedPanel.setComponentAt(selectedTab,panel);
 	}
 
 	@Override
@@ -223,18 +226,10 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 		
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == JTText){
-			sendText();
-		}
-		
-	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == e.VK_ENTER){
-			
+		if (e.getKeyCode() == e.VK_ENTER){			
 			if (!JTText.getText().trim().equals("")){
 				sendText();
 			}
