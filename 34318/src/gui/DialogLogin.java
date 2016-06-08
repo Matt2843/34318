@@ -62,6 +62,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 }
 	private void setDefaultProperties(){
     	this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
+    	this.setBackground(Color.GRAY);
     	this.setUndecorated(true);
     	this.setPreferredSize(new Dimension(500,300));
     	this.pack();
@@ -180,6 +181,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	
 	private void setJButton(JButton name){
 		name.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		name.setBackground(Color.WHITE);
 		name.setVisible(true);		
 	}
 

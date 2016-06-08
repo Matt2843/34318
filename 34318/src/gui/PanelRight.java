@@ -148,15 +148,15 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	
 	
 	private void makeBottomPanel(){
-//		Menu.add(JLSmiley);
-//		Menu.add(JLFile);
-//		ChatBottom.add(Menu, BorderLayout.NORTH);
-//		ChatBottom.add(JTText,BorderLayout.CENTER);
-//		ChatBottom.add(JBSend, BorderLayout.EAST);
+		Menu.add(JLSmiley);
+		Menu.add(JLFile);
+		ChatBottom.add(Menu, BorderLayout.NORTH);
+		ChatBottom.add(JTText,BorderLayout.CENTER);
+		ChatBottom.add(JBSend, BorderLayout.EAST);
 		
-		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
-		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
-		TabbedPanelBottom.addTab("",parent.IFile,JPFile);
+//		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
+//		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
+//		TabbedPanelBottom.addTab("",parent.IFile,JPFile);
 	}
 
 	@Override
