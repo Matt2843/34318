@@ -33,7 +33,7 @@ import javax.swing.plaf.ColorUIResource;
 public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	MainFrame parent;
 	private String[] Chats = {"Chat 1", "Chat 2", "Chat 3", "Chat 4"};
-	private JPanel ChatTab, ChatBottom, Menu, JPSmiley,JPFile;
+	private JPanel ChatTab, ChatBottom, Menu, JPPictures, JPSmiley,JPFile;
 	private JTabbedPane TabbedPanel, TabbedPanelBottom;
 	private JLabel JLSmiley, JLFile, JLClose;
 	private JButton JBSend;
@@ -49,8 +49,8 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		setComponents();
 		makeBottomPanel();
 		this.add(TabbedPanel,BorderLayout.NORTH);
-		this.add(TabbedPanelBottom, BorderLayout.CENTER);
-		//this.add(ChatBottom,BorderLayout.CENTER);
+		//this.add(TabbedPanelBottom, BorderLayout.CENTER);
+		this.add(ChatBottom,BorderLayout.CENTER);
 	}
 	
 	private void setDefaultProperties(){
@@ -66,8 +66,12 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		ChatBottom.setPreferredSize(GeneralProperties.panelRightBottomSize);
 		ChatBottom.setBackground(Color.white);
 		
-		Menu = new JPanel(new GridLayout(1,10));
+		Menu = new JPanel(new BorderLayout());
 		Menu.setBackground(Color.white);
+		
+
+		JPPictures = new JPanel(new GridLayout(1,2));
+		JPPictures.setBackground(Color.WHITE);
 		
 		JPSmiley = new JPanel();
 		JPSmiley.setPreferredSize(new Dimension(200,200));
@@ -77,15 +81,18 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		
 		TabbedPanelBottom = new JTabbedPane();
 		
-		UIManager.put("TabbedPane.borderColor",ColorUIResource.ORANGE);
 		TabbedPanel = new JTabbedPane();
 		TabbedPanel.setPreferredSize(GeneralProperties.panelRightTopSize);
 				
 		JLSmiley = new JLabel(parent.ISmiley);
+		JLSmiley.setOpaque(false);
+		
 		JLFile = new JLabel(parent.IFile);
+		JLFile.setOpaque(false);
 		
 		JBSend = new JButton("Send");
 		JBSend.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		JBSend.setBackground(Color.WHITE);
 		JBSend.addMouseListener(this);
 		
 		JTText = new JTextArea();
@@ -148,8 +155,10 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	
 	
 	private void makeBottomPanel(){
-		Menu.add(JLSmiley);
-		Menu.add(JLFile);
+		JPPictures.add(JLSmiley);
+		JPPictures.add(JLFile);
+		Menu.add(JPPictures, BorderLayout.WEST);
+		Menu.add(new JLabel(),BorderLayout.CENTER);
 		ChatBottom.add(Menu, BorderLayout.NORTH);
 		ChatBottom.add(JTText,BorderLayout.CENTER);
 		ChatBottom.add(JBSend, BorderLayout.EAST);

@@ -52,11 +52,11 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	
 	public void createImageIcons(){
 		try {
-			IPublic = createResizedImageIcon(ImageIO.read(new File("public.png")), 20, 20);
-		    IPrivate = createResizedImageIcon(ImageIO.read(new File("private.png")), 20, 20);
-		    IClose = createResizedImageIcon(ImageIO.read(new File("close.png")), 20, 20);
-			ISmiley = createResizedImageIcon(ImageIO.read(new File("smiley.png")), 15, 15);
-		    IFile = createResizedImageIcon(ImageIO.read(new File("file.png")), 20, 20);
+			IPublic = createResizedImageIcon(ImageIO.read(new File("pictures/public.png")), 20, 20);
+		    IPrivate = createResizedImageIcon(ImageIO.read(new File("pictures/private.png")), 20, 20);
+		    IClose = createResizedImageIcon(ImageIO.read(new File("pictures/close.png")), 20, 20);
+			ISmiley = createResizedImageIcon(ImageIO.read(new File("pictures/smiley.png")), 15, 15);
+		    IFile = createResizedImageIcon(ImageIO.read(new File("pictures/file.png")), 20, 20);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
