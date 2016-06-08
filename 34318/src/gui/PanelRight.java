@@ -103,7 +103,8 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		content.setLineWrap(true);
 		content.setText(Chats[chatCounter]);chatCounter++;
 		
-		JLClose = new JLabel(parent.IClose);		
+		JLClose = new JLabel(parent.IClose);
+		JLClose.setOpaque(false);
 		JLClose.addMouseListener(new MouseListener() {
 		      
 			@Override
