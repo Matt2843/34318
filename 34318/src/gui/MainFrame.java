@@ -21,8 +21,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	private DialogLogin DLogin;
 	private GridBagConstraints c = new GridBagConstraints();
 	private JPanel panel = new JPanel(new GridBagLayout()), JPLeft, JPRight;
-	public static ImageIcon IPublic, IPrivate;
-	private BufferedImage BPublic, BPrivate;
+	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile;
 	
 	public MainFrame(){
 		DLogin = new DialogLogin(this);
@@ -38,7 +37,8 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	}
 	
 	
-	private void setDefaultProperties(){	
+	private void setDefaultProperties(){
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.white);
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(GeneralProperties.frameSize);
@@ -52,10 +52,11 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	
 	public void createImageIcons(){
 		try {
-			BPublic = ImageIO.read(new File("public.png"));
-			BPrivate = ImageIO.read(new File("private.png"));
-			IPublic = createResizedImageIcon(BPublic, 20, 20);
-		    IPrivate = createResizedImageIcon(BPrivate, 20, 20);
+			IPublic = createResizedImageIcon(ImageIO.read(new File("public.png")), 20, 20);
+		    IPrivate = createResizedImageIcon(ImageIO.read(new File("private.png")), 20, 20);
+		    IClose = createResizedImageIcon(ImageIO.read(new File("close.png")), 20, 20);
+			ISmiley = createResizedImageIcon(ImageIO.read(new File("smiley.png")), 15, 15);
+		    IFile = createResizedImageIcon(ImageIO.read(new File("file.png")), 20, 20);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

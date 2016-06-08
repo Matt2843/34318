@@ -51,14 +51,8 @@ public class PanelLeft extends JPanel {
 		
 		JPPrivate = new JPanel();
 		JPPrivate.setBackground(Color.red);
-		
-		
+				
 		tabbedPanel = new JTabbedPane();
 		
-	}
-	
-	private void setJLabel(JLabel name){
-		name.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		name.setVisible(true);		
 	}
 }
