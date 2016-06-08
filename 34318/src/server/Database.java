@@ -29,6 +29,10 @@ public class Database {
 	}
 
 	public void updateAndSaveDatabase() {
+		if(!new File("data").exists()) {
+			File dir = new File("data");
+			dir.mkdir();
+		}
 		try {
 			saveObjectToFile("data/registeredUsers.db", registeredUsers);
 			saveObjectToFile("data/publicRooms.db", publicRooms);
