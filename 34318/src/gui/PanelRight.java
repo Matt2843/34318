@@ -97,10 +97,10 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	private void addTab(){
 		final JPanel content = new JPanel(new BorderLayout());
 		makeUsersTab("Indsæt ID her");
-		JTextArea JTText = new JTextArea();
-		JTText.setLineWrap(true);
-		JTText.setText(Chats[chatCounter]);chatCounter++;
-		content.add(JTText,BorderLayout.CENTER);
+		JTextArea JTTextChat = new JTextArea();
+		JTTextChat.setLineWrap(true); JTTextChat.setEditable(false);
+		JTTextChat.setText(Chats[chatCounter]);chatCounter++;
+		content.add(JTTextChat,BorderLayout.CENTER);
 		content.add(JPUsers,BorderLayout.EAST);
 		JLClose = new JLabel(parent.IClose);		
 		JLClose.addMouseListener(new MouseListener() {
