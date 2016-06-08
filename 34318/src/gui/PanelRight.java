@@ -27,16 +27,16 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-public class PanelRight extends JPanel{
+public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	MainFrame parent;
 	private String[] Chats = {"Chat 1", "Chat 2", "Chat 3", "Chat 4"};
-	private JPanel C1,C2,C3,C4,C1Tab, ChatBottom, Menu, JPSmiley,JPFile;
+	private JPanel ChatTab, ChatBottom, Menu, JPSmiley,JPFile;
 	private JTabbedPane TabbedPanel, TabbedPanelBottom;
 	private JLabel JLSmiley, JLFile, JLClose;
 	private JButton JBSend;
-	private JTextArea JTText;
+	private JTextArea JTText, JTChat;
 	private GridBagConstraints c = new GridBagConstraints();
-	private int tabCounter = 0;
+	private int tabCounter = 0, chatCounter = 0;
 	
 	
 	public PanelRight(MainFrame parent){
@@ -83,8 +83,11 @@ public class PanelRight extends JPanel{
 		
 		JBSend = new JButton("Send");
 		JBSend.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		JBSend.addMouseListener(this);
 		
 		JTText = new JTextArea();
+		//JTText.addActionListener(this);
+		
 		for (int i = 0; i < Chats.length; i++){
 			addTab();
 		}
@@ -98,8 +101,8 @@ public class PanelRight extends JPanel{
 	}
 	
 	private void addTab(){
-		final JPanel content = new JPanel();
-		C1 = new JPanel();
+		final JTextArea content = new JTextArea();
+		content.setText(Chats[chatCounter]);chatCounter++;
 		JLClose = new JLabel(parent.IClose);		
 		JLClose.addMouseListener(new MouseListener() {
 		      
@@ -135,11 +138,11 @@ public class PanelRight extends JPanel{
 			}
 		    });
 		
-		C1Tab = new JPanel(new BorderLayout());
-		C1Tab.add(new JLabel("Chat" + (++tabCounter) + "    "),BorderLayout.WEST);
-		C1Tab.add(JLClose,BorderLayout.EAST);
+		ChatTab = new JPanel(new BorderLayout());
+		ChatTab.add(new JLabel("Chat" + (++tabCounter) + "    "),BorderLayout.WEST);
+		ChatTab.add(JLClose,BorderLayout.EAST);
 		TabbedPanel.addTab(null, content);
-		TabbedPanel.setTabComponentAt(TabbedPanel.getTabCount() - 1, C1Tab);
+		TabbedPanel.setTabComponentAt(TabbedPanel.getTabCount() - 1, ChatTab);
 	}
 	
 	
@@ -149,5 +152,43 @@ public class PanelRight extends JPanel{
 		ChatBottom.add(Menu, BorderLayout.NORTH);
 		ChatBottom.add(JTText,BorderLayout.CENTER);
 		ChatBottom.add(JBSend, BorderLayout.EAST);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == JBSend){
+			JTText.setText(null);
+		}
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
