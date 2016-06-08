@@ -17,6 +17,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 public class PanelLeft extends JPanel {
@@ -25,6 +26,7 @@ public class PanelLeft extends JPanel {
 	private JPanel ShownPanel,TabPanel;
 	private JTabbedPane tabbedPanel;
 	private String[] publicChats = {"Title 1", "Title2"}, privateChats = {"Name 1", "Name 2", "Name 3", "Name 4"};
+	private JScrollPane SPPublic, SPPrivate;
 	
 	
 	private PanelLeftPublic PLPublic = new PanelLeftPublic(parent);
@@ -34,8 +36,8 @@ public class PanelLeft extends JPanel {
 		setDefaultProperties();
 		setComponents();
 		addContent();
-		tabbedPanel.addTab("Public",parent.IPublic,JPPublic);
-		tabbedPanel.addTab("Private", parent.IPrivate, JPPrivate);
+		tabbedPanel.addTab("Public",parent.IPublic,SPPublic);
+		tabbedPanel.addTab("Private", parent.IPrivate, SPPrivate);
 		this.add(tabbedPanel, BorderLayout.CENTER);
 		this.validate();
 	}
@@ -50,9 +52,11 @@ public class PanelLeft extends JPanel {
 	
 	private void setComponents(){
 		JPPublic = new JPanel(new GridLayout(30,1));
+		SPPublic = new JScrollPane(JPPublic);
 		JPPublic.setBackground(Color.green);
 		
 		JPPrivate = new JPanel(new GridLayout(30,1));
+		SPPrivate = new JScrollPane(JPPrivate);
 		JPPrivate.setBackground(Color.red);
 				
 		tabbedPanel = new JTabbedPane();
