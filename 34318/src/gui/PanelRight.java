@@ -38,7 +38,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	private JTabbedPane TabbedPanel, TabbedPanelBottom;
 	private JLabel JLSmiley, JLFile, JLClose;
 	private JButton JBSend;
-	private JTextField JTText;
+	private JTextField JTText,test;
 	private GridBagConstraints c = new GridBagConstraints();
 	private int tabCounter = 0, chatCounter = 0;
 	
@@ -64,7 +64,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	private void setComponents(){
 
 		ChatBottom = new JPanel(new BorderLayout());
-		ChatBottom.setPreferredSize(GeneralProperties.panelRightBottomSize);
+		//ChatBottom.setPreferredSize(GeneralProperties.panelRightBottomSize);
 		ChatBottom.setBackground(Color.white);
 		
 		Menu = new JPanel(new BorderLayout());
