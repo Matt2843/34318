@@ -27,6 +27,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	MainFrame parent;
@@ -45,7 +47,6 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		this.setBackground(Color.white);
 		setDefaultProperties();
 		setComponents();
-		//createTabbedPanels();
 		makeBottomPanel();
 		this.add(TabbedPanel,BorderLayout.NORTH);
 		//this.add(TabbedPanelBottom, BorderLayout.CENTER);
@@ -76,6 +77,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 //		
 //		TabbedPanelBottom = new JTabbedPane();
 		
+		UIManager.put("TabbedPane.borderColor",ColorUIResource.ORANGE);
 		TabbedPanel = new JTabbedPane();
 		TabbedPanel.setPreferredSize(GeneralProperties.panelRightTopSize);
 				
@@ -94,18 +96,13 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		}
 	}
 	
-	private void createTabbedPanels(){
-
-//		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
-//		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
-//		TabbedPanelBottom.addTab("",parent.IFile,JPFile);
-	}
 	
 	private void addTab(){
 		final JTextArea content = new JTextArea();
+		JScrollPane scrollPane = new JScrollPane(content);
 		content.setLineWrap(true);
 		content.setText(Chats[chatCounter]);chatCounter++;
-		JScrollPane scrollPane = new JScrollPane(content);
+		
 		JLClose = new JLabel(parent.IClose);		
 		JLClose.addMouseListener(new MouseListener() {
 		      
@@ -144,7 +141,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		ChatTab = new JPanel(new BorderLayout());
 		ChatTab.add(new JLabel("Chat" + (++tabCounter) + "    "),BorderLayout.WEST);
 		ChatTab.add(JLClose,BorderLayout.EAST);
-		TabbedPanel.addTab(null, scrollPane);
+		TabbedPanel.addTab(null, content);
 		TabbedPanel.setTabComponentAt(TabbedPanel.getTabCount() - 1, ChatTab);
 	}
 	
@@ -155,6 +152,10 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		ChatBottom.add(Menu, BorderLayout.NORTH);
 		ChatBottom.add(JTText,BorderLayout.CENTER);
 		ChatBottom.add(JBSend, BorderLayout.EAST);
+		
+//		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
+//		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
+//		TabbedPanelBottom.addTab("",parent.IFile,JPFile);
 	}
 
 	@Override

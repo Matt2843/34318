@@ -50,10 +50,8 @@ public class PanelLeft extends JPanel {
 	
 	private void setComponents(){
 		JPPublic = new JPanel(new GridLayout(30,1));
-		JPPublic.setBackground(Color.green);
 		
 		JPPrivate = new JPanel(new GridLayout(30,1));
-		JPPrivate.setBackground(Color.red);
 				
 		tabbedPanel = new JTabbedPane();
 		tabbedPanel.setBackground(Color.white);
