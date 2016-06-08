@@ -98,7 +98,11 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		JTText.setText(Chats[chatCounter]);chatCounter++;
 		JPanel JPUsers = new JPanel(new GridLayout(30,1));
 		JPUsers.setPreferredSize(GeneralProperties.panelUsersSize);
-		JPUsers.add(new JLabel("Users",SwingConstants.CENTER));
+		JPanel JPUsersTop = new JPanel(new GridLayout(1,3));
+		JPUsersTop.add(new JLabel("Users",SwingConstants.CENTER));
+		JPUsersTop.add(new JLabel(parent.IAdd));
+		JPUsersTop.add(new JLabel(parent.IBlock));
+		JPUsers.add(JPUsersTop);
 		content.add(JTText,BorderLayout.CENTER);
 		content.add(JPUsers,BorderLayout.EAST);
 		JLClose = new JLabel(parent.IClose);		

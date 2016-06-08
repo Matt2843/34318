@@ -19,7 +19,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	private static final long serialVersionUID = 1L;
 	private DialogLogin DLogin;
 	private JPanel JPLeft, JPRight;
-	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile;
+	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock;
 	
 	public MainFrame(){
 		DLogin = new DialogLogin(this);
@@ -55,6 +55,8 @@ public class MainFrame extends JFrame implements GeneralProperties {
 		    IClose = createResizedImageIcon(ImageIO.read(new File("pictures/close.png")), 20, 20);
 			ISmiley = createResizedImageIcon(ImageIO.read(new File("pictures/smiley.png")), 15, 15);
 		    IFile = createResizedImageIcon(ImageIO.read(new File("pictures/file.png")), 20, 20);
+		    IAdd = createResizedImageIcon(ImageIO.read(new File("pictures/add.png")), 10, 10);
+		    IBlock = createResizedImageIcon(ImageIO.read(new File("pictures/block.png")), 10, 10);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
