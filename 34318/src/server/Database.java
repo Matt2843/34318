@@ -12,17 +12,19 @@ import chat.ChatRoom;
 
 @SuppressWarnings("unchecked")
 public class Database {
-	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>();
-	
-	private HashMap<String, String> registeredUsers = null;
-	private HashMap<String, ChatRoom> publicRooms = null;
+	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>(); // K: SessionID 	V: Connection
+	private HashMap<String, Object> storedFiles = null;									 // K: FileID		V: File
+	private HashMap<String, String> registeredUsers = null;								 // CHANGE THIS
+	private HashMap<String, ChatRoom> publicRooms = null;								 // K: ChatID		V: ChatRoom
 
 	public Database() {
 		String path = "data/registeredUsers.db";
 		try {
-			registeredUsers = new File(path).exists() ? (HashMap<String,String>) readFileToObject(path) : new HashMap<String, String>();
+			registeredUsers = new File(path).exists() ? (HashMap<String, String>) readFileToObject(path) : new HashMap<String, String>();
 			path = "data/publicRooms.db";
 			publicRooms = new File(path).exists() ? (HashMap<String, ChatRoom>) readFileToObject(path) : new HashMap<String, ChatRoom>();
+			path = "data/storedFiles.db";
+			storedFiles = new File(path).exists() ? (HashMap<String, Object>) readFileToObject(path) : new HashMap<String, Object>();
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}	
@@ -69,6 +71,10 @@ public class Database {
 
 	public HashMap<String, ChatRoom> getPublicRooms() {
 		return publicRooms;
+	}
+
+	public HashMap<String, Object> getStoredFiles() {
+		return storedFiles;
 	}
 
 }
