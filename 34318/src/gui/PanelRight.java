@@ -50,7 +50,6 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	
 	private void setDefaultProperties(){
 		this.setLayout(new BorderLayout());
-		this.setPreferredSize(GeneralProperties.panelRightSize);
 		this.setVisible(true);
 		this.validate();
 	}
@@ -67,11 +66,8 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JPPictures = new JPanel(new GridLayout(1,2));
 		JPPictures.setBackground(Color.WHITE);
 		
-		JPSmiley = new JPanel();
-		JPSmiley.setPreferredSize(new Dimension(200,200));
-		
+		JPSmiley = new JPanel();		
 		JPFile = new JPanel();
-		JPFile.setPreferredSize(new Dimension(200,200));
 				
 		TabbedPanel = new JTabbedPane();
 		TabbedPanel.setPreferredSize(GeneralProperties.panelRightTopSize);
@@ -150,15 +146,15 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		TabbedPanel.setTabComponentAt(TabbedPanel.getTabCount() - 1, ChatTab);
 	}
 	
-		private JPanel makeUsersTab(String ID){
-		JPUsers = new JPanel(new GridLayout(30,1));
+	private JPanel makeUsersTab(String ID){
+		JPUsers = new JPanel(new BorderLayout());
 		JPUsers.setPreferredSize(GeneralProperties.panelUsersSize);
 		JPUsers.setBorder(BorderFactory.createLineBorder(Color.black));
 		JPUsers.setBackground(Color.WHITE);
 		
 		JTUsersInChat = new JTextArea();
 		for (int i = 0; i<UsersInChat.length;i++){
-			JTUsersInChat.append(UsersInChat[i]+ "\n");
+			JTUsersInChat.append("\n   " + UsersInChat[i] );
 		}
 		JPanel JUsersIcons = new JPanel(new GridLayout(1,3));
 		JUsersIcons.setOpaque(false);
@@ -168,10 +164,11 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JLabel JLUsers = new JLabel("  Users");
 		JLUsers.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JPUsersTop.add(JLUsers,BorderLayout.WEST);
-		JPUsersTop.add(JTUsersInChat,BorderLayout.CENTER);
+		JPUsersTop.add(new JLabel(),BorderLayout.CENTER);
 		JPUsersTop.add(JUsersIcons,BorderLayout.EAST);
 		JPUsersTop.setBackground(Color.WHITE);	
-		JPUsers.add(JPUsersTop);
+		JPUsers.add(JPUsersTop, BorderLayout.NORTH);
+		JPUsers.add(JTUsersInChat, BorderLayout.CENTER);
 		return JPUsers;
 	}
 	
