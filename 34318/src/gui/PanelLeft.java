@@ -24,6 +24,7 @@ public class PanelLeft extends JPanel {
 	private JPanel JPPublic, JPPrivate;
 	private JPanel ShownPanel,TabPanel;
 	private JTabbedPane tabbedPanel;
+	private String[] publicChats = {"Title 1", "Title2"}, privateChats = {"Name 1", "Name 2", "Name 3", "Name 4"};
 	
 	
 	private PanelLeftPublic PLPublic = new PanelLeftPublic(parent);
@@ -32,6 +33,7 @@ public class PanelLeft extends JPanel {
 	public PanelLeft(MainFrame parent){
 		setDefaultProperties();
 		setComponents();
+		addContent();
 		tabbedPanel.addTab("Public",parent.IPublic,JPPublic);
 		tabbedPanel.addTab("Private", parent.IPrivate, JPPrivate);
 		this.add(tabbedPanel, BorderLayout.CENTER);
@@ -47,14 +49,23 @@ public class PanelLeft extends JPanel {
 	}
 	
 	private void setComponents(){
-		JPPublic = new JPanel();
+		JPPublic = new JPanel(new GridLayout(30,1));
 		JPPublic.setBackground(Color.green);
 		
-		JPPrivate = new JPanel();
+		JPPrivate = new JPanel(new GridLayout(30,1));
 		JPPrivate.setBackground(Color.red);
 				
 		tabbedPanel = new JTabbedPane();
 		tabbedPanel.setBackground(Color.white);
 		
+	}
+	
+	private void addContent(){
+		for (int i = 0; i<publicChats.length; i++){
+			JPPublic.add(new JLabel(publicChats[i]));
+		}
+		for (int i = 0; i<privateChats.length;i++){
+			JPPrivate.add(new JLabel(privateChats[i]));
+		}
 	}
 }

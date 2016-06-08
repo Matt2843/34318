@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -102,7 +103,9 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	
 	private void addTab(){
 		final JTextArea content = new JTextArea();
+		content.setLineWrap(true);
 		content.setText(Chats[chatCounter]);chatCounter++;
+		JScrollPane scrollPane = new JScrollPane(content);
 		JLClose = new JLabel(parent.IClose);		
 		JLClose.addMouseListener(new MouseListener() {
 		      
@@ -141,7 +144,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		ChatTab = new JPanel(new BorderLayout());
 		ChatTab.add(new JLabel("Chat" + (++tabCounter) + "    "),BorderLayout.WEST);
 		ChatTab.add(JLClose,BorderLayout.EAST);
-		TabbedPanel.addTab(null, content);
+		TabbedPanel.addTab(null, scrollPane);
 		TabbedPanel.setTabComponentAt(TabbedPanel.getTabCount() - 1, ChatTab);
 	}
 	
