@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +27,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private MainFrame parent;
 	private GridBagConstraints c = new GridBagConstraints();
 	private JPanel panel = new JPanel(new GridBagLayout());
-	private JPanel JPLogin, JPNewUser;
+	private JPanel JPLogin,JPButtonsLogin, JPNewUser, JPButtonsNewUser;
 	private JTextField JTUsername;
 	private JPasswordField Password;
 	private JLabel JLLogin, JLUsername, JLPassword, JLNewUser, JLForgotPassword;
@@ -126,10 +127,15 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		
 		JBNewCancel = new JButton("Cancel");
 		setJButton(JBNewCancel);
+		
+		JPButtonsLogin = new JPanel(new GridLayout(1,2));
+		JPButtonsNewUser = new JPanel(new GridLayout(1,2));
 	}
 
 	private void setJPLogin(){
 		JPLogin = new JPanel(new GridBagLayout());
+		JPButtonsLogin.add(JBLogin);
+		JPButtonsLogin.add(JBCancel);
 		int i = 0;
 		c.anchor = GridBagConstraints.NORTHWEST;
         addC(JPLogin, JLLogin,0,i,1);i++; c.insets = biggerInsets;
@@ -139,8 +145,9 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
         addC(JPLogin, Password,0,i,2);i++; c.insets = biggerInsets;
         addC(JPLogin, JLNewUser,0,i,1);i++; c.insets = normalInsets;
         addC(JPLogin,JLForgotPassword,0,i,1);i++; c.insets = biggerInsets;
-        addC(JPLogin, JBLogin,0,i,1);
-        addC(JPLogin, JBCancel,1,i,1);
+        addC(JPLogin,JPButtonsLogin,0,i,1);
+//        addC(JPLogin, JBLogin,0,i,1);
+//        addC(JPLogin, JBCancel,1,i,1);
         
 		
 		Password.addActionListener(this);
