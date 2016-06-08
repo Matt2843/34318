@@ -3,8 +3,6 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,15 +10,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
 public class MainFrame extends JFrame implements GeneralProperties {
+
+	private static final long serialVersionUID = 1L;
 	private DialogLogin DLogin;
-	private GridBagConstraints c = new GridBagConstraints();
-	private JPanel panel = new JPanel(new GridBagLayout()), JPLeft, JPRight;
+	private JPanel JPLeft, JPMiddle, JPRight;
 	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile;
 	
 	public MainFrame(){
@@ -30,9 +28,11 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    setDefaultProperties();
 	    createImageIcons();
 	    JPLeft = new PanelLeft(this);
+	    JPMiddle = new PanelMiddle(this);
 	    JPRight = new PanelRight(this);
 	    this.add(JPLeft,BorderLayout.WEST);
-	    this.add(JPRight,BorderLayout.CENTER);
+	    this.add(JPMiddle,BorderLayout.CENTER);
+	    this.add(JPRight, BorderLayout.EAST);
 	    this.validate();
 	}
 	

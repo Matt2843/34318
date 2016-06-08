@@ -21,18 +21,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 public class PanelLeft extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 	private MainFrame parent;
 	private JPanel JPPublic, JPPrivate;
-	private JPanel ShownPanel,TabPanel;
 	private JTabbedPane tabbedPanel;
 	private String[] publicChats = {"Title 1", "Title2"}, privateChats = {"Name 1", "Name 2", "Name 3", "Name 4"};
 	private JScrollPane SPPublic, SPPrivate;
 	
-	
-	private PanelLeftPublic PLPublic = new PanelLeftPublic(parent);
-	private PanelLeftPrivate PLPrivate = new PanelLeftPrivate(parent);
+
 	
 	public PanelLeft(MainFrame parent){
+		this.parent = parent;
 		setDefaultProperties();
 		setComponents();
 		addContent();
