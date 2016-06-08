@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -32,6 +33,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 	private JButton JBSend;
 	private JTextArea JTText;
 	private int tabCounter = 0, chatCounter = 0;
+	private JScrollPane scrollPane;
 	
 	
 	public PanelRight(MainFrame parent){
@@ -87,6 +89,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 		
 		JTText = new JTextArea();
 		JTText.addKeyListener(this);
+		scrollPane = new JScrollPane(JTText);
 		//JTText.addActionListener(this);
 		
 		for (int i = 0; i < Chats.length; i++){
@@ -172,7 +175,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 		Menu.add(JPPictures, BorderLayout.WEST);
 		Menu.add(new JLabel(),BorderLayout.CENTER);
 		ChatBottom.add(Menu, BorderLayout.NORTH);
-		ChatBottom.add(JTText,BorderLayout.CENTER);
+		ChatBottom.add(scrollPane,BorderLayout.CENTER);
 		ChatBottom.add(JBSend, BorderLayout.EAST);
 		
 //		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
@@ -231,7 +234,11 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener,
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == e.VK_ENTER){
-			sendText();
+			
+			if (!JTText.getText().trim().equals("")){
+				sendText();
+			}
+			
 		}
 		
 	}
