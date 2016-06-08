@@ -102,9 +102,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		//JScrollPane scrollPane = new JScrollPane(content);
 		content.setLineWrap(true);
 		content.setText(Chats[chatCounter]);chatCounter++;
-		
-		JLClose = new JLabel(parent.IClose);
-		
+		JLClose = new JLabel(parent.IClose);		
 		JLClose.addMouseListener(new MouseListener() {
 		      
 			@Override
@@ -143,6 +141,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		ChatTab.setOpaque(false);
 		ChatTab.add(new JLabel("Chat" + (++tabCounter) + "    "),BorderLayout.WEST);
 		ChatTab.add(JLClose,BorderLayout.EAST);
+		TabbedPanel.setBackground(Color.white);
 		TabbedPanel.addTab(null, content);
 		TabbedPanel.setTabComponentAt(TabbedPanel.getTabCount() - 1, ChatTab);
 	}
