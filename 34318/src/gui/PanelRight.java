@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -96,13 +98,25 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		JTextArea JTText = new JTextArea();
 		JTText.setLineWrap(true);
 		JTText.setText(Chats[chatCounter]);chatCounter++;
+		
 		JPanel JPUsers = new JPanel(new GridLayout(30,1));
 		JPUsers.setPreferredSize(GeneralProperties.panelUsersSize);
-		JPanel JPUsersTop = new JPanel(new GridLayout(1,3));
-		JPUsersTop.add(new JLabel("Users",SwingConstants.CENTER));
-		JPUsersTop.add(new JLabel(parent.IAdd));
-		JPUsersTop.add(new JLabel(parent.IBlock));
+		JPUsers.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPUsers.setBackground(Color.WHITE);
+		JPanel JUsersIcons = new JPanel(new GridLayout(1,3));
+		JUsersIcons.setOpaque(false);
+		JUsersIcons.add(new JLabel(parent.IAdd));
+		JUsersIcons.add(new JLabel(parent.IBlock)); JUsersIcons.add(new JLabel());
+		JPanel JPUsersTop = new JPanel(new BorderLayout());
+		JLabel JLUsers = new JLabel("  Users");
+		JLUsers.setFont(new Font("SansSerif", Font.BOLD, 14));
+		JPUsersTop.add(JLUsers,BorderLayout.WEST);
+		JPUsersTop.add(new JLabel(),BorderLayout.CENTER);
+		JPUsersTop.add(JUsersIcons,BorderLayout.EAST);
+		JPUsersTop.setBackground(Color.WHITE);
+	
 		JPUsers.add(JPUsersTop);
+		
 		content.add(JTText,BorderLayout.CENTER);
 		content.add(JPUsers,BorderLayout.EAST);
 		JLClose = new JLabel(parent.IClose);		
@@ -157,7 +171,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		Menu.add(new JLabel(),BorderLayout.CENTER);
 		ChatBottom.add(Menu, BorderLayout.NORTH);
 		ChatBottom.add(JTText,BorderLayout.CENTER);
-		ChatBottom.add(JBSend, BorderLayout.EAST);
+		//ChatBottom.add(JBSend, BorderLayout.EAST);
 		
 //		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
 //		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
