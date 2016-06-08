@@ -3,18 +3,18 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Server extends Thread {
-	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>();
+	public static String serverStatus = "Ready...";
+
+	public static Database db = new Database();
 	
 	private ServerSocket server;
 	private Socket connection;
 	private int port;
 	
 	private boolean running = true;
-	private String serverStatus = "Ready...";
 
 	public Server(int port) {
 		this.port = port;
@@ -28,11 +28,11 @@ public class Server extends Thread {
 			e.printStackTrace();
 		}
 		initializeServer();
-		super.run();
 	}
 
 	private void initializeServer() {
 		try {
+			db.updateAndSaveDatabase();
 			waitForConnection();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -46,12 +46,12 @@ public class Server extends Thread {
 		while(running) {
 			connection = server.accept();
 			String sessionID = SU.generateSessionID(5);
-			while(activeUsers.containsKey(sessionID)) {
+			while(db.getActiveUsers().containsKey(sessionID)) {
 				sessionID = SU.generateSessionID(5);
 			}
 			Connection newClient = new Connection(connection, sessionID);
 			newClient.start();
-			activeUsers.put(sessionID, newClient);
+			db.getActiveUsers().put(sessionID, newClient);
 			try {
 				Thread.sleep(150);
 			} catch(InterruptedException e) {
@@ -67,10 +67,6 @@ public class Server extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public HashMap<String, Connection> getActiveUsers() {
-		return activeUsers;
 	}
 
 }
