@@ -31,10 +31,11 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	private JTabbedPane TabbedPanel;
 	private JLabel JLSmiley, JLFile, JLClose;
 	private JButton JBSend;
-	private JTextArea JTText;
+	private JTextArea JTText, JTUsersInChat;
 	private int tabCounter = 0, chatCounter = 0;
 	private JScrollPane scrollPane;
 	private String id = "Username";
+	private String[] UsersInChat = {"User1", "User ", "User3","User 4"};
 	
 	
 	public PanelRight(MainFrame parent){
@@ -57,7 +58,6 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	private void setComponents(){
 
 		ChatBottom = new JPanel(new BorderLayout());
-		//ChatBottom.setPreferredSize(GeneralProperties.panelRightBottomSize);
 		ChatBottom.setBackground(Color.white);
 		
 		Menu = new JPanel(new BorderLayout());
@@ -155,6 +155,11 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JPUsers.setPreferredSize(GeneralProperties.panelUsersSize);
 		JPUsers.setBorder(BorderFactory.createLineBorder(Color.black));
 		JPUsers.setBackground(Color.WHITE);
+		
+		JTUsersInChat = new JTextArea();
+		for (int i = 0; i<UsersInChat.length;i++){
+			JTUsersInChat.append(UsersInChat[i]+ "\n");
+		}
 		JPanel JUsersIcons = new JPanel(new GridLayout(1,3));
 		JUsersIcons.setOpaque(false);
 		JUsersIcons.add(new JLabel(parent.IAdd));
@@ -163,7 +168,7 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JLabel JLUsers = new JLabel("  Users");
 		JLUsers.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JPUsersTop.add(JLUsers,BorderLayout.WEST);
-		JPUsersTop.add(new JLabel(),BorderLayout.CENTER);
+		JPUsersTop.add(JTUsersInChat,BorderLayout.CENTER);
 		JPUsersTop.add(JUsersIcons,BorderLayout.EAST);
 		JPUsersTop.setBackground(Color.WHITE);	
 		JPUsers.add(JPUsersTop);

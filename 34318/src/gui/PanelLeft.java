@@ -53,7 +53,7 @@ public class PanelLeft extends JPanel {
 	private void setComponents(){
 		JPPublic = new JPanel(new GridLayout(30,1));
 		SPPublic = new JScrollPane(JPPublic);
-		JPPublic.setBackground(Color.green);
+		JPPublic.setBackground(Color.LIGHT_GRAY);
 		
 		JPPrivate = new JPanel(new GridLayout(30,1));
 		SPPrivate = new JScrollPane(JPPrivate);
