@@ -49,8 +49,8 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		setComponents();
 		makeBottomPanel();
 		this.add(TabbedPanel,BorderLayout.NORTH);
-		//this.add(TabbedPanelBottom, BorderLayout.CENTER);
-		this.add(ChatBottom,BorderLayout.CENTER);
+		this.add(TabbedPanelBottom, BorderLayout.CENTER);
+		//this.add(ChatBottom,BorderLayout.CENTER);
 	}
 	
 	private void setDefaultProperties(){
@@ -69,13 +69,13 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		Menu = new JPanel(new GridLayout(1,10));
 		Menu.setBackground(Color.white);
 		
-//		JPSmiley = new JPanel();
-//		JPSmiley.setPreferredSize(new Dimension(200,200));
-//		
-//		JPFile = new JPanel();
-//		JPFile.setPreferredSize(new Dimension(200,200));
-//		
-//		TabbedPanelBottom = new JTabbedPane();
+		JPSmiley = new JPanel();
+		JPSmiley.setPreferredSize(new Dimension(200,200));
+		
+		JPFile = new JPanel();
+		JPFile.setPreferredSize(new Dimension(200,200));
+		
+		TabbedPanelBottom = new JTabbedPane();
 		
 		UIManager.put("TabbedPane.borderColor",ColorUIResource.ORANGE);
 		TabbedPanel = new JTabbedPane();
@@ -99,7 +99,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	
 	private void addTab(){
 		final JTextArea content = new JTextArea();
-		JScrollPane scrollPane = new JScrollPane(content);
+		//JScrollPane scrollPane = new JScrollPane(content);
 		content.setLineWrap(true);
 		content.setText(Chats[chatCounter]);chatCounter++;
 		
@@ -147,15 +147,15 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	
 	
 	private void makeBottomPanel(){
-		Menu.add(JLSmiley);
-		Menu.add(JLFile);
-		ChatBottom.add(Menu, BorderLayout.NORTH);
-		ChatBottom.add(JTText,BorderLayout.CENTER);
-		ChatBottom.add(JBSend, BorderLayout.EAST);
+//		Menu.add(JLSmiley);
+//		Menu.add(JLFile);
+//		ChatBottom.add(Menu, BorderLayout.NORTH);
+//		ChatBottom.add(JTText,BorderLayout.CENTER);
+//		ChatBottom.add(JBSend, BorderLayout.EAST);
 		
-//		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
-//		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
-//		TabbedPanelBottom.addTab("",parent.IFile,JPFile);
+		TabbedPanelBottom.addTab("",parent.IPrivate,JTText);
+		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
+		TabbedPanelBottom.addTab("",parent.IFile,JPFile);
 	}
 
 	@Override
