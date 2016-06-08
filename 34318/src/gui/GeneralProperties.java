@@ -10,6 +10,8 @@ public interface GeneralProperties {
 	public static Dimension panelRightSize = new Dimension((frameSize.width/3)*2, (frameSize.height));
 	public static Dimension panelRightTopSize = new Dimension(panelRightSize.width, panelRightSize.height-80);
 	public static Dimension panelRightBottomSize = new Dimension(panelRightSize.width, 80);
+	public static Dimension panelUsersSize = new Dimension(panelRightSize.width/4, panelRightSize.height-80);
+	
 	
 	
 }

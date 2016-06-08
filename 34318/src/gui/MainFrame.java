@@ -18,7 +18,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 
 	private static final long serialVersionUID = 1L;
 	private DialogLogin DLogin;
-	private JPanel JPLeft, JPMiddle, JPRight;
+	private JPanel JPLeft, JPRight;
 	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile;
 	
 	public MainFrame(){
@@ -28,11 +28,9 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    setDefaultProperties();
 	    createImageIcons();
 	    JPLeft = new PanelLeft(this);
-	    JPMiddle = new PanelMiddle(this);
 	    JPRight = new PanelRight(this);
 	    this.add(JPLeft,BorderLayout.WEST);
-	    this.add(JPMiddle,BorderLayout.CENTER);
-	    this.add(JPRight, BorderLayout.EAST);
+	    this.add(JPRight,BorderLayout.CENTER);
 	    this.validate();
 	}
 	
