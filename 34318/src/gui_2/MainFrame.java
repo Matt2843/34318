@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MainFrame extends JFrame {
@@ -22,6 +23,9 @@ public class MainFrame extends JFrame {
 
 	private void addPanel(JPanel panel) {
 		this.add(panel, BorderLayout.CENTER);
+		JLabel lab = new JLabel("TEST");
+		lab.setOpaque(false);
+		panel.add(lab);
 		this.repaint();
 	}
 

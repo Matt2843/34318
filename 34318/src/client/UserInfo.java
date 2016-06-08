@@ -1,45 +1,35 @@
 package client;
 
-public class UserInfo {
-	private String firstName;
-	private String lastName;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class UserInfo implements Serializable {
+	private static final long serialVersionUID = 3863758677993591803L;
+	
+	private ArrayList<String> friends = null;
+	private ArrayList<String> savedRooms = null;
+	
 	private String username;
 	private String password;
-
-	// first name
-	public String setFirstName(String firstName) {
-		return this.firstName = firstName;
+	
+	public ArrayList<String> getFriends() {
+		return friends;
 	}
-
-	public String getFirstName() {
-		return firstName;
+	public ArrayList<String> getSavedRooms() {
+		return savedRooms;
 	}
-
-	// last name
-	public String setLastName(String lastName) {
-		return this.lastName = lastName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	// username
-	public String setUserName(String name) {
-		return this.username = name;
-	}
-
-	public String getUserName() {
+	public String getUsername() {
 		return username;
 	}
-
-	// password
-	public String setPassword(String password) {
-		return this.password = password;
-	}
-
 	public String getPassword() {
 		return password;
 	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
+	
 }

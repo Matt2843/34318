@@ -17,7 +17,7 @@ public class Client extends Thread {
 
 	private Socket connection;
 	
-	private String sessionID = ""; // Think of smart inital value.
+	private String sessionID = "-1";
 
 	public Client(String host, int port) {
 		this.host = host;
