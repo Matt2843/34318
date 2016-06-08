@@ -145,7 +145,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
         addC(JPLogin, Password,0,i,2);i++; c.insets = biggerInsets;
         addC(JPLogin, JLNewUser,0,i,1);i++; c.insets = normalInsets;
         addC(JPLogin,JLForgotPassword,0,i,1);i++; c.insets = biggerInsets;
-        addC(JPLogin,JPButtonsLogin,0,i,1);
+        addC(JPLogin,JPButtonsLogin,0,i,2);
 //        addC(JPLogin, JBLogin,0,i,1);
 //        addC(JPLogin, JBCancel,1,i,1);
         
