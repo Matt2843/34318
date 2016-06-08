@@ -9,10 +9,9 @@ import java.util.Arrays;
 
 public class ClientFTP {
 	public static void main(String[] args) throws Exception {
-		String fileName = null;
 
 		try {
-			fileName = args[0];
+			
 		} catch (Exception e) {
 
 			File file = new File("C:/Users/chris/OneDrive/Billeder/text.txt");
@@ -39,14 +38,8 @@ public class ClientFTP {
 
 	}
 private void uploadFile(String path, String targetRoom){
-	String fileName = null;
-
-	try {
-		fileName = args[0];
-	} catch (Exception e) {
+	try {	
 		File file = new File(path);
-		output.writeObject(file.getName());
-		output.flush();
 		
 		FileInputStream fileInputStream = new FileInputStream(file);
 		byte [] buffer = new byte[10000]; //Størrelsen af bufferen
@@ -59,7 +52,9 @@ private void uploadFile(String path, String targetRoom){
 
 		input.close();
 		output.close();
-		System.exit(0);   
+		System.exit(0);
+	} catch (Exception e) {
+		 e.printStackTrace();
 }
 }
 }  
