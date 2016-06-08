@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
@@ -37,7 +38,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 	private JTabbedPane TabbedPanel, TabbedPanelBottom;
 	private JLabel JLSmiley, JLFile, JLClose;
 	private JButton JBSend;
-	private JTextArea JTText, JTChat;
+	private JTextField JTText;
 	private GridBagConstraints c = new GridBagConstraints();
 	private int tabCounter = 0, chatCounter = 0;
 	
@@ -95,7 +96,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		JBSend.setBackground(Color.WHITE);
 		JBSend.addMouseListener(this);
 		
-		JTText = new JTextArea();
+		JTText = new JTextField(200);
 		//JTText.addActionListener(this);
 		
 		for (int i = 0; i < Chats.length; i++){
