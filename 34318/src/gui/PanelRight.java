@@ -97,6 +97,7 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 		JBSend.addMouseListener(this);
 		
 		JTText = new JTextField(200);
+		JTText.addActionListener(this);
 		//JTText.addActionListener(this);
 		
 		for (int i = 0; i < Chats.length; i++){
@@ -168,11 +169,19 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 //		TabbedPanelBottom.addTab("",parent.ISmiley,JPSmiley);
 //		TabbedPanelBottom.addTab("",parent.IFile,JPFile);
 	}
+	
+	private void sendText(){
+		String message = JTText.getText();
+		System.out.println(message);
+		JTText.setText(null);
+		int selectedTac = TabbedPanel.getSelectedIndex();
+		//TabbedPanel.setComponentAt(selectedTab,);
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JBSend){
-			JTText.setText(null);
+			sendText();
 		}
 		
 	}
@@ -203,7 +212,9 @@ public class PanelRight extends JPanel implements ActionListener, MouseListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == JTText){
+			sendText();
+		}
 		
 	}
 }
