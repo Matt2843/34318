@@ -35,6 +35,12 @@ public class ChatTab extends JPanel implements MouseListener {
 		validate();
 	}
 	
+	public void updateTabIndex(int index) {
+		if(tabIndex != index && tabIndex > index) {
+			tabIndex -= 1;
+		}
+	}
+	
 	public void appendToTextArea(String string) {
 		// TO-DO: Add standard format + timestamp?
 		chatArea.append(string);
@@ -71,7 +77,9 @@ public class ChatTab extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		parent.removeTabAt(tabIndex);
-		
+		for(int i = 0; i < ChatPanel.chatTabs.size(); i++) {
+			ChatPanel.chatTabs.get(i).updateTabIndex(tabIndex);
+		}
 	}
 
 	@Override
