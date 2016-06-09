@@ -1,25 +1,34 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class ChatTab extends JTextArea implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel icon;
-	private JLabel name;
+	private JLabel icon,name;
+	private JPanel tabContent;
+	private ChatPanel parent;
 	
-	public ChatTab(String tabName) {
+	public ChatTab(ChatPanel parent,String tabName) {
+		this.parent = parent;
 		name = new JLabel(tabName);
-		// icon
+		icon = new JLabel(MainFrame.IClose);
+		tabContent = new JPanel(new BorderLayout());
+		tabContent.setOpaque(false);
+		tabContent.add(name, BorderLayout.WEST);
+		tabContent.add(icon,BorderLayout.EAST);
+		tabContent.validate();
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		System.out.println("Der er trykket");
 		
 	}
 

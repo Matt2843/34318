@@ -103,7 +103,6 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JTText.setText(null);
 		int selectedTab = chatPanel.getSelectedIndex();
 		ChatPanel.chatTabs.get(selectedTab).append(id + ":   " +message);
-		
 //		JPanel panel = new JPanel(new BorderLayout());
 //		JTextArea chat = new JTextArea(id + ":   " + message); chat.setEditable(false); chat.setLineWrap(true);
 //		panel.add(chat,BorderLayout.CENTER);
@@ -147,7 +146,7 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JBSend){
-			sendText();
+			sendText(JTText.getText());
 		}
 		
 	}
