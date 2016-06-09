@@ -18,7 +18,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 
 	private static final long serialVersionUID = 1L;
 	private DialogLogin DLogin;
-	private JPanel JPLeft, JPRight;
+	public JPanel JPLeft, JPRight;
 	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock;
 	
 	public MainFrame(){

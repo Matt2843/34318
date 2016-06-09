@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -89,17 +90,17 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		scrollPane = new JScrollPane(JTText);
 		
 		for (int i = 0; i < Chats.length; i++){
-			addTab();
+			addTab(Chats[i]);
 		}
 	}
 	
 	
-	private void addTab(){
+	public void addTab(String name){
 		final JPanel content = new JPanel(new BorderLayout());
-		makeUsersTab("Indsæt ID her");
+		makeUsersTab(name);
 		JTextArea JTTextChat = new JTextArea();
 		JTTextChat.setLineWrap(true); JTTextChat.setEditable(false);
-		JTTextChat.setText(Chats[chatCounter]);chatCounter++;
+		JTTextChat.setText(name);
 		content.add(JTTextChat,BorderLayout.CENTER);
 		content.add(JPUsers,BorderLayout.EAST);
 		JLClose = new JLabel(parent.IClose);		
@@ -189,11 +190,48 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		System.out.println(message);
 		JTText.setText(null);
 		int selectedTab = TabbedPanel.getSelectedIndex();
+	/*	JPanel JPSelectedPanel = (JPanel) TabbedPanel.getComponentAt(selectedTab);
+		JPSelectedPanel.setLayout(new GridLayout(30,1));
+		JPSelectedPanel.add(new JLabel(id + ":   " + message));
+		TabbedPanel.setComponentAt(selectedTab, JPSelectedPanel);*/
 		JPanel panel = new JPanel(new BorderLayout());
 		JTextArea chat = new JTextArea(id + ":   " + message); chat.setEditable(false); chat.setLineWrap(true);
 		panel.add(chat,BorderLayout.CENTER);
 		panel.add(makeUsersTab("Indsæt ID"),BorderLayout.EAST);
 		TabbedPanel.setComponentAt(selectedTab,panel);
+		Component editTab = TabbedPanel.getComponentAt(selectedTab);
+		editTab.addMouseListener(new MouseListener() {
+		      
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int closeTabNumber = TabbedPanel.indexOfComponent(panel);
+		        TabbedPanel.removeTabAt(closeTabNumber);
+				
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		    });
 	}
 
 	@Override

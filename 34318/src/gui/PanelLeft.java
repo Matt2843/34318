@@ -29,6 +29,8 @@ public class PanelLeft extends JPanel {
 	private String[] publicChats = {"Title 1", "Title2"}, privateChats = {"Name 1", "Name 2", "Name 3", "Name 4"};
 	private JScrollPane SPPublic, SPPrivate;
 	
+	private PanelRight panelRight = new PanelRight(parent);
+	
 
 	
 	public PanelLeft(MainFrame parent){
@@ -66,7 +68,43 @@ public class PanelLeft extends JPanel {
 	
 	private void addContent(){
 		for (int i = 0; i<publicChats.length; i++){
-			JPPublic.add(new JLabel(publicChats[i]));
+			JLabel chat = new JLabel(publicChats[i]);
+			String chatter = publicChats[i];
+			chat.addMouseListener(new MouseListener() {
+			      
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					panelRight.addTab(chatter);
+					System.out.println("trykket!");
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			    });
+			JPPublic.add(chat);
+					
 		}
 		for (int i = 0; i<privateChats.length;i++){
 			JPPrivate.add(new JLabel(privateChats[i]));
