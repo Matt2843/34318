@@ -1,9 +1,11 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -22,17 +24,22 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JTextArea chatArea;
 	
 	// The users-online list elements.
-	private JList<String> onlineUsers;
-	private DefaultListModel<String> model;
+	private JList<UserInformation> usersInChat;
+	private DefaultListModel<UserInformation> model;
 	private JScrollPane scrollPane;
+	
 	
 	public ChatTab(ChatPanel parent, String tabName, int tabIndex) {
 		this.parent = parent;
 		this.tabIndex = tabIndex;
 		setLayout(new BorderLayout());
 		configureChatArea(tabName);
-		configureOnlineUsers();
+		setUsersInChat();
 		validate();
+		for (int i = 0; i<2; i++){
+			UserInformation user = new UserInformation("User" + i);
+			addUserToList(user);
+		}
 	}
 	
 	public void updateTabIndex(int index) {
@@ -43,22 +50,26 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	public void appendToTextArea(String string) {
 		// TO-DO: Add standard format + timestamp?
-		chatArea.append(string);
+		chatArea.append(string + "\n");
 	}
 	
 	public void removeUserFromList(String user) {
 		model.removeElement(user);
 	}
 	
-	public void addUserToList(String user) {
+	public void addUserToList(UserInformation user) {
 		model.addElement(user);
 	}
 
-	private void configureOnlineUsers() {
-		model = new DefaultListModel<String>();
-		onlineUsers = new JList<String>(model);
-		scrollPane = new JScrollPane(onlineUsers);
+	private void setUsersInChat() {
+		model = new DefaultListModel<UserInformation>();
+		usersInChat = new JList<UserInformation>(model);
+		usersInChat.addMouseListener(this);
+		scrollPane = new JScrollPane(usersInChat);
+		scrollPane.setPreferredSize(GeneralProperties.panelUsersSize);
+		scrollPane.setBackground(Color.WHITE);
 		add(scrollPane, BorderLayout.EAST);
+		
 	}
 
 	private void configureChatArea(String tabName) {
@@ -76,10 +87,17 @@ public class ChatTab extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		parent.removeTabAt(tabIndex);
-		for(int i = 0; i < ChatPanel.chatTabs.size(); i++) {
-			ChatPanel.chatTabs.get(i).updateTabIndex(tabIndex);
+		if (e.getSource() == icon){
+			parent.removeTabAt(tabIndex);
+			for(int i = 0; i < ChatPanel.chatTabs.size(); i++) {
+				ChatPanel.chatTabs.get(i).updateTabIndex(tabIndex);
+			}
 		}
+		if (e.getSource() == usersInChat){
+			int x = usersInChat.getSelectedIndex();
+			usersInChat.getModel().getElementAt(x).fun();
+		}
+		
 	}
 
 	@Override
