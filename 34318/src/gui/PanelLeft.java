@@ -29,7 +29,7 @@ public class PanelLeft extends JPanel {
 	private String[] publicChats = {"Title 1", "Title2"}, privateChats = {"Name 1", "Name 2", "Name 3", "Name 4"};
 	private JScrollPane SPPublic, SPPrivate;
 	
-	private PanelRight panelRight = new PanelRight(parent);
+	private ChatPanel chatPanel = new ChatPanel(parent);
 	
 
 	
@@ -74,7 +74,7 @@ public class PanelLeft extends JPanel {
 			      
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					panelRight.addTab(chatter);
+					chatPanel.addTab(chatter);
 					System.out.println("trykket!");
 					
 				}
