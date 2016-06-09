@@ -4,27 +4,66 @@ import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class ChatTab extends JTextArea implements MouseListener {
+public class ChatTab extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
+	private ChatPanel parent;
+	private int tabIndex;
 	
+	// The chat window including tab headers.
 	private JLabel icon,name;
 	private JPanel tabContent;
-	private ChatPanel parent;
+	private JTextArea chatArea;
 	
-	public ChatTab(ChatPanel parent,String tabName) {
+	// The users-online list elements.
+	private JList<String> onlineUsers;
+	private DefaultListModel<String> model;
+	private JScrollPane scrollPane;
+	
+	public ChatTab(ChatPanel parent, String tabName) {
 		this.parent = parent;
+		setLayout(new BorderLayout());
+		configureChatArea(tabName);
+		configureOnlineUsers();
+		validate();
+	}
+	
+	public void appendToTextArea(String string) {
+		// TO-DO: Add standard format + timestamp?
+		chatArea.append(string);
+	}
+	
+	public void removeUserFromList(String user) {
+		model.removeElement(user);
+	}
+	
+	public void addUserToList(String user) {
+		model.addElement(user);
+	}
+
+	private void configureOnlineUsers() {
+		model = new DefaultListModel<String>();
+		onlineUsers = new JList<String>(model);
+		scrollPane = new JScrollPane(onlineUsers);
+		add(scrollPane, BorderLayout.EAST);
+	}
+
+	private void configureChatArea(String tabName) {
 		name = new JLabel(tabName);
 		icon = new JLabel(MainFrame.IClose);
+		chatArea = new JTextArea();
 		icon.addMouseListener(this);
 		tabContent = new JPanel(new BorderLayout());
 		tabContent.setOpaque(false);
 		tabContent.add(name, BorderLayout.WEST);
 		tabContent.add(icon,BorderLayout.EAST);
-		tabContent.validate();
+		add(chatArea, BorderLayout.CENTER);
 	}
 
 	@Override
@@ -59,6 +98,10 @@ public class ChatTab extends JTextArea implements MouseListener {
 
 	public JPanel getTabContent() {
 		return tabContent;
+	}
+
+	public JTextArea getChatArea() {
+		return chatArea;
 	}
 	
 	
