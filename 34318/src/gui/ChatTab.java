@@ -26,8 +26,9 @@ public class ChatTab extends JPanel implements MouseListener {
 	private DefaultListModel<String> model;
 	private JScrollPane scrollPane;
 	
-	public ChatTab(ChatPanel parent, String tabName) {
+	public ChatTab(ChatPanel parent, String tabName, int tabIndex) {
 		this.parent = parent;
+		this.tabIndex = tabIndex;
 		setLayout(new BorderLayout());
 		configureChatArea(tabName);
 		configureOnlineUsers();
@@ -58,6 +59,7 @@ public class ChatTab extends JPanel implements MouseListener {
 		name = new JLabel(tabName);
 		icon = new JLabel(MainFrame.IClose);
 		chatArea = new JTextArea();
+		chatArea.setEditable(false);
 		icon.addMouseListener(this);
 		tabContent = new JPanel(new BorderLayout());
 		tabContent.setOpaque(false);
@@ -68,7 +70,7 @@ public class ChatTab extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Der er trykket");
+		parent.removeTabAt(tabIndex);
 		
 	}
 
