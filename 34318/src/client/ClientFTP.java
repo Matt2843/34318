@@ -66,21 +66,24 @@ private void uploadFile(String path, String targetRoom){
 
 private void downloadFile(String link){
 	ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-	InputStream inputStream = connection.getInputStream();
+	FileInputStream fileInputStream = connection.getFileInputStream();
     try {
+    	output.writeObject(link); //link skal være en sti!
+		output.flush();
+		
     	byte[] buffer = new byte[10000];
-        FileOutputStream fileOutputStream = new FileOutputStream(link); //Her skal link være en sti!
+        FileOutputStream fileOutputStream = new FileOutputStream(link); //dette er hvor det skal gemmes!
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
         Integer bytesRead = 0;
 
-        while ((bytesRead = inputStream.read(buffer)) > 0);{
+        while ((bytesRead = fileInputStream.read(buffer)) > 0);{
                 byteArray.write(buffer);      
         }
 
         bufferedOutputStream.write(byteArray.toByteArray());
         bufferedOutputStream.flush();
         bufferedOutputStream.close();
-        inputStream.close();
+        fileInputStream.close();
     } catch (IOException e) {
     	e.printStackTrace();
     }
