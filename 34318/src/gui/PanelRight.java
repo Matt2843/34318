@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -97,53 +98,50 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		
 	}
 	
-	private void sendText(){
-		String message = JTText.getText();
+	private void sendText(String message){
 		System.out.println(message);
 		JTText.setText(null);
 		int selectedTab = chatPanel.getSelectedIndex();
-	/*	JPanel JPSelectedPanel = (JPanel) TabbedPanel.getComponentAt(selectedTab);
-		JPSelectedPanel.setLayout(new GridLayout(30,1));
-		JPSelectedPanel.add(new JLabel(id + ":   " + message));
-		TabbedPanel.setComponentAt(selectedTab, JPSelectedPanel);*/
-		JPanel panel = new JPanel(new BorderLayout());
-		JTextArea chat = new JTextArea(id + ":   " + message); chat.setEditable(false); chat.setLineWrap(true);
-		panel.add(chat,BorderLayout.CENTER);
-		panel.add(chatPanel.makeUsersTab("Indsæt ID"),BorderLayout.EAST);
-		chatPanel.setComponentAt(selectedTab,panel);
-		Component editTab = chatPanel.getComponentAt(selectedTab);
-		editTab.addMouseListener(new MouseListener() {
-		      
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int closeTabNumber = chatPanel.indexOfComponent(panel);
-		        chatPanel.removeTabAt(closeTabNumber);
-				
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		    });
+		ChatPanel.chatTabs.get(selectedTab).append(id + ":   " +message);
+		
+//		JPanel panel = new JPanel(new BorderLayout());
+//		JTextArea chat = new JTextArea(id + ":   " + message); chat.setEditable(false); chat.setLineWrap(true);
+//		panel.add(chat,BorderLayout.CENTER);
+//		panel.add(chatPanel.makeUsersTab("Indsæt ID"),BorderLayout.EAST);
+//		chatPanel.setComponentAt(selectedTab,panel);
+//		Component editTab = chatPanel.getComponentAt(selectedTab);
+//		editTab.addMouseListener(new MouseListener() {
+//		      
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				int closeTabNumber = chatPanel.indexOfComponent(panel);
+//		        chatPanel.removeTabAt(closeTabNumber);
+//				
+//			}
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseReleased(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		    });
 	}
 
 	@Override
@@ -181,9 +179,9 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == e.VK_ENTER){			
+		if (e.getKeyCode() == KeyEvent.VK_ENTER){			
 			if (!JTText.getText().trim().equals("")){
-				sendText();
+				sendText(JTText.getText());
 			}
 			
 		}

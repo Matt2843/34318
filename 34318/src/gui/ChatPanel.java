@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -21,6 +22,7 @@ public class ChatPanel extends JTabbedPane {
 	private String[] Chats = {"Chat 1", "Chat 2", "Chat 3", "Chat 4"};
 	private String[] UsersInChat = {"User1", "User ", "User3","User 4"};
 	private int tabCounter = 0;
+	public static ArrayList <JTextArea> chatTabs = new ArrayList<JTextArea>();
 	
 	
 	public ChatPanel(MainFrame parent){
@@ -38,15 +40,13 @@ public class ChatPanel extends JTabbedPane {
 	}
 	
 	private void setComponents(){
-		
-		
 		for (int i = 0; i < Chats.length; i++){
 			addTab(Chats[i]);
 		}
 	}
 	
 	public void addTab(String name){
-		final JPanel content = new JPanel(new BorderLayout());
+		JPanel content = new JPanel(new BorderLayout());
 		makeUsersTab(name);
 		JTextArea JTTextChat = new JTextArea();
 		JTTextChat.setLineWrap(true); JTTextChat.setEditable(false);
@@ -94,6 +94,7 @@ public class ChatPanel extends JTabbedPane {
 		ChatTab.add(JLClose,BorderLayout.EAST);
 		addTab(null, content);
 		setTabComponentAt(getTabCount() - 1, ChatTab);
+		chatTabs.add(JTTextChat);
 	}
 	
 	public JPanel makeUsersTab(String ID){
