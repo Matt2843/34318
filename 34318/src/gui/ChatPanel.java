@@ -22,7 +22,7 @@ public class ChatPanel extends JTabbedPane {
 	private String[] Chats = {"Chat 1", "Chat 2", "Chat 3", "Chat 4"};
 	private String[] UsersInChat = {"User1", "User ", "User3","User 4"};
 	private int tabCounter = 0;
-	public static ArrayList <JTextArea> chatTabs = new ArrayList<JTextArea>();
+	public static ArrayList <ChatTab> chatTabs = new ArrayList<ChatTab>();
 	
 	
 	public ChatPanel(MainFrame parent){
@@ -49,6 +49,7 @@ public class ChatPanel extends JTabbedPane {
 		ChatTab newTab = new ChatTab(this,name,getTabCount());
 		addTab(null, newTab);
 		setTabComponentAt(getTabCount()-1, newTab.getTabContent());
+		chatTabs.add(newTab);
 	}
 	
 //	public void addTab(String name){
