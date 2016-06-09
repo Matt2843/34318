@@ -1,7 +1,12 @@
 package client;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -59,3 +64,24 @@ private void uploadFile(String path, String targetRoom){
 }
 }  
 
+private void downloadFile(String link){
+	ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+	InputStream inputStream = connection.getInputStream();
+    try {
+    	byte[] buffer = new byte[10000];
+        FileOutputStream fileOutputStream = new FileOutputStream(link); //Her skal link være en sti!
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+        Integer bytesRead = 0;
+
+        while ((bytesRead = inputStream.read(buffer)) > 0);{
+                byteArray.write(buffer);      
+        }
+
+        bufferedOutputStream.write(byteArray.toByteArray());
+        bufferedOutputStream.flush();
+        bufferedOutputStream.close();
+        inputStream.close();
+    } catch (IOException e) {
+    	e.printStackTrace();
+    }
+}

@@ -32,7 +32,6 @@ public class ServerFTP extends Thread {
 
 		// 1. Read file name.
 		Object o = inputStream.readObject();
-
 		if (o instanceof String) {
 			fileOutputStream = new FileOutputStream(new File("D:/text.txt"));
 		} else {
@@ -41,18 +40,13 @@ public class ServerFTP extends Thread {
 
 		// 2. Read file to the end.
 		Integer bytesRead = 0;
-
-		do {
+		while (bytesRead == BUFFER_SIZE){
 			o = inputStream.readObject();
-
 			if (!(o instanceof Integer)) {
 				throwException("Something is wrong");
 			}
-
 			bytesRead = (Integer)o;
-
 			o = inputStream.readObject();
-
 			if (!(o instanceof byte[])) {
 				throwException("Something is wrong");
 			}
@@ -61,11 +55,9 @@ public class ServerFTP extends Thread {
 
 			// 3. Write data to output file.
 			fileOutputStream.write(buffer, 0, bytesRead);
-
-		} while (bytesRead == BUFFER_SIZE);
-
+		} 
+		
 		System.out.println("File transfer success");
-
 		fileOutputStream.close();
 		inputStream.close();
 		outputStream.close();

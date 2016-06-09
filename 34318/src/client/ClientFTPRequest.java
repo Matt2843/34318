@@ -24,10 +24,7 @@ public class ClientFTPRequest {
 		bytesRead = inputStream.read(byteArray, 0, byteArray.length);
 		current = bytesRead;
 
-		do {
-			bytesRead =
-					inputStream.read(byteArray, 
-							current, (byteArray.length - current));
+		do {bytesRead =	inputStream.read(byteArray,current, (byteArray.length - current));
 			if (bytesRead >= 0) {
 				current += bytesRead;
 			}
