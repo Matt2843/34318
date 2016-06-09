@@ -46,56 +46,62 @@ public class ChatPanel extends JTabbedPane {
 	}
 	
 	public void addTab(String name){
-		JPanel content = new JPanel(new BorderLayout());
-		makeUsersTab(name);
-		JTextArea JTTextChat = new JTextArea();
-		JTTextChat.setLineWrap(true); JTTextChat.setEditable(false);
-		JTTextChat.setText(name);
-		content.add(JTTextChat,BorderLayout.CENTER);
-		content.add(JPUsers,BorderLayout.EAST);
-		JLClose = new JLabel(parent.IClose);		
-		JLClose.addMouseListener(new MouseListener() {
-		      
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int closeTabNumber = indexOfComponent(content);
-		        removeTabAt(closeTabNumber);
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		    });
-		
-		ChatTab = new JPanel(new BorderLayout());
-		ChatTab.setOpaque(false);
-		ChatTab.add(new JLabel("Chat" + (++tabCounter) + "    "),BorderLayout.WEST);
-		ChatTab.add(JLClose,BorderLayout.EAST);
-		addTab(null, content);
-		setTabComponentAt(getTabCount() - 1, ChatTab);
-		chatTabs.add(JTTextChat);
+		ChatTab newTab = new ChatTab(this,name);
+		addTab(null, newTab);
+		setTabComponentAt(getTabCount()-1, newTab.getTabContent());
 	}
+	
+//	public void addTab(String name){
+//		JPanel content = new JPanel(new BorderLayout());
+//		makeUsersTab(name);
+//		JTextArea JTTextChat = new JTextArea();
+//		JTTextChat.setLineWrap(true); JTTextChat.setEditable(false);
+//		JTTextChat.setText(name);
+//		content.add(JTTextChat,BorderLayout.CENTER);
+//		content.add(JPUsers,BorderLayout.EAST);
+//		JLClose = new JLabel(parent.IClose);		
+//		JLClose.addMouseListener(new MouseListener() {
+//		      
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				int closeTabNumber = indexOfComponent(content);
+//		        removeTabAt(closeTabNumber);
+//				
+//			}
+//
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseReleased(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		    });
+//		
+//		ChatTab = new JPanel(new BorderLayout());
+//		ChatTab.setOpaque(false);
+//		ChatTab.add(new JLabel("Chat" + (++tabCounter) + "    "),BorderLayout.WEST);
+//		ChatTab.add(JLClose,BorderLayout.EAST);
+//		addTab(null, content);
+//		setTabComponentAt(getTabCount() - 1, ChatTab);
+//		chatTabs.add(JTTextChat);
+//	}
 	
 	public JPanel makeUsersTab(String ID){
 		JPUsers = new JPanel(new BorderLayout());

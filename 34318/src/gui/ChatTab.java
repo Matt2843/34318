@@ -19,6 +19,7 @@ public class ChatTab extends JTextArea implements MouseListener {
 		this.parent = parent;
 		name = new JLabel(tabName);
 		icon = new JLabel(MainFrame.IClose);
+		icon.addMouseListener(this);
 		tabContent = new JPanel(new BorderLayout());
 		tabContent.setOpaque(false);
 		tabContent.add(name, BorderLayout.WEST);
@@ -54,6 +55,10 @@ public class ChatTab extends JTextArea implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public JPanel getTabContent() {
+		return tabContent;
 	}
 	
 	
