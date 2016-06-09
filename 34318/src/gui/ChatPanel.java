@@ -46,7 +46,7 @@ public class ChatPanel extends JTabbedPane {
 	}
 	
 	public void addTab(String name){
-		ChatTab newTab = new ChatTab(this,name,getTabCount()-1);
+		ChatTab newTab = new ChatTab(this,name,getTabCount());
 		addTab(null, newTab);
 		setTabComponentAt(getTabCount()-1, newTab.getTabContent());
 	}
