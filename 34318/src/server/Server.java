@@ -3,13 +3,17 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
+
+import server.gui.MainWindow;
 
 public class Server extends Thread {
-	public static String serverStatus = "Ready...";
+	public String serverStatus = null;
 
 	public static Database db = new Database();
 	
 	private boolean running = true;
+	private boolean ready = false;
 	
 	private ServerSocket server;
 	private Socket connection;
@@ -41,7 +45,9 @@ public class Server extends Thread {
 	}
 
 	private void waitForConnection() throws IOException {
+		ready = true;
 		while(running) {
+			setServerStatus("Waiting for someone to connect ...");
 			connection = server.accept();
 			String sessionID = SU.generateSessionID(5);
 			while(db.getActiveUsers().containsKey(sessionID)) {
@@ -50,6 +56,7 @@ public class Server extends Thread {
 			Connection newClient = new Connection(connection, sessionID);
 			newClient.start();
 			db.addNewConnection(sessionID, newClient);
+			setServerStatus("New client " + sessionID + " connected.");
 			try {
 				Thread.sleep(150);
 			} catch(InterruptedException e) {
@@ -70,9 +77,23 @@ public class Server extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	private void setServerStatus(String status) {
+		String timestamp = "[" + new Date().toString().substring(11, 19) + "] ";
+		serverStatus = timestamp + status;
+		MainWindow.serverLog.append(serverStatus + "\n");
+	}
 
 	public boolean isRunning() {
 		return running;
+	}
+
+	public String getServerStatus() {
+		return serverStatus;
+	}
+
+	public boolean isReady() {
+		return ready;
 	}
 
 }
