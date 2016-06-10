@@ -2,10 +2,10 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ScrollPane;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -22,6 +22,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JLabel icon,name;
 	private JPanel tabContent;
 	private JTextArea chatArea;
+	private JScrollPane ChatScrollPane;
 	
 	// The users-online list elements.
 	private JList<UserInformation> usersInChat;
@@ -40,6 +41,7 @@ public class ChatTab extends JPanel implements MouseListener {
 			UserInformation user = new UserInformation("User" + i);
 			addUserToList(user);
 		}
+		System.out.println("Hej");
 	}
 	
 	public void updateTabIndex(int index) {
@@ -77,12 +79,13 @@ public class ChatTab extends JPanel implements MouseListener {
 		icon = new JLabel(MainFrame.IClose);
 		chatArea = new JTextArea();
 		chatArea.setEditable(false);
+		ChatScrollPane = new JScrollPane(chatArea);
 		icon.addMouseListener(this);
 		tabContent = new JPanel(new BorderLayout());
 		tabContent.setOpaque(false);
 		tabContent.add(name, BorderLayout.WEST);
 		tabContent.add(icon,BorderLayout.EAST);
-		add(chatArea, BorderLayout.CENTER);
+		add(ChatScrollPane, BorderLayout.CENTER);
 	}
 
 	@Override

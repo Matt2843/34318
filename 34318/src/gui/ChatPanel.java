@@ -1,14 +1,9 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.ScrollPane;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -22,6 +17,7 @@ public class ChatPanel extends JTabbedPane {
 	private String[] Chats = {"Chat 1", "Chat 2", "Chat 3", "Chat 4"};
 	private String[] UsersInChat = {"User1", "User ", "User3","User 4"};
 	private int tabCounter = 0;
+	private ScrollPane scrollPane;
 
 	public static ArrayList <ChatTab> chatTabs;
 	
