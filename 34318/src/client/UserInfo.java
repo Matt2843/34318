@@ -8,6 +8,8 @@ public class UserInfo implements Serializable {
 	
 	private ArrayList<String> friends = null;
 	private ArrayList<String> savedRooms = null;
+	private ArrayList<String> blocked = null;
+	
 	
 	private String username = null;
 	private String password = null;
@@ -22,6 +24,9 @@ public class UserInfo implements Serializable {
 	
 	public ArrayList<String> getFriends() {
 		return friends;
+	}
+	public void friends(String alias) {
+		friends.add(alias)
 	}
 	public ArrayList<String> getSavedRooms() {
 		return savedRooms;
@@ -43,6 +48,13 @@ public class UserInfo implements Serializable {
 	}
 	public void setAlias(String alias) {
 		this.alias = alias;
+	}
+	public ArrayList<String> getBlocked() {
+		return blocked;
+	}
+
+	public void blockUser(String user) {
+		blocked.add(user);
 	}
 
 	
