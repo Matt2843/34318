@@ -9,11 +9,11 @@ public class Server extends Thread {
 
 	public static Database db = new Database();
 	
+	private boolean running = true;
+	
 	private ServerSocket server;
 	private Socket connection;
 	private int port;
-	
-	private boolean running = true;
 
 	public Server(int port) {
 		this.port = port;
@@ -31,7 +31,6 @@ public class Server extends Thread {
 
 	private void initializeServer() {
 		try {
-			db.updateAndSaveDatabase();
 			waitForConnection();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -50,7 +49,7 @@ public class Server extends Thread {
 			}
 			Connection newClient = new Connection(connection, sessionID);
 			newClient.start();
-			db.getActiveUsers().put(sessionID, newClient);
+			db.addNewConnection(sessionID, newClient);
 			try {
 				Thread.sleep(150);
 			} catch(InterruptedException e) {
@@ -60,12 +59,20 @@ public class Server extends Thread {
 	}
 
 	private void cleanUp() {
+		for(int i = 0; i < db.getActiveUsers().size(); i++) {
+			db.getActiveUsers().get(i).stopConnection();
+		}
 		try {
+			db.updateAndSaveDatabase();
 			connection.close();
 			server.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean isRunning() {
+		return running;
 	}
 
 }

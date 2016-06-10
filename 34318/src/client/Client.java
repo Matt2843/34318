@@ -73,7 +73,7 @@ public class Client extends Thread {
 	}
 
 	public void sendMessage(String msg) {
-		String message = msg + "#" + sessionID;
+		String message = sessionID + "#" + msg;
 		Message<String, Object> m = new Message<String, Object>(message);
 		try {
 			output.writeObject(m);

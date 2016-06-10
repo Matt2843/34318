@@ -14,6 +14,7 @@ public class Connection extends Thread {
 	private ObjectOutputStream output;
 
 	private boolean alive = true;
+	private boolean loggedIn = false;
 
 	private String clientIP;
 	private Socket client;
@@ -38,9 +39,9 @@ public class Connection extends Thread {
 			slave.start();
 			do {
 				message = (Message<String, Object>) input.readObject();
-				System.out.println(message.getString());
+				System.out.println("FROM CLIENT: " + message.getString());
 				slave.decode(message);
-			} while (!message.getString().substring(0, 5).equals("L103"));
+			} while (!message.getString().substring(0, 5).equals("L103") && alive);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -60,6 +61,7 @@ public class Connection extends Thread {
 	}
 
 	private void cleanUp() {
+		sendMessage("K100#Server Closed");
 		try {
 			input.close();
 			output.close();
@@ -89,12 +91,24 @@ public class Connection extends Thread {
 		}
 	}
 
-	public boolean isClientAlive() {
+	public boolean isConnectionAlive() {
 		return alive;
+	}
+	
+	public void stopConnection() {
+		alive = false;
 	}
 
 	public String getClientIP() {
 		return clientIP;
+	}
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
 	}
 
 }

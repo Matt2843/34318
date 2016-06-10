@@ -11,11 +11,13 @@ public class Slave extends Thread {
 	
 	public void decode(Message<String, Object> message) {
 		String msgSplit[] = message.getString().split("#");
-		switch (msgSplit[0]) {
-		case "L100": // Login
-			System.out.println("Login request received.");
+		switch (msgSplit[1]) {
+		case "L100": // Login FORMAT: SESSIONID#USERNAME#PASSWORD"
+			
 			break;
-		case "L101": // Create User
+		case "L101": // Create User FORMAT: "SESSIONID#L101#USERNAME#PASSWORD
+			System.out.println("Adding user to DB..");
+			Server.db.registerNewUser(msgSplit[2], msgSplit[3]);
 			break;
 		case "L102": // Change Password
 			break;

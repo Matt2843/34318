@@ -27,7 +27,16 @@ public class Database {
 			storedFiles = new File(path).exists() ? (HashMap<String, Object>) readFileToObject(path) : new HashMap<String, Object>();
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
-		}	
+		}
+		System.out.println(registeredUsers.keySet());
+	}
+	
+	public void registerNewUser(String username, String password) {
+		registeredUsers.put(username, password);
+	}
+	
+	public void addNewConnection(String sessionID, Connection connection) {
+		activeUsers.put(sessionID, connection);
 	}
 
 	public void updateAndSaveDatabase() {
@@ -38,27 +47,25 @@ public class Database {
 		try {
 			saveObjectToFile("data/registeredUsers.db", registeredUsers);
 			saveObjectToFile("data/publicRooms.db", publicRooms);
+			saveObjectToFile("data/storedFiles.db", storedFiles);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private Object readFileToObject(String path) throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream("data/registeredUsers.db");
+		FileInputStream fis = new FileInputStream(new File(path));
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		Object target = ois.readObject();
 		ois.close();
-		fis.close();
 		return target;
 	}
 
-	private boolean saveObjectToFile(String path, Object obj) throws IOException {
+	private void saveObjectToFile(String path, Object obj) throws IOException {
 		FileOutputStream fos = new FileOutputStream(path);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(obj);
 		oos.close();
-		fos.close();
-		return true;
 	}
 
 	public HashMap<String, Connection> getActiveUsers() {
