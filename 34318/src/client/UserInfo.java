@@ -26,7 +26,7 @@ public class UserInfo implements Serializable {
 		return friends;
 	}
 	public void friends(String alias) {
-		friends.add(alias)
+		friends.add(alias);
 	}
 	public ArrayList<String> getSavedRooms() {
 		return savedRooms;
