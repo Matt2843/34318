@@ -9,18 +9,19 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import chat.ChatRoom;
+import client.UserInfo;
 
 @SuppressWarnings("unchecked")
 public class Database {
 	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>(); // K: SessionID 	V: Connection
 	private HashMap<String, Object> storedFiles = null;									 // K: FileID		V: File
-	private HashMap<String, String> registeredUsers = null;								 // CHANGE THIS
+	private HashMap<String, UserInfo> registeredUsers = null;								 // CHANGE THIS
 	private HashMap<String, ChatRoom> publicRooms = null;								 // K: ChatID		V: ChatRoom
 
 	public Database() {
 		String path = "data/registeredUsers.db";
 		try {
-			registeredUsers = new File(path).exists() ? (HashMap<String, String>) readFileToObject(path) : new HashMap<String, String>();
+			registeredUsers = new File(path).exists() ? (HashMap<String, UserInfo>) readFileToObject(path) : new HashMap<String, UserInfo>();
 			path = "data/publicRooms.db";
 			publicRooms = new File(path).exists() ? (HashMap<String, ChatRoom>) readFileToObject(path) : new HashMap<String, ChatRoom>();
 			path = "data/storedFiles.db";
@@ -31,8 +32,8 @@ public class Database {
 		System.out.println(registeredUsers.keySet());
 	}
 	
-	public void registerNewUser(String username, String password) {
-		registeredUsers.put(username, password);
+	public void registerNewUser(String username, UserInfo userinformation) {
+		registeredUsers.put(username, userinformation);
 	}
 	
 	public void addNewConnection(String sessionID, Connection connection) {
@@ -72,7 +73,7 @@ public class Database {
 		return activeUsers;
 	}
 
-	public HashMap<String, String> getRegisteredUsers() {
+	public HashMap<String, UserInfo> getRegisteredUsers() {
 		return registeredUsers;
 	}
 
