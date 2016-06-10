@@ -21,7 +21,8 @@ public class Connection extends Thread {
 	
 	private String sessionID;
 	
-	private Slave slave = new Slave();
+	private Slave slave;
+	
 	public static ArrayList<String> tasks = new ArrayList<String>();
 
 	public Connection(Socket connection, String sessionID) {
@@ -36,6 +37,7 @@ public class Connection extends Thread {
 			Message<String, Object> message;
 			configureStreams();
 			greetUser();
+			slave = new Slave(this);
 			slave.start();
 			do {
 				message = (Message<String, Object>) input.readObject();
