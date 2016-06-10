@@ -1,15 +1,37 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
 
-public class UserInformation extends JFrame implements MouseListener{
+public class UserInformation implements MouseListener{
+	private MainFrame mainFrame;
 	private static final long serialVersionUID = 1L;
 	private String username;
+	private Point location;
+	private int x,y;
+	private JFrame frame = new JFrame();
+	private JPanel JPAddFriend,JPBlockUser,JPSendMessage, userInfo;
+	private JLabel addFriend, blockUser, sendMessage;
+	
+
+	private JList<JPanel> options;
+	private DefaultListModel<JPanel> model;
+	private UserInformation info;
+	private ChatPanel parent;
 	
 	public UserInformation(String username) {
 		this.username = username;
@@ -17,10 +39,56 @@ public class UserInformation extends JFrame implements MouseListener{
 	}
 	
 	private void setDefaultProperties(){
-		this.setUndecorated(true);
-		//this.setBorder(BorderFactory.createLineBorder(Color.black));
-		this.setVisible(true);
-		this.validate();
+	}
+	
+	public void addJFrame(UserInformation info, ChatPanel parent){
+		this.info = info;
+		this.parent = parent;
+		addUserInformation(info);
+		location = MouseInfo.getPointerInfo().getLocation();
+		x = (int) location.getX();
+		y = (int) location.getY();
+		frame.setLocation(x,y);
+		frame.setPreferredSize(GeneralProperties.userInformationTabSize);
+		frame.addFocusListener(new FocusListener(){
+			@Override
+		      public void focusLost( FocusEvent e ) {
+		          frame.dispose();
+		        
+		      }
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		frame.setUndecorated(true);
+		frame.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
+		frame.setVisible(true);
+		frame.pack();
+		frame.validate();
+	}
+	
+	public void addUserInformation(UserInformation info){
+		JPAddFriend = new JPanel(new BorderLayout());
+		JPAddFriend.add(new JLabel(MainFrame.IAddFriend),BorderLayout.WEST);
+		JPAddFriend.add(new JLabel("  Add Friend"),BorderLayout.CENTER);
+		JPAddFriend.addMouseListener(this);
+		JPBlockUser = new JPanel(new BorderLayout());
+		JPBlockUser.add(new JLabel(MainFrame.IBlock),BorderLayout.WEST);
+		JPBlockUser.add(new JLabel("  Block User"), BorderLayout.CENTER);
+		JPBlockUser.addMouseListener(this);
+		JPSendMessage = new JPanel(new BorderLayout());
+		JPSendMessage.add(new JLabel(MainFrame.ISendMessage),BorderLayout.WEST);
+		JPSendMessage.add(new JLabel("  Send Message"),BorderLayout.CENTER);
+		JPSendMessage.addMouseListener(this);
+		userInfo  = new JPanel(new GridLayout(4,1));
+		userInfo.setVisible(true);
+		userInfo.add(JPAddFriend);
+		userInfo.add(JPBlockUser); 
+		userInfo.add(JPSendMessage);
+		frame.add(userInfo);
 	}
 	@Override
 	public String toString() {
@@ -33,7 +101,20 @@ public class UserInformation extends JFrame implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == JPAddFriend){
+			DialogMessage DMessage = new DialogMessage(mainFrame, "Friend added");
+			DMessage.setAlwaysOnTop(true);
+		}
+		if (e.getSource() == JPBlockUser){
+			DialogMessage DMessage = new DialogMessage(mainFrame, "User blocked");
+			DMessage.setAlwaysOnTop(true);
+		}
+		if(e.getSource() == JPSendMessage){
+			parent.addTab("Ny chat");
+			System.out.println("Du er herinde");
+			frame.dispose();
+			parent.setSelectedIndex(parent.getTabCount()-1);
+		}
 		
 	}
 

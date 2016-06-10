@@ -12,7 +12,7 @@ public interface GeneralProperties {
 	public static Dimension panelRightBottomSize = new Dimension(panelRightSize.width, panelRightSize.height/4);	
 	public static Dimension panelUsersSize = new Dimension(panelRightSize.width/4, panelRightSize.height/4*3);
 	
-	public static Dimension userInformationTabSize = new Dimension(200,200);
+	public static Dimension userInformationTabSize = new Dimension(130,80);
 	
 	
 	

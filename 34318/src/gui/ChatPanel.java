@@ -10,7 +10,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 public class ChatPanel extends JTabbedPane {
-	private MainFrame parent;
 	private JPanel ChatTab, JPUsers;
 	private JLabel JLClose;
 	private JTextArea JTUsersInChat;
@@ -22,8 +21,7 @@ public class ChatPanel extends JTabbedPane {
 	public static ArrayList <ChatTab> chatTabs;
 	
 	
-	public ChatPanel(MainFrame parent){
-		this.parent = parent;
+	public ChatPanel(){
 		chatTabs = new ArrayList<ChatTab>();
 		setDefaultProperties();
 		setComponents();

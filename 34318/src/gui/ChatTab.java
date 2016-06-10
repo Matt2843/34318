@@ -2,7 +2,8 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ScrollPane;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -28,6 +29,8 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JList<UserInformation> usersInChat;
 	private DefaultListModel<UserInformation> model;
 	private JScrollPane scrollPane;
+	private JLabel JLAddUsers;
+	private JPanel usersInChatRight, JPUsersTop;
 	
 	
 	public ChatTab(ChatPanel parent, String tabName, int tabIndex) {
@@ -64,14 +67,30 @@ public class ChatTab extends JPanel implements MouseListener {
 	}
 
 	private void setUsersInChat() {
+		makeTopPanel();	
 		model = new DefaultListModel<UserInformation>();
 		usersInChat = new JList<UserInformation>(model);
 		usersInChat.addMouseListener(this);
 		scrollPane = new JScrollPane(usersInChat);
 		scrollPane.setPreferredSize(GeneralProperties.panelUsersSize);
 		scrollPane.setBackground(Color.WHITE);
-		add(scrollPane, BorderLayout.EAST);
+		usersInChatRight.add(JPUsersTop,BorderLayout.NORTH);
+		usersInChatRight.add(scrollPane,BorderLayout.CENTER);
+		add(usersInChatRight, BorderLayout.EAST);
 		
+	}
+	
+	private void makeTopPanel(){
+
+		JLAddUsers = new JLabel(MainFrame.IAdd);
+		JLAddUsers.addMouseListener(this);
+		usersInChatRight = new JPanel( new BorderLayout());;
+		JPUsersTop = new JPanel(new BorderLayout());
+		JLabel JLUsers = new JLabel("Users");
+		JLUsers.setFont(new Font("SansSerif", Font.BOLD, 14));
+		JPUsersTop.add(JLUsers,BorderLayout.WEST); JPUsersTop.add(new JLabel(),BorderLayout.CENTER);
+		JPUsersTop.add(JLAddUsers,BorderLayout.EAST);
+		JPUsersTop.setBackground(Color.WHITE);
 	}
 
 	private void configureChatArea(String tabName) {
@@ -96,16 +115,25 @@ public class ChatTab extends JPanel implements MouseListener {
 				ChatPanel.chatTabs.get(i).updateTabIndex(tabIndex);
 			}
 		}
-		if (e.getSource() == usersInChat){
-			int x = usersInChat.getSelectedIndex();
-			usersInChat.getModel().getElementAt(x).fun();
+		if(e.getSource() == JLAddUsers){
+			System.out.println("Tiføj bruger");
 		}
+		if (e.getClickCount() == 2) {
+			parent.addTab("Ny chat");
+			System.out.println("trykket!");
+		  }
+		
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == usersInChat){
+			if(e.getButton() == MouseEvent.BUTTON3){
+				int x = usersInChat.getSelectedIndex();
+				usersInChat.getModel().getElementAt(x).addJFrame(usersInChat.getModel().getElementAt(x),parent);
+			}
+		}
 		
 	}
 

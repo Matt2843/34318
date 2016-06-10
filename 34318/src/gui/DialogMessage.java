@@ -37,7 +37,7 @@ public class DialogMessage extends JDialog implements MouseListener{
 		if (message == "Passwords doesn't match"){
 			addC(JBTryAgain,0,1,1);
 		}
-		if (message == "Wrong login"){
+		else{
 			addC(JBOK,0,1,1);
 		}
 		setDefaultProperties();

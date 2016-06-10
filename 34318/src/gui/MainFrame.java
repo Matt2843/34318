@@ -19,7 +19,8 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	private static final long serialVersionUID = 1L;
 	private DialogLogin DLogin;
 	public JPanel JPLeft, JPRight;
-	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock;
+	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock,IAddFriend, ISendMessage;
+	public static ChatPanel chatPanel;
 	
 	public MainFrame(){
 		DLogin = new DialogLogin(this);
@@ -27,8 +28,9 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    DLogin.setVisible(true);
 	    setDefaultProperties();
 	    createImageIcons();
-	    JPLeft = new PanelLeft(this);
-	    JPRight = new PanelRight(this);
+	    chatPanel = new ChatPanel();
+	    JPLeft = new PanelLeft();
+	    JPRight = new PanelRight();
 	    this.add(JPLeft,BorderLayout.WEST);
 	    this.add(JPRight,BorderLayout.CENTER);
 	    this.validate();
@@ -57,6 +59,8 @@ public class MainFrame extends JFrame implements GeneralProperties {
 		    IFile = createResizedImageIcon(ImageIO.read(new File("pictures/file.png")), 20, 20);
 		    IAdd = createResizedImageIcon(ImageIO.read(new File("pictures/add.png")), 12, 12);
 		    IBlock = createResizedImageIcon(ImageIO.read(new File("pictures/block.png")), 12, 12);
+		    IAddFriend = createResizedImageIcon(ImageIO.read(new File("pictures/addFriend.png")), 12, 12);
+		    ISendMessage = createResizedImageIcon(ImageIO.read(new File("pictures/sendMessage.png")), 12, 12);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

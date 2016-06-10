@@ -22,12 +22,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.text.DefaultEditorKit.InsertBreakAction;
 
 public class PanelRight extends JPanel implements MouseListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
-	MainFrame parent;
+	//MainFrame parent;
 	private JPanel  ChatBottom, Menu, JPPictures, JPSmiley,JPFile;
 	private JLabel JLSmiley, JLFile;
 	private JButton JBSend;
@@ -35,17 +37,14 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	private int tabCounter = 0;
 	private JScrollPane scrollPane;
 	private String id = "Username";
-
-	private ChatPanel chatPanel = new ChatPanel(parent);
 	
 	
-	public PanelRight(MainFrame parent){
-		this.parent = parent;
+	public PanelRight(){
 		this.setBackground(Color.white);
 		setDefaultProperties();
 		setComponents();
 		makeBottomPanel();
-		this.add(chatPanel,BorderLayout.NORTH);
+		this.add(MainFrame.chatPanel,BorderLayout.NORTH);
 		this.add(ChatBottom,BorderLayout.CENTER);
 	}
 	
@@ -70,10 +69,10 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JPSmiley = new JPanel();		
 		JPFile = new JPanel();
 				
-		JLSmiley = new JLabel(parent.ISmiley);
+		JLSmiley = new JLabel(MainFrame.ISmiley);
 		JLSmiley.setOpaque(false);
 		
-		JLFile = new JLabel(parent.IFile);
+		JLFile = new JLabel(MainFrame.IFile);
 		JLFile.setOpaque(false);
 		
 		JBSend = new JButton("Send");
@@ -101,7 +100,9 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	private void sendText(String message){
 		System.out.println(message);
 		JTText.setText(null);
-		int selectedTab = chatPanel.getSelectedIndex();
+		JTText.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"doNothing");
+		//SJTText.put(KeyStroke.getKeyStroke("shift ENTER"), inser);
+		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
 		ChatPanel.chatTabs.get(selectedTab).appendToTextArea(id + ":   " +message);		
 	}
 

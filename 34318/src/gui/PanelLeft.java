@@ -26,7 +26,6 @@ import javax.swing.JTabbedPane;
 public class PanelLeft extends JPanel{
 
 	private static final long serialVersionUID = 1L;
-	private MainFrame parent;
 	private JPanel JPPublic, JPPrivate;
 	private JTabbedPane tabbedPanel;
 	private String[] publicChats = {"Title 1", "Title2"}, privateChats = {"Name 1", "Name 2", "Name 3", "Name 4"};
@@ -34,14 +33,12 @@ public class PanelLeft extends JPanel{
 	
 	private JList<String> onlineUsers;
 	private DefaultListModel<String> model;
-	private ChatPanel chatPanel = new ChatPanel(parent);
 		
-	public PanelLeft(MainFrame parent){
-		this.parent = parent;
+	public PanelLeft(){
 		setDefaultProperties();
 		setComponents();
-		tabbedPanel.addTab("Public",parent.IPublic,JPPublic);
-		tabbedPanel.addTab("Private", parent.IPrivate, JPPrivate);
+		tabbedPanel.addTab("Public",MainFrame.IPublic,JPPublic);
+		tabbedPanel.addTab("Private", MainFrame.IPrivate, JPPrivate);
 		this.add(tabbedPanel, BorderLayout.CENTER);
 		this.validate();
 	}
@@ -71,14 +68,20 @@ public class PanelLeft extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					chatPanel.addTab("Ny chat");
+					MainFrame.chatPanel.addTab("Ny chat");
 					System.out.println("trykket!");
 				  }
+				
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+				if (e.getSource() == onlineUsers){
+					if (e.getButton() == MouseEvent.BUTTON3){
+						int x = onlineUsers.getSelectedIndex();
+						//onlineUsers.getModel().getElementAt(x).addJFrame(onlineUsers.getModel().getElementAt(x));
+					}
+				}
 				
 			}
 
