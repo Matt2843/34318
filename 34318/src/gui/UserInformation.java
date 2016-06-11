@@ -33,6 +33,7 @@ public class UserInformation implements MouseListener{
 	}
 	
 	public void addJFrame(UserInformation info, ChatPanel parent){
+		this.parent = parent; 
 		addUserInformation(info);
 		location = MouseInfo.getPointerInfo().getLocation();
 		x = (int) location.getX();

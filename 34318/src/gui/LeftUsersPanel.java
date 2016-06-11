@@ -30,7 +30,7 @@ public class LeftUsersPanel extends JPanel implements MouseListener {
 		for (int i = 0; i<users.size();i++){
 			model.addElement(users.get(i));
 		}
-	}
+	}   
 	
 
 	@Override

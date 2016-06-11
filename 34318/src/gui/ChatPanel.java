@@ -39,32 +39,4 @@ public class ChatPanel extends JTabbedPane {
 		setTabComponentAt(getTabCount()-1, newTab.getTabContent());
 		chatTabs.add(newTab);
 	}
-	
-	
-//	public JPanel makeUsersTab(String ID){
-//		JPUsers = new JPanel(new BorderLayout());
-//		//JPUsers.setPreferredSize(GeneralProperties.panelUsersSize);
-//		JPUsers.setBorder(BorderFactory.createLineBorder(Color.black));
-//		JPUsers.setBackground(Color.WHITE);
-//		
-//		JTUsersInChat = new JTextArea();
-//		for (int i = 0; i<UsersInChat.length;i++){
-//			JTUsersInChat.append("\n   " + UsersInChat[i] );
-//		}
-//		JPanel JUsersIcons = new JPanel(new GridLayout(1,3));
-//		JUsersIcons.setOpaque(false);
-//		JUsersIcons.add(new JLabel(parent.IAdd));
-//		JUsersIcons.add(new JLabel(parent.IBlock)); JUsersIcons.add(new JLabel());
-//		JPanel JPUsersTop = new JPanel(new BorderLayout());
-//		JLabel JLUsers = new JLabel("  Users");
-//		JLUsers.setFont(new Font("SansSerif", Font.BOLD, 14));
-//		JPUsersTop.add(JLUsers,BorderLayout.WEST);
-//		JPUsersTop.add(new JLabel(),BorderLayout.CENTER);
-//		JPUsersTop.add(JUsersIcons,BorderLayout.EAST);
-//		JPUsersTop.setBackground(Color.WHITE);	
-//		JPUsers.add(JPUsersTop, BorderLayout.NORTH);
-//		JPUsers.add(JTUsersInChat, BorderLayout.CENTER);
-//		return JPUsers;
-//	}
-
 }
