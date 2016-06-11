@@ -2,39 +2,27 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
-import javax.swing.text.DefaultEditorKit.InsertBreakAction;
 
 public class PanelRight extends JPanel implements MouseListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
-	//MainFrame parent;
-	private JPanel  ChatBottom, Menu, JPPictures, JPSmiley,JPFile;
+	private JPanel  ChatBottom, Menu, JPPictures;
 	private JLabel JLSmiley, JLFile;
 	private JButton JBSend;
 	private JTextArea JTText;
-	private int tabCounter = 0;
 	private JScrollPane scrollPane;
 	private String id = "Username";
 	
@@ -65,9 +53,6 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 
 		JPPictures = new JPanel(new GridLayout(1,2));
 		JPPictures.setBackground(Color.WHITE);
-		
-		JPSmiley = new JPanel();		
-		JPFile = new JPanel();
 				
 		JLSmiley = new JLabel(MainFrame.ISmiley);
 		JLSmiley.setOpaque(false);
@@ -94,7 +79,6 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		ChatBottom.add(Menu, BorderLayout.NORTH);
 		ChatBottom.add(scrollPane,BorderLayout.CENTER);
 		ChatBottom.add(JBSend, BorderLayout.EAST);
-		
 	}
 	
 	private void sendText(String message){
@@ -111,54 +95,38 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		if (e.getSource() == JBSend){
 			sendText(JTText.getText());
 		}
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
-
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER){			
 			if (!JTText.getText().trim().equals("")){
 				sendText(JTText.getText());
-			}
-			
-		}
-		
+			}	
+		}		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 }

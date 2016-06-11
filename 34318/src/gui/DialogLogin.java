@@ -24,10 +24,11 @@ import javax.swing.JTextField;
 
 
 public class DialogLogin extends JDialog implements ActionListener, MouseListener {
+	private static final long serialVersionUID = 1L;
 	private MainFrame parent;
 	private GridBagConstraints c = new GridBagConstraints();
 	private JPanel panel = new JPanel(new GridBagLayout());
-	private JPanel JPLogin,JPButtonsLogin, JPNewUser, JPButtonsNewUser;
+	private JPanel JPLogin,JPButtonsLogin, JPNewUser;
 	private JTextField JTUsername;
 	private JPasswordField Password;
 	private JLabel JLLogin, JLUsername, JLPassword, JLNewUser, JLForgotPassword;
@@ -40,7 +41,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private JTextField JTNewUsername;
 	private JPasswordField NewPassword, RepeatPassword;
 	private JButton JBCreate, JBNewCancel;
-	private String newUsername, newPassword, repeatPassword;
     
     private DialogMessage DMessage;
 	
@@ -129,7 +129,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		setJButton(JBNewCancel);
 		
 		JPButtonsLogin = new JPanel(new GridLayout(1,2));
-		JPButtonsNewUser = new JPanel(new GridLayout(1,2));
 	}
 
 	private void setJPLogin(){
@@ -220,11 +219,11 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
         	parent.mainFrameSetVisible();
 		}
 		else if (false){
-			DMessage = new DialogMessage(parent, "User already exists");
+			DMessage = new DialogMessage("User already exists");
 			DMessage.setAlwaysOnTop(true);
 		}
 		else{
-			DMessage = new DialogMessage(parent, "Passwords doesn't match");
+			DMessage = new DialogMessage("Passwords doesn't match");
 			DMessage.setAlwaysOnTop(true);
 		}
 	
@@ -236,7 +235,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			parent.mainFrameSetVisible();
 		}
 		else{
-			DMessage = new DialogMessage(parent, "Wrong login");
+			DMessage = new DialogMessage("Wrong login");
 			DMessage.setAlwaysOnTop(true);
 		}
 	}

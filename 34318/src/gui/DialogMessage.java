@@ -16,14 +16,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class DialogMessage extends JDialog implements MouseListener{
-	private MainFrame parent;
+	
+	private static final long serialVersionUID = 1L;
 	private GridBagConstraints c = new GridBagConstraints();
 	private JPanel panel = new JPanel(new GridBagLayout());
 	private JLabel JLMessage; /*JLPasswordDoesntMatch, JLUserAlreadyExist;*/
 	private JButton JBOK, JBTryAgain;
 	
-	public DialogMessage(MainFrame parent, String message){
-		this.parent = parent;
+	public DialogMessage(String message){
 		setJComponents(message);
 		
 		this.setPreferredSize(new Dimension(400,150));

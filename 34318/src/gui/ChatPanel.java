@@ -1,22 +1,14 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.ScrollPane;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 
 public class ChatPanel extends JTabbedPane {
-	private JPanel ChatTab, JPUsers;
-	private JLabel JLClose;
-	private JTextArea JTUsersInChat;
+	private static final long serialVersionUID = 1L;
+
 	private String[] Chats = {"Chat 1", "Chat 2", "Chat 3", "Chat 4"};
-	private String[] UsersInChat = {"User1", "User ", "User3","User 4"};
-	private int tabCounter = 0;
-	private ScrollPane scrollPane;
 
 	public static ArrayList <ChatTab> chatTabs;
 	

@@ -3,7 +3,6 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -119,8 +118,8 @@ public class ChatTab extends JPanel implements MouseListener {
 			System.out.println("Tiføj bruger");
 		}
 		if (e.getClickCount() == 2) {
-			parent.addTab("Ny chat");
-			System.out.println("trykket!");
+			parent.addTab(usersInChat.getSelectedValue().toString());
+			MainFrame.chatPanel.setSelectedIndex(MainFrame.chatPanel.getTabCount()-1);
 		  }
 		
 		
