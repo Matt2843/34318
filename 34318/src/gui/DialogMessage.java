@@ -76,6 +76,7 @@ public class DialogMessage extends JDialog implements MouseListener{
 	
 	private void setJButton(JButton name){
 		name.setFont(new Font("SanSerif",Font.PLAIN,14));
+		name.setBackground(Color.white);
 		name.addMouseListener(this);
 		name.setVisible(true);
 	}
