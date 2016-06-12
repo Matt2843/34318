@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -15,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.text.DefaultEditorKit.InsertBreakAction;
 
 public class PanelRight extends JPanel implements MouseListener, KeyListener{
 
@@ -68,6 +70,7 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JTText = new JTextArea();
 		JTText.addKeyListener(this);
 		JTText.setLineWrap(true);
+		JTText.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"doNothing");
 		scrollPane = new JScrollPane(JTText);
 	}
 	
@@ -84,8 +87,6 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	private void sendText(String message){
 		System.out.println(message);
 		JTText.setText(null);
-		JTText.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"doNothing");
-		//SJTText.put(KeyStroke.getKeyStroke("shift ENTER"), inser);
 		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
 		ChatPanel.chatTabs.get(selectedTab).appendToTextArea(id + ":   " +message);		
 	}
@@ -115,15 +116,18 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ENTER){			
-			if (!JTText.getText().trim().equals("")){
-				sendText(JTText.getText());
-			}	
-		}		
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_ENTER && (e.getModifiers() & InputEvent.SHIFT_MASK) != 0){
+            JTText.append("\n");
+        }
+		else if (e.getKeyCode() == KeyEvent.VK_ENTER){			
+			if (!JTText.getText().trim().equals("")){
+				sendText(JTText.getText());
+			}	
+		}
 	}
 
 	@Override
