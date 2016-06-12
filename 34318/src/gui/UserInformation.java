@@ -23,6 +23,7 @@ public class UserInformation implements MouseListener{
 	private JPanel JPAddFriend,JPBlockUser,JPSendMessage, userInfo;
 	
 	private ChatPanel parent;
+	private UserInformation info;
 	
 	public UserInformation(String username) {
 		this.username = username;
@@ -33,6 +34,7 @@ public class UserInformation implements MouseListener{
 	}
 	
 	public void addJFrame(UserInformation info, ChatPanel parent){
+		this.info = info;
 		this.parent = parent; 
 		addUserInformation(info);
 		location = MouseInfo.getPointerInfo().getLocation();
@@ -86,16 +88,17 @@ public class UserInformation implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JPAddFriend){
-			DialogMessage DMessage = new DialogMessage("Friend added");
+			DialogMessage DMessage = new DialogMessage(info.toString()+" added as friend");
 			DMessage.setAlwaysOnTop(true);
+			frame.dispose();
 		}
 		if (e.getSource() == JPBlockUser){
-			DialogMessage DMessage = new DialogMessage("User blocked");
+			DialogMessage DMessage = new DialogMessage(info.toString() +" has been blocked");
 			DMessage.setAlwaysOnTop(true);
+			frame.dispose();
 		}
 		if(e.getSource() == JPSendMessage){
-			parent.addTab("Ny chat");
-			System.out.println("Du er herinde");
+			parent.addTab(info.toString());
 			frame.dispose();
 			parent.setSelectedIndex(parent.getTabCount()-1);
 		}
