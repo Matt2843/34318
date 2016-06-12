@@ -10,13 +10,14 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
-import javax.swing.text.DefaultEditorKit.InsertBreakAction;
+import javax.swing.text.BadLocationException;
 
 public class PanelRight extends JPanel implements MouseListener, KeyListener{
 
@@ -24,7 +25,7 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	private JPanel  ChatBottom, Menu, JPPictures;
 	private JLabel JLSmiley, JLFile;
 	private JButton JBSend;
-	private JTextArea JTText;
+	private JTextPane JTText;
 	private JScrollPane scrollPane;
 	private String id = "Username";
 	
@@ -57,6 +58,7 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JPPictures.setBackground(Color.WHITE);
 				
 		JLSmiley = new JLabel(MainFrame.ISmiley);
+		JLSmiley.addMouseListener(this);
 		JLSmiley.setOpaque(false);
 		
 		JLFile = new JLabel(MainFrame.IFile);
@@ -67,9 +69,9 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JBSend.setBackground(Color.WHITE);
 		JBSend.addMouseListener(this);
 		
-		JTText = new JTextArea();
+		JTText = new JTextPane();
 		JTText.addKeyListener(this);
-		JTText.setLineWrap(true);
+		//JTText.setLineWrap(true);
 		JTText.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"doNothing");
 		scrollPane = new JScrollPane(JTText);
 	}
@@ -89,11 +91,18 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
 		ChatPanel.chatTabs.get(selectedTab).appendToTextArea(id + ":   " +message);		
 	}
+	
+	public void addSmiley(ImageIcon smiley){
+		JTText.insertIcon( smiley);
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JBSend){
 			sendText(JTText.getText());
+		}
+		if (e.getSource() == JLSmiley){
+			new SmileyMenu(this);
 		}
 	}
 
@@ -120,7 +129,13 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_ENTER && (e.getModifiers() & InputEvent.SHIFT_MASK) != 0){
-            JTText.append("\n");
+            //JTText.append("\n");
+            try {
+				JTText.getDocument().insertString(JTText.getDocument().getLength(), "\n", null);
+			} catch (BadLocationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         }
 		else if (e.getKeyCode() == KeyEvent.VK_ENTER){			
 			if (!JTText.getText().trim().equals("")){
