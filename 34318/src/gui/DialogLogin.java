@@ -145,9 +145,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
         addC(JPLogin, JLNewUser,0,i,1);i++; c.insets = normalInsets;
         addC(JPLogin,JLForgotPassword,0,i,1);i++; c.insets = biggerInsets;
         addC(JPLogin,JPButtonsLogin,0,i,2);
-//        addC(JPLogin, JBLogin,0,i,1);
-//        addC(JPLogin, JBCancel,1,i,1);
-        
 		
 		Password.addActionListener(this);
 		JLNewUser.addMouseListener(this);
@@ -192,7 +189,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	}
 
 	@SuppressWarnings("deprecation")
-	private String getInfo(){
+	private String getLoginInfo(){
     	username = JTUsername.getText();
     	password = Password.getText();
     	info = "L100#" + username + "#" + password;
@@ -230,6 +227,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 }
 	
 	public void login(){
+		getLoginInfo();
 		if (true){
 			this.setVisible(false);
 			parent.mainFrameSetVisible();

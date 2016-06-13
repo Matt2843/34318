@@ -46,7 +46,6 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	}
 	
 	private void setComponents(){
-
 		ChatBottom = new JPanel(new BorderLayout());
 		ChatBottom.setBackground(Color.white);
 		
@@ -71,6 +70,7 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		
 		JTText = new JTextPane();
 		JTText.addKeyListener(this);
+		JTText.setPreferredSize(GeneralProperties.panelRightBottomSize);
 		//JTText.setLineWrap(true);
 		JTText.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"doNothing");
 		scrollPane = new JScrollPane(JTText);
@@ -87,9 +87,10 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	}
 	
 	private void sendText(String message){
+
 		JTText.setText(null);
 		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
-		ChatPanel.chatTabs.get(selectedTab).appendToTextArea(id + ":   " +message);		
+		ChatPanel.chatTabs.get(selectedTab).appendToTextArea(id + ":   " +message);	
 	}
 	
 	public void addSmiley(ImageIcon smiley){
@@ -129,11 +130,9 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_ENTER && (e.getModifiers() & InputEvent.SHIFT_MASK) != 0){
-            //JTText.append("\n");
             try {
 				JTText.getDocument().insertString(JTText.getDocument().getLength(), "\n", null);
 			} catch (BadLocationException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
         }

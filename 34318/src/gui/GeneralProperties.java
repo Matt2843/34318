@@ -11,10 +11,8 @@ public interface GeneralProperties {
 	public static Dimension panelRightTopSize = new Dimension(panelRightSize.width, panelRightSize.height/4*3);
 	public static Dimension panelRightBottomSize = new Dimension(panelRightSize.width, panelRightSize.height/4);	
 	public static Dimension panelUsersSize = new Dimension(panelRightSize.width/4, panelRightSize.height/4*3);
-	
+	public static Dimension friendsPanelSize = new Dimension(panelRightSize.width/3, panelRightSize.height/4*3);
 	public static Dimension userInformationTabSize = new Dimension(130,80);
 	public static Dimension smileyTabSize = new Dimension(100,100);
-	
-	
 	
 }

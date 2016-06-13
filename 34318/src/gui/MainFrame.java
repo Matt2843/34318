@@ -40,6 +40,8 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	private void setDefaultProperties(){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setBackground(Color.white);
+		this.setTitle("Chat project");
+		this.setIconImage(new ImageIcon("pictures/chat.png").getImage());
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(GeneralProperties.frameSize);
 		this.pack();

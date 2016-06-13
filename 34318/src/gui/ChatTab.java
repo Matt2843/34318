@@ -11,7 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
 
 public class ChatTab extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +22,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	// The chat window including tab headers.
 	private JLabel icon,name;
 	private JPanel tabContent;
-	private JTextArea chatArea;
+	private JTextPane chatArea;
 	private JScrollPane ChatScrollPane;
 	
 	// The users-online list elements.
@@ -43,7 +44,6 @@ public class ChatTab extends JPanel implements MouseListener {
 			UserInformation user = new UserInformation("User" + i);
 			addUserToList(user);
 		}
-		System.out.println("Hej");
 	}
 	
 	public void updateTabIndex(int index) {
@@ -54,7 +54,11 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	public void appendToTextArea(String string) {
 		// TO-DO: Add standard format + timestamp?
-		chatArea.append(string + "\n");
+		try {
+			chatArea.getDocument().insertString(chatArea.getDocument().getLength(), string  + "\n", null);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void removeUserFromList(String user) {
@@ -95,7 +99,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	private void configureChatArea(String tabName) {
 		name = new JLabel(tabName);
 		icon = new JLabel(MainFrame.IClose);
-		chatArea = new JTextArea();
+		chatArea = new JTextPane();
 		chatArea.setEditable(false);
 		ChatScrollPane = new JScrollPane(chatArea);
 		icon.addMouseListener(this);
@@ -115,7 +119,7 @@ public class ChatTab extends JPanel implements MouseListener {
 			}
 		}
 		if(e.getSource() == JLAddUsers){
-			System.out.println("Tiføj bruger");
+			new Friends(this);
 		}
 		if (e.getClickCount() == 2) {
 			parent.addTab(usersInChat.getSelectedValue().toString());
@@ -158,7 +162,7 @@ public class ChatTab extends JPanel implements MouseListener {
 		return tabContent;
 	}
 
-	public JTextArea getChatArea() {
+	public JTextPane getChatArea() {
 		return chatArea;
 	}
 	
