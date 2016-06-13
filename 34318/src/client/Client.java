@@ -41,28 +41,15 @@ public class Client extends Thread {
 		while(true) {
 			try {
 				message = (Message) input.readObject();
-//				decodeMessage(message);
 				System.out.println("FROM SERVER: " + message.toString());
 			} catch (ClassNotFoundException e) {
 				System.out.println("Couldn't cast message to the proper format");
 			}
 			if(message.getCommand().equals("K100")) break;
-			//if(message.getString().substring(0, 4).equals("K100")) break;
-			//if(message.getString().substring(0, 4).equals("Q999")) sendMessage("K999");
+			if(message.getCommand().equals("Q999")) sendMessage("K999", null);
 		}
 		cleanUp();
 	}
-
-//	private void decodeMessage(Message message) {
-//		String msgSplit[] = message.split("#");
-//		switch (msgSplit[0]) {
-//		case "L104":
-//			sessionID = msgSplit[1]; 
-//			break;
-//		default:
-//			break;
-//		}
-//	}
 
 	private void configureStreams() throws IOException {
 		output = new ObjectOutputStream(connection.getOutputStream());

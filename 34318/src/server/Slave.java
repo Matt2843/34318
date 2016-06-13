@@ -66,6 +66,10 @@ public class Slave extends Thread {
 			} 
 			break;
 		case "L103": // Logout
+			if(master.isLoggedIn()) {
+				master.setLoggedIn(false);
+				
+			}
 			break;
 		case "C100": // Invite Private Chat
 			break;
