@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import client.UserInfo;
+
 
 
 public class DialogLogin extends JDialog implements ActionListener, MouseListener {
@@ -43,6 +45,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private JButton JBCreate, JBNewCancel;
     
     private DialogMessage DMessage;
+    private UserInfo userinfo;
 	
 	public DialogLogin(MainFrame parent){
 		this.parent = parent;
@@ -211,7 +214,11 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	
 	private void createNewUser(){
 		
-		if(false){
+		if(NewPassword.getText() != RepeatPassword.getText()){
+			String newUsername = JTNewUsername.getText();
+			String newPassword = NewPassword.getText();
+			UserInfo info = new UserInfo(newUsername, newPassword);
+			MainFrame.client.sendMessage("L101#", info);
 			this.setVisible(false);
         	parent.mainFrameSetVisible();
 		}

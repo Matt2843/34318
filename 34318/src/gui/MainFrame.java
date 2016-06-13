@@ -23,7 +23,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	public JPanel JPLeft, JPRight;
 	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock,IAddFriend, ISendMessage;
 	public static ChatPanel chatPanel;
-	private Client client;
+	public static Client client;
 	
 	public MainFrame(Client client){
 		this.client = client;
