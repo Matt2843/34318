@@ -82,7 +82,7 @@ public class Client extends Thread {
 	}
 
 	private void cleanUp() {
-		sendMessage("L103", null); // ADD PARAMS?
+		//sendMessage("L103", null); // ADD PARAMS?
 		System.out.println("Closing connection.");
 		try {
 			output.close();

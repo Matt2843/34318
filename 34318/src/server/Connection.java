@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 
 import utility.Message;
@@ -21,7 +20,6 @@ public class Connection extends Thread {
 	private Socket client = null;
 	
 	private String sessionID = null;
-	private String connectionCheck = "";
 	
 	private Slave slave = null;
 	
@@ -40,11 +38,9 @@ public class Connection extends Thread {
 			greetUser();
 			slave = new Slave(this);
 			slave.start();
-			checkConnectivity();
 			while(alive) {
 				message = (Message) input.readObject();
 				System.out.println("FROM CLIENT: " + message.toString());
-				connectionCheck = message.getCommand();
 				slave.decode(message);
 				if(message.getCommand().equals("L103")) {
 					alive = false;
@@ -68,38 +64,15 @@ public class Connection extends Thread {
 		input = new ObjectInputStream(client.getInputStream());
 	}
 	
-	private void checkConnectivity() {
-		new Thread(new Runnable() {
-			public void run() {
-				while(alive) {
-					sendMessage("Q999", null);
-					try {
-						int countdown = 10;
-						while(!connectionCheck.equals("K999") && countdown > 0) {
-							Thread.sleep(1000);
-							countdown -= 1;
-							sendMessage("Countdown: " + countdown, null);
-						}
-						if(countdown == 0) {
-							alive = false;
-							cleanUp();
-						}
-						sendMessage("Sleeping 1 minute", null);
-						Thread.sleep(1000*5);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
-		
-	}
-	
 	public void sendMessage(String command, String[] params) {
 		Message m = new Message(command, params);
 		try {
-			output.writeObject(m);
-			output.flush();
+			if(!client.isClosed()) {
+				output.writeObject(m);
+				output.flush();
+			} else {
+				System.out.println("SOCKET IS DEAD");
+			}
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -108,18 +81,21 @@ public class Connection extends Thread {
 	public void sendMessage(String command, String[] params, Object object) {
 		Message m = new Message(command, params, object);
 		try {
-			output.writeObject(m);
-			output.flush();
+			if(!client.isClosed()) {
+				output.writeObject(m);
+				output.flush();
+			} else {
+				System.out.println("SOCKET IS DEAD");
+			}
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private void cleanUp() {
-		if(alive) {
-			sendMessage("K100", null); // ADD PARAMETER MYBE MAYBE NOT?
-		}
-		Server.setServerStatus("Connection " + sessionID + " timed out.");
+		alive = false;
+		Server.db.getActiveUsers().remove(sessionID);
+		Server.setServerStatus("Connection " + sessionID + " timed out. DB: " + Server.db.getActiveUsers().keySet());
 		try {
 			input.close();
 			output.close();

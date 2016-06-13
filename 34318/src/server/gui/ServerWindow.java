@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import server.Server;
@@ -17,6 +18,7 @@ public class ServerWindow extends JFrame {
 	private JPanel contentPane;
 	private JLabel serverStatus;
 	public static JTextArea serverLog;
+	public static JScrollPane pane;
 	private Server server;
 	
 	
@@ -49,7 +51,8 @@ public class ServerWindow extends JFrame {
 		// Server log 
 		serverLog = new JTextArea();
 		serverLog.setEditable(false);
-		contentPane.add(serverLog, BorderLayout.CENTER);
+		pane = new JScrollPane(serverLog);
+		contentPane.add(pane, BorderLayout.CENTER);
 	}
 
 	private void configureMainWindow(String title, int w, int h) {

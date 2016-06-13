@@ -56,7 +56,7 @@ public class Server extends Thread {
 			Connection newClient = new Connection(connection, sessionID);
 			newClient.start();
 			db.addNewConnection(sessionID, newClient);
-			setServerStatus("New client " + sessionID + " connected.");
+			setServerStatus("New client " + sessionID + " connected." + db.getActiveUsers().keySet());
 			try {
 				Thread.sleep(150);
 			} catch(InterruptedException e) {
