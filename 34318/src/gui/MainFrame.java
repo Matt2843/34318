@@ -27,6 +27,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	
 	public MainFrame(Client client){
 		this.client = client;
+		client.start();
 		DLogin = new DialogLogin(this);
 		DLogin.setAlwaysOnTop(true);
 	    DLogin.setVisible(true);
@@ -83,6 +84,6 @@ public class MainFrame extends JFrame implements GeneralProperties {
     }
 	
 	public static void main(String[] args) {
-		new MainFrame();
+		new MainFrame(new Client("localhost", 1234));
 	}
 }
