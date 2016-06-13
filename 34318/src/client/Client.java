@@ -36,31 +36,33 @@ public class Client extends Thread {
 		super.run();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void whileConnected() throws IOException {
-		Message<String, Object> message = null;
-		do {
+		Message message = null;
+		while(true) {
 			try {
-				message = (Message<String, Object>) input.readObject();
-				decodeMessage(message.getString());
-				System.out.println("FROM SERVER: " + message.getString());
+				message = (Message) input.readObject();
+//				decodeMessage(message);
+				System.out.println("FROM SERVER: " + message.toString());
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				System.out.println("Couldn't cast message to the proper format");
 			}
-		} while (!message.getString().substring(0, 5).equals("K100") || !message.getString().substring(0, 5).equals("K101"));
+			if(message.getCommand().equals("K100")) break;
+			//if(message.getString().substring(0, 4).equals("K100")) break;
+			//if(message.getString().substring(0, 4).equals("Q999")) sendMessage("K999");
+		}
 		cleanUp();
 	}
 
-	private void decodeMessage(String message) {
-		String msgSplit[] = message.split("#");
-		switch (msgSplit[0]) {
-		case "L104":
-			sessionID = msgSplit[1]; 
-			break;
-		default:
-			break;
-		}
-	}
+//	private void decodeMessage(Message message) {
+//		String msgSplit[] = message.split("#");
+//		switch (msgSplit[0]) {
+//		case "L104":
+//			sessionID = msgSplit[1]; 
+//			break;
+//		default:
+//			break;
+//		}
+//	}
 
 	private void configureStreams() throws IOException {
 		output = new ObjectOutputStream(connection.getOutputStream());
@@ -72,9 +74,8 @@ public class Client extends Thread {
 		connection = new Socket(InetAddress.getByName(host), port);
 	}
 
-	public void sendMessage(String msg) {
-		String message = sessionID + "#" + msg;
-		Message<String, Object> m = new Message<String, Object>(message);
+	public void sendMessage(String command, String[] params) {
+		Message m = new Message(command, params);
 		try {
 			output.writeObject(m);
 			output.flush();
@@ -83,9 +84,8 @@ public class Client extends Thread {
 		}
 	}
 
-	public void sendMessage(String msg, Object object) {
-		String message = msg + "#" + sessionID;
-		Message<String, Object> m = new Message<String, Object>(message, object);
+	public void sendMessage(String command, String[] params, Object object) {
+		Message m = new Message(command, params, object);
 		try {
 			output.writeObject(m);
 			output.flush();
@@ -95,6 +95,8 @@ public class Client extends Thread {
 	}
 
 	private void cleanUp() {
+		sendMessage("L103", null); // ADD PARAMS?
+		System.out.println("Closing connection.");
 		try {
 			output.close();
 			input.close();

@@ -1,7 +1,5 @@
 package server;
 
-import java.util.concurrent.SynchronousQueue;
-
 import client.UserInfo;
 import utility.Message;
 
@@ -10,50 +8,60 @@ public class Slave extends Thread {
 	private Connection master;
 	private String username, password;
 	private UserInfo userinformation;
+	private String[] params;
 	
 	public Slave(Connection master) {
 		this.master = master;
 	}
 	
-	public void decode(Message<String, Object> message) {
-		String msgSplit[] = message.getString().split("#");
-		switch (msgSplit[1]) {
+	private void setParams(int length, String... p) {
+		params = new String[length];
+		for(int i = 0; i < length; i++) {
+			params[i] = p[i];
+		}
+	}
+	
+	public void decode(Message message) {
+		switch (message.getCommand()) {
 		case "L100": // Login FORMAT: "SESSIONID#USERNAME#USERINFORMATION"
-			username = msgSplit[2];
-			password = msgSplit[3];
+			username = message.getParams()[0];
+			password = message.getParams()[1];
 			if(Server.db.getRegisteredUsers().containsKey(username)) {
 				userinformation = (UserInfo) message.getObject();
 				if(Server.db.getRegisteredUsers().get(username).getPassword().equals(password)) {
 					master.setLoggedIn(true);
-					master.sendMessage("L100", userinformation);
+					master.sendMessage("L100", null,userinformation);
 				} else {
-					master.sendMessage("L400#Wrong password.");
+					setParams(1, "Wrong Password");
+					master.sendMessage("L400", params);
 				}
 			} else {
-				master.sendMessage("L400#Username doesn't exist.");
+				setParams(1, "Username doesn't exist.");
+				master.sendMessage("L400", params);
 			}
 			break;
 		case "L101": // Create User FORMAT: "SESSIONID#L101#USERNAME#USERINFORMATION"
 			// Notify client if username already exists in database.
-			System.out.println("HELLO WE RECEIVED STUFF");
 			userinformation = (UserInfo) message.getObject(); // Test if conversion is good.
 			username = userinformation.getUsername();
 			if(!Server.db.getRegisteredUsers().containsKey(username)) {
 				Server.db.registerNewUser(username, userinformation);
 				Server.setServerStatus("User " + username + " added to database.");
-				master.sendMessage("L101");
+				master.sendMessage("L101", null);
 			} else { // Username taken
-				master.sendMessage("L401#Username already exists");
+				setParams(1, "Username already exists.");
+				master.sendMessage("L401", params);
 			}
 			break;
 		case "L102": // Change Password FORMAT: "SESSIONID#L102#USERNAME#PASSWORD#NEWPASSWORD"
 			if(master.isLoggedIn()) {
-				username = msgSplit[2];
-				password = msgSplit[3];	
+				username = message.getParams()[0];
+				password = message.getParams()[1];	
 				if(Server.db.getRegisteredUsers().get(username).getPassword().equals(password)) {
-					Server.db.getRegisteredUsers().get(username).setPassword(msgSplit[4]);
+					Server.db.getRegisteredUsers().get(username).setPassword(message.getParams()[2]);
 				} else {
-					master.sendMessage("L400#Wrong Password");
+					setParams(1, "Wrong Password");
+					master.sendMessage("L400", params);
 				}
 			} 
 			break;

@@ -2,29 +2,47 @@ package utility;
 
 import java.io.Serializable;
 
-public class Message<X, Y> implements Serializable {
+public class Message implements Serializable {
 
 	private static final long serialVersionUID = -2531116161088241327L;
-
-	private final X string;
-	private final Y object;
 	
-	public Message(X string) {
-		this.string = string;
-		object = null;
+	private final String COMMAND;
+	private final String[] PARAMS;
+	private final Object OBJECT;
+	
+	public Message(String COMMAND, String[] PARAMS) {
+		this.COMMAND = COMMAND;
+		this.PARAMS = PARAMS;
+		this.OBJECT = null;
 	}
 	
-	public Message(X string, Y object) {
-		this.string = string;
-		this.object = object;
+	public Message(String COMMAND, String[] PARAMS, Object OBJECT) {
+		this.COMMAND = COMMAND;
+		this.PARAMS = PARAMS;
+		this.OBJECT = OBJECT;
+	}
+	
+	@Override
+	public String toString() {
+		String r = COMMAND;
+		if(PARAMS != null) {
+			for(int i = 0; i < PARAMS.length; i++) {
+				r += "#" + PARAMS[i];
+			}
+		}
+		return r;
 	}
 
-	public X getString() {
-		return string;
+	public String getCommand() {
+		return COMMAND;
 	}
 
-	public Y getObject() {
-		return object;
+	public String[] getParams() {
+		return PARAMS;
+	}
+
+	public Object getObject() {
+		return OBJECT;
 	}
 	
 }

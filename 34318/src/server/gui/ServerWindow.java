@@ -21,14 +21,13 @@ public class ServerWindow extends JFrame {
 	
 	
 	public ServerWindow(String title, int w, int h) {
-		
 		configureMainWindow(title, w, h);
 		addContentToMainWindow();
 		pack();
 		setLocationRelativeTo(null);
 		startServer();
 	}
-	
+
 	private void startServer() {
 		server = new Server(1234);
 		server.start();
