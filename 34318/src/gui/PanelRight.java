@@ -46,6 +46,7 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	}
 	
 	private void setComponents(){
+
 		ChatBottom = new JPanel(new BorderLayout());
 		ChatBottom.setBackground(Color.white);
 		
@@ -73,6 +74,7 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 		JTText.setPreferredSize(GeneralProperties.panelRightBottomSize);
 		//JTText.setLineWrap(true);
 		JTText.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"doNothing");
+		JTText.setFont(new Font(("DejaVu Sans"), Font.PLAIN,14));
 		scrollPane = new JScrollPane(JTText);
 	}
 	
@@ -87,7 +89,6 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	}
 	
 	private void sendText(String message){
-
 		JTText.setText(null);
 		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
 		ChatPanel.chatTabs.get(selectedTab).appendToTextArea(id + ":   " +message);	

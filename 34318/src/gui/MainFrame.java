@@ -13,6 +13,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import client.Client;
+
 
 public class MainFrame extends JFrame implements GeneralProperties {
 
@@ -21,8 +23,10 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	public JPanel JPLeft, JPRight;
 	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock,IAddFriend, ISendMessage;
 	public static ChatPanel chatPanel;
+	private Client client;
 	
-	public MainFrame(){
+	public MainFrame(Client client){
+		this.client = client;
 		DLogin = new DialogLogin(this);
 		DLogin.setAlwaysOnTop(true);
 	    DLogin.setVisible(true);
