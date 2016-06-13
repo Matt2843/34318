@@ -11,7 +11,7 @@ import javax.swing.JTextArea;
 
 import server.Server;
 
-public class MainWindow extends JFrame {
+public class ServerWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel contentPane;
@@ -20,7 +20,7 @@ public class MainWindow extends JFrame {
 	private Server server;
 	
 	
-	public MainWindow(String title, int w, int h) {
+	public ServerWindow(String title, int w, int h) {
 		
 		configureMainWindow(title, w, h);
 		addContentToMainWindow();
@@ -65,7 +65,7 @@ public class MainWindow extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new MainWindow("Server", 500, 500);
+		new ServerWindow("Server", 500, 500);
 	}
 
 }

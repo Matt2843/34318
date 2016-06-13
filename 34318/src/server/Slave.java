@@ -1,5 +1,7 @@
 package server;
 
+import java.util.concurrent.SynchronousQueue;
+
 import client.UserInfo;
 import utility.Message;
 
@@ -33,10 +35,12 @@ public class Slave extends Thread {
 			break;
 		case "L101": // Create User FORMAT: "SESSIONID#L101#USERNAME#USERINFORMATION"
 			// Notify client if username already exists in database.
-			username = msgSplit[2];
+			System.out.println("HELLO WE RECEIVED STUFF");
 			userinformation = (UserInfo) message.getObject(); // Test if conversion is good.
+			username = userinformation.getUsername();
 			if(!Server.db.getRegisteredUsers().containsKey(username)) {
 				Server.db.registerNewUser(username, userinformation);
+				Server.setServerStatus("User " + username + " added to database.");
 				master.sendMessage("L101");
 			} else { // Username taken
 				master.sendMessage("L401#Username already exists");

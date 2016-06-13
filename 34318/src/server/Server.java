@@ -5,10 +5,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 
-import server.gui.MainWindow;
+import server.gui.ServerWindow;
 
 public class Server extends Thread {
-	public String serverStatus = null;
+	private static String serverStatus = null;
 
 	public static Database db = new Database();
 	
@@ -78,10 +78,10 @@ public class Server extends Thread {
 		}
 	}
 	
-	private void setServerStatus(String status) {
+	public static void setServerStatus(String status) {
 		String timestamp = "[" + new Date().toString().substring(11, 19) + "] ";
 		serverStatus = timestamp + status;
-		MainWindow.serverLog.append(serverStatus + "\n");
+		ServerWindow.serverLog.append(serverStatus + "\n");
 	}
 
 	public boolean isRunning() {
