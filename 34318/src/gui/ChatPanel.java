@@ -61,7 +61,6 @@ public class ChatPanel extends JTabbedPane {
 			setSelectedIndex(getTabCount()-1);
 		}
 		else{
-			System.out.println(index);
 			setSelectedIndex(index);
 		}
 		
