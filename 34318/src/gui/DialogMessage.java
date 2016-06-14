@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -15,7 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class DialogMessage extends JDialog implements MouseListener{
+public class DialogMessage extends JDialog implements MouseListener, KeyListener{
 	
 	private static final long serialVersionUID = 1L;
 	private GridBagConstraints c = new GridBagConstraints();
@@ -31,10 +33,7 @@ public class DialogMessage extends JDialog implements MouseListener{
 		addC(JLMessage,0,0,1);
 		c.ipady = 0;
 		
-		if (message == "User already exists"){
-			addC(JBTryAgain,0,1,1);
-		}
-		if (message == "Passwords doesn't match"){
+		if (message == "User already exists" || message == "Creation Failed" || message == "Passwords doesn't match"){
 			addC(JBTryAgain,0,1,1);
 		}
 		else{
@@ -120,6 +119,26 @@ public class DialogMessage extends JDialog implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER){
+			this.setVisible(false);
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

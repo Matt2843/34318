@@ -31,7 +31,6 @@ public class StallFrame extends JFrame {
 	}
 
 	public void stall(ArrayList<String> args) {
-		MainFrame.client.setStatus("");
 		this.setVisible(true);
 		parent.setEnabled(false);
 		new Thread(new Runnable() {

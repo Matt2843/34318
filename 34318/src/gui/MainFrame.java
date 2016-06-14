@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -38,7 +39,6 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    DLogin.setVisible(true);
 	    setDefaultProperties();
 	    createImageIcons();
-	    makeLoadingJFrame();
 	    chatPanel = new ChatPanel();
 	    JPLeft = new PanelLeft();
 	    JPRight = new PanelRight();
@@ -88,38 +88,9 @@ public class MainFrame extends JFrame implements GeneralProperties {
         return result;
     }
 	
-	public void stall(ArrayList<String> okayFlags){
-		StallFrame stall = new StallFrame(DLogin);
+	public void stall(ArrayList<String> okayFlags, Component parent){
+		StallFrame stall = new StallFrame(parent);
 		stall.stall(okayFlags);
-		
-//		int countdown = 200;
-//		loading.setVisible(true);
-////		while(!okayFlags.contains(client.getStatus())) {
-////		    try {
-////		        Thread.sleep(50);
-////		        countdown -= 1;
-////		        if(countdown == 0) {
-////		            return false;              
-////		        }
-////		    } catch (InterruptedException e) {
-////		        e.printStackTrace();
-////		    }
-////		}
-//		return true;
-	}
-	
-
-	
-	public void makeLoadingJFrame(){
-	    pleaseWait = new JLabel(new ImageIcon("pictures/wait.gif"));
-	    pleaseWait.setVisible(true);
-	    loading = new JDialog();
-	    loading.setSize(50,50);
-	    loading.setUndecorated(true);
-	    loading.add(pleaseWait);
-	    loading.validate();
-	    loading.setAlwaysOnTop(true);
-	    loading.setLocationRelativeTo(null);
 	}
 	
 	public static void main(String[] args) {

@@ -221,23 +221,17 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			ArrayList<String> parameters = new ArrayList<String>();
 			parameters.add("L401");
 			parameters.add("L101");
-			parent.stall(parameters);
 			MainFrame.client.sendMessage("L101", null, info);
-			
-//			MainFrame.loading.setVisible(true);
-//			if (MainFrame.stall(parameters)){
-//				if(MainFrame.client.getStatus().equals("L101")){
-//					DMessage = new DialogMessage("Creation Successfull");
-//					this.setVisible(false);
-//					parent.mainFrameSetVisible();
-//					MainFrame.loading.setVisible(false);
-//				}
-//				else{
-//					DMessage = new DialogMessage("Creattion Failed");
-//					DMessage.setAlwaysOnTop(true);
-//					MainFrame.loading.setVisible(false);
-//				}
-//			}
+			parent.stall(parameters,this);
+			if(MainFrame.client.getStatus().equals("L101")){
+				DMessage = new DialogMessage("Creation Successfull");
+				this.setVisible(false);
+				parent.mainFrameSetVisible();
+			}
+			else{
+				DMessage = new DialogMessage("Creation Failed");
+				DMessage.setAlwaysOnTop(true);
+			}
 			
 		}
 		else if (false){
@@ -256,21 +250,16 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		ArrayList<String> parameters = new ArrayList<String>();
 		parameters.add("L400");
 		parameters.add("L100");
-		parent.stall(parameters);
 		MainFrame.client.sendMessage("L100",loginInfo);
-//		MainFrame.loading.setVisible(true);
-//		MainFrame.loading.setAlwaysOnTop(true);
-//		if (MainFrame.stall(parameters)){
-//			if(MainFrame.client.getStatus().equals("L100")){
-//				this.setVisible(false);
-//				parent.mainFrameSetVisible();
-//			}
-//			else{
-//				DMessage = new DialogMessage("Wrong login");
-//				DMessage.setAlwaysOnTop(true);
-//				MainFrame.loading.setVisible(false);
-//			}
-//		}
+		parent.stall(parameters,this);
+		if(MainFrame.client.getStatus().equals("L100")){
+			this.setVisible(false);
+			parent.mainFrameSetVisible();
+		}
+		else{
+			DMessage = new DialogMessage("Wrong login");
+			DMessage.setAlwaysOnTop(true);
+		}
 	}
 	
 	@Override
@@ -280,9 +269,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		}
 		if (e.getSource() == JLForgotPassword){
 			System.exit(0);
-		}
-		if (e.getSource() == Password){
-			login();
 		}
 		if (e.getSource() == JBLogin){
 			login();
@@ -321,7 +307,9 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		if (e.getSource() == RepeatPassword){
 			createNewUser();
 		}
-		
+		if (e.getSource() == Password){
+			login();
+		}
 	}
 
 }
