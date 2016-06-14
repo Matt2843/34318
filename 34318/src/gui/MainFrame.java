@@ -7,6 +7,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -83,7 +84,23 @@ public class MainFrame extends JFrame implements GeneralProperties {
         return result;
     }
 	
+	public static boolean stall(ArrayList<String> okayFlags){
+		int countdown = 200;
+		while(!okayFlags.contains(client.getStatus())) {
+		    try {
+		        Thread.sleep(50);
+		        countdown -= 1;
+		        if(countdown == 0) {
+		            return false;              
+		        }
+		    } catch (InterruptedException e) {
+		        e.printStackTrace();
+		    }
+		}
+		return true;
+	}
+	
 	public static void main(String[] args) {
-		new MainFrame(new Client("localhost", 1234));
+		new MainFrame(new Client("192.168.1.52", 1234));
 	}
 }

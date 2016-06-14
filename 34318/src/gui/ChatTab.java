@@ -78,6 +78,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	public String getName(){
 		return tabName;
 	}
+	
 
 	private void setUsersInChat() {
 		makeTopPanel();	

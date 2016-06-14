@@ -11,8 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -190,11 +190,11 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	}
 
 	@SuppressWarnings("deprecation")
-	private String getLoginInfo(){
+	private String[] getLoginInfo(){
     	username = JTUsername.getText();
     	password = Password.getText();
-    	info = "L100#" + username + "#" + password;
-    	return info;
+    	String[] returnInfo = {username, password};
+    	return returnInfo;
     }
 	
 	public void removePanel() {
@@ -217,12 +217,23 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			String newUsername = JTNewUsername.getText();
 			String newPassword = NewPassword.getText();
 			UserInfo info = new UserInfo(newUsername, newPassword);
-			MainFrame.client.sendMessage("L101#", info);
-			if (true){
-				DMessage = new DialogMessage("Creation Successfull");
-				this.setVisible(false);
-	        	parent.mainFrameSetVisible();
+			String[] userInfo = {newUsername, newPassword};
+			MainFrame.client.sendMessage("L101",null, info);
+			ArrayList<String> parameters = new ArrayList<String>();
+			parameters.add("L401");
+			parameters.add("L101");
+			if (MainFrame.stall(parameters)){
+				if(MainFrame.client.getStatus().equals("L101")){
+					DMessage = new DialogMessage("Creation Successfull");
+					this.setVisible(false);
+					parent.mainFrameSetVisible();
+				}
+				else{
+					DMessage = new DialogMessage("Creattion Failed");
+					DMessage.setAlwaysOnTop(true);
+				}
 			}
+			
 		}
 		else if (false){
 			DMessage = new DialogMessage("User already exists");
@@ -236,14 +247,20 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 }
 	
 	public void login(){
-		getLoginInfo();
-		if (true){
-			this.setVisible(false);
-			parent.mainFrameSetVisible();
-		}
-		else{
-			DMessage = new DialogMessage("Wrong login");
-			DMessage.setAlwaysOnTop(true);
+		String loginInfo[] = getLoginInfo();
+		MainFrame.client.sendMessage("L100",loginInfo);
+		ArrayList<String> parameters = new ArrayList<String>();
+		parameters.add("L400");
+		parameters.add("L100");
+		if (MainFrame.stall(parameters)){
+			if(MainFrame.client.getStatus().equals("L100")){
+				this.setVisible(false);
+				parent.mainFrameSetVisible();
+			}
+			else{
+				DMessage = new DialogMessage("Wrong login");
+				DMessage.setAlwaysOnTop(true);
+			}
 		}
 	}
 	
@@ -272,25 +289,18 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
