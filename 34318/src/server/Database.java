@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import chat.ChatRoom;
@@ -13,7 +14,7 @@ import client.UserInfo;
 
 @SuppressWarnings("unchecked")
 public class Database {
-	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>(); // K: SessionID 	V: Connection
+	private ArrayList<Connection> activeUsers = new ArrayList<Connection>();	
 	private HashMap<String, Object> storedFiles = null;									 // K: FileID		V: File
 	private HashMap<String, UserInfo> registeredUsers = null;								 // CHANGE THIS
 	private HashMap<String, ChatRoom> publicRooms = null;								 // K: ChatID		V: ChatRoom
@@ -36,8 +37,10 @@ public class Database {
 		registeredUsers.put(username, userinformation);
 	}
 	
-	public void addNewConnection(String sessionID, Connection connection) {
-		activeUsers.put(sessionID, connection);
+	public void addNewConnection(Connection connection) {
+		if(!activeUsers.contains(connection)) {
+			activeUsers.add(connection);
+		}
 	}
 
 	public void updateAndSaveDatabase() {
@@ -69,10 +72,6 @@ public class Database {
 		oos.close();
 	}
 
-	public HashMap<String, Connection> getActiveUsers() {
-		return activeUsers;
-	}
-
 	public HashMap<String, UserInfo> getRegisteredUsers() {
 		return registeredUsers;
 	}
@@ -83,6 +82,10 @@ public class Database {
 
 	public HashMap<String, Object> getStoredFiles() {
 		return storedFiles;
+	}
+
+	public ArrayList<Connection> getActiveUsers() {
+		return activeUsers;
 	}
 
 }

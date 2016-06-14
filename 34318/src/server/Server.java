@@ -51,7 +51,8 @@ public class Server extends Thread {
 			connection = server.accept();
 			Connection newClient = new Connection(connection);
 			newClient.start();
-			
+			db.addNewConnection(newClient);
+			setServerStatus("New client " + newClient.toString() + " connected.");
 			//db.addNewConnection(sessionID, newClient);
 			//setServerStatus("New client " + sessionID + " connected." + db.getActiveUsers().keySet());
 			try {

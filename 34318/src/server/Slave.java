@@ -1,5 +1,7 @@
 package server;
 
+import java.util.ArrayList;
+
 import client.UserInfo;
 import utility.Message;
 
@@ -75,6 +77,11 @@ public class Slave extends Thread {
 		case "C101": // Start Private Group
 			break;
 		case "C102": // Start Public Group
+			ArrayList<String> usersInGroup = new ArrayList<String>();
+			usersInGroup.add("Lise");
+			usersInGroup.add("Alsted");
+			usersInGroup.add("Ole");
+			master.sendMessage("ABC1000", null, usersInGroup);
 			break;
 		case "S100": // Broadcast Message
 			break;
