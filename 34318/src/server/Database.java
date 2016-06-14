@@ -57,6 +57,14 @@ public class Database {
 		} else return false;
 	}
 	
+	public ArrayList<ChatRoom> generatePublicChatRoomsData() {
+		ArrayList<ChatRoom> result = new ArrayList<ChatRoom>();
+		for(ChatRoom value : publicRooms.values()) {
+			result.add(value);
+		}
+		return result;
+	}
+	
 	public void updateAndSaveDatabase() {
 		if(!new File("data").exists()) {
 			File dir = new File("data");
