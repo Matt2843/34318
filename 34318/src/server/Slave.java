@@ -111,8 +111,7 @@ public class Slave extends Thread {
 		case "F101": // Download File
 			break;
 		case "D100": // Get PublicRooms data
-			
-			master.sendMessage("D100", null);
+			master.sendMessage("D100", null, Server.db.generatePublicChatRoomsData());
 			break;
 		default:
 			break;

@@ -18,6 +18,7 @@ public abstract class AbstractPanelList extends JPanel{
 		this.setLayout(new BorderLayout());
 		setVariables();
 		addElements();
+		getListData();
 	}
 	
 	public abstract void setVariables();
