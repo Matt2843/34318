@@ -28,13 +28,12 @@ public class ChatPanel extends JTabbedPane {
 	}
 	
 	private void setComponents(){
-		for (int i = 0; i < Chats.length; i++){
-			addFirstTabs(Chats[i]);
-		}
+		
 	}
 	
 	private void addFirstTabs(String name){
 		ChatTab newTab = new ChatTab(this,name,getTabCount());
+		newTab.setChatID("Chatte");
 		addTab(null, newTab);
 		setTabComponentAt(getTabCount()-1, newTab.getTabContent());
 		chatTabs.add(newTab);
@@ -56,6 +55,7 @@ public class ChatPanel extends JTabbedPane {
 		if (makeTab){
 			ChatTab newTab = new ChatTab(this,name,getTabCount());
 			addTab(null, newTab);
+			
 			setTabComponentAt(getTabCount()-1, newTab.getTabContent());
 			chatTabs.add(newTab);
 			setSelectedIndex(getTabCount()-1);
@@ -67,4 +67,5 @@ public class ChatPanel extends JTabbedPane {
 		}
 		
 	}
+
 }

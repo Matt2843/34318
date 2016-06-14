@@ -2,8 +2,10 @@ package server;
 
 import java.util.ArrayList;
 
+import chat.ChatRoom;
 import client.UserInfo;
 import utility.Message;
+import utility.Utilities;
 
 public class Slave extends Thread {
 	
@@ -77,13 +79,14 @@ public class Slave extends Thread {
 		case "C101": // Start Private Group
 			break;
 		case "C102": // Start Public Group
-			ArrayList<String> usersInGroup = new ArrayList<String>();
-			usersInGroup.add("Lise");
-			usersInGroup.add("Alsted");
-			usersInGroup.add("Ole");
-			master.sendMessage("ABC1000", null, usersInGroup);
+			String chatID = Utilities.generateID(5);
+			if(!Server.db.getPublicRooms().containsKey(chatID)){
+				ChatRoom newChatRoom = new ChatRoom(message.getParams()[0]);
+				
+			}
 			break;
 		case "S100": // Broadcast Message
+			System.out.println(message.toString());
 			break;
 		case "S101": // Private Message
 			break;

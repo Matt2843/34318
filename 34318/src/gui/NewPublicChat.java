@@ -18,14 +18,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class newPublicChat extends JFrame implements ActionListener, MouseListener{
+import chat.ChatRoom;
+
+public class NewPublicChat extends JFrame implements ActionListener, MouseListener{
 	private JButton JBCreate;
 	private JTextField JTName;
 	private JLabel JLName;
 	private PanelLeft panelLeft;
 	private MainFrame mainFrame;
 	
-	public newPublicChat(PanelLeft panelLeft,MainFrame mainFrame){
+	public NewPublicChat(PanelLeft panelLeft,MainFrame mainFrame){
 		this.panelLeft = panelLeft;
 		this.mainFrame = mainFrame;
 		setDefaultProperties();
@@ -51,7 +53,7 @@ public class newPublicChat extends JFrame implements ActionListener, MouseListen
 	}
 
 	private void setDefaultProperties() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(GeneralProperties.addPublicChat);
 		this.setTitle("Add new public chat");
@@ -71,8 +73,9 @@ public class newPublicChat extends JFrame implements ActionListener, MouseListen
 				MainFrame.client.sendMessage("C102",namea);
 				mainFrame.stall(okayFlags,mainFrame);
 				if(MainFrame.client.getStatus().equals("ABC1000")){
-					MainFrame.chatPanel.addTab(JTName.getText());
-					panelLeft.publicChats.add(new UserInformation(name));
+					@SuppressWarnings("unchecked")
+					ArrayList<ChatRoom> chats = (ArrayList<ChatRoom>)MainFrame.client.getObject();
+					panelLeft.updatePublicChats(chats);
 					dispose();
 				}				
 			}

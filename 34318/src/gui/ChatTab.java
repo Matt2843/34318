@@ -1,4 +1,4 @@
-package gui;
+  package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +19,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	private ChatPanel parent;
 	private int tabIndex;
 	private String tabName;
+	private String chatID;
 	
 	// The chat window including tab headers.
 	private JLabel icon,name;
@@ -79,7 +80,6 @@ public class ChatTab extends JPanel implements MouseListener {
 		return tabName;
 	}
 	
-
 	private void setUsersInChat() {
 		makeTopPanel();	
 		model = new DefaultListModel<UserInformation>();
@@ -134,8 +134,7 @@ public class ChatTab extends JPanel implements MouseListener {
 		}
 		if (e.getClickCount() == 2) {
 			parent.addTab(usersInChat.getSelectedValue().toString());
-		  }
-		
+		}
 		
 	}
 
@@ -168,6 +167,14 @@ public class ChatTab extends JPanel implements MouseListener {
 
 	public JTextPane getChatArea() {
 		return chatArea;
+	}
+
+	public String getChatID() {
+		return chatID;
+	}
+
+	public void setChatID(String chatID) {
+		this.chatID = chatID;
 	}
 	
 	

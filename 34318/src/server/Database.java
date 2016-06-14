@@ -43,6 +43,10 @@ public class Database {
 		}
 	}
 
+	public void addNewPublicChat(String name, String chatID){
+		
+	}
+	
 	public void updateAndSaveDatabase() {
 		if(!new File("data").exists()) {
 			File dir = new File("data");

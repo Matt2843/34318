@@ -11,14 +11,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import chat.ChatRoom;
+
 public class PanelLeft extends JPanel implements MouseListener{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel JPPublic, JPFriends, addChat;
+	private JPanel  JPPublic,JPFriends, addChat;
 	private JTabbedPane tabbedPanel;
-	public ArrayList<UserInformation> publicChats = new ArrayList<UserInformation>();
+	public static ArrayList<UserInformation> publicChats = new ArrayList<UserInformation>();
 	private ArrayList<UserInformation> privateChats = new ArrayList<UserInformation>();
 	private MainFrame parent;
+	private PanelLeftPublicChats PLPublicChats = new PanelLeftPublicChats();
 	
 	public PanelLeft(MainFrame parent){
 		this.parent = parent;
@@ -50,7 +53,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 
 	private void makePublicChat(){
 		JPPublic = new JPanel(new BorderLayout());
-		JPPublic.add(new LeftUsersPanel(publicChats), BorderLayout.CENTER);
+		JPPublic.add(PLPublicChats, BorderLayout.CENTER);
 		addChat = new JPanel(new BorderLayout());
 		addChat.add(new JLabel(MainFrame.IAdd),BorderLayout.WEST);
 		addChat.add(new JLabel(" Add public chat"),BorderLayout.CENTER);
@@ -60,11 +63,17 @@ public class PanelLeft extends JPanel implements MouseListener{
 		addChat.setPreferredSize(GeneralProperties.panelLeftaddChat);
 		JPPublic.add(addChat,BorderLayout.SOUTH);
 	}
+	
+	public void updatePublicChats(ArrayList<ChatRoom> publicChats){
+		PLPublicChats.setList(publicChats);
+	}
+	
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == addChat){
 			System.out.println("add new chat here");
-			new newPublicChat(this,parent);
+			new NewPublicChat(this,parent);
 		}
 		
 	}

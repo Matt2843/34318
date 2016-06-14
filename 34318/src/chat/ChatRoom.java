@@ -16,7 +16,9 @@ public class ChatRoom implements Serializable {
 	private ArrayList<String> chatModeratiors = null;
 	private ArrayList<String> chatAdmins = null;
 	
-	
+	public ChatRoom(String chatName){
+		this.chatName = chatName;
+	}
 	public String getChatName() {
 		return chatName;
 	}
@@ -45,7 +47,10 @@ public class ChatRoom implements Serializable {
 		db.getPublicRooms().get(room);
 		return chatHistory;
 	}
-	
+	@Override
+	public String toString() {
+		return chatName;
+	}
 	
 
 }

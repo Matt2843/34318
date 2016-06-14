@@ -91,7 +91,8 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	private void sendText(String message){
 		JTText.setText(null);
 		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
-		ChatPanel.chatTabs.get(selectedTab).appendToTextArea(id + ":   " +message);	
+		String[] params = {((ChatTab) MainFrame.chatPanel.getSelectedComponent()).getChatID(), message};
+		MainFrame.client.sendMessage("S100", params);
 	}
 	
 	public void addSmiley(ImageIcon smiley){
