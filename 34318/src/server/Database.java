@@ -44,14 +44,16 @@ public class Database {
 	}
 
 	public boolean addNewPublicChat(String name, String chatID){
-		for(ChatRoom value : publicRooms.values()) {
-			if(value.getChatName().equals(name)) {
-				return false;
+		if(!publicRooms.containsKey(chatID)) {
+			for(ChatRoom value : publicRooms.values()) {
+				if(value.getChatName().equals(name)) {
+					return false;
+				}
 			}
-		}
-		ChatRoom newPublicRoom = new ChatRoom(name);
-		publicRooms.put(chatID, newPublicRoom);
-		return true;
+			ChatRoom newPublicRoom = new ChatRoom(name);
+			publicRooms.put(chatID, newPublicRoom);
+			return true;
+		} else return false;
 	}
 	
 	public void updateAndSaveDatabase() {
