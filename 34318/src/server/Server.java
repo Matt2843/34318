@@ -49,14 +49,14 @@ public class Server extends Thread {
 		while(running) {
 			setServerStatus("Waiting for someone to connect ...");
 			connection = server.accept();
-			String sessionID = SU.generateSessionID(5);
-			while(db.getActiveUsers().containsKey(sessionID)) {
-				sessionID = SU.generateSessionID(5);
-			}
-			Connection newClient = new Connection(connection, sessionID);
+//			String sessionID = SU.generateSessionID(5);
+//			while(db.getActiveUsers().containsKey(sessionID)) {
+//				sessionID = SU.generateSessionID(5);
+//			}
+			Connection newClient = new Connection(connection);
 			newClient.start();
-			db.addNewConnection(sessionID, newClient);
-			setServerStatus("New client " + sessionID + " connected." + db.getActiveUsers().keySet());
+			//db.addNewConnection(sessionID, newClient);
+			//setServerStatus("New client " + sessionID + " connected." + db.getActiveUsers().keySet());
 			try {
 				Thread.sleep(150);
 			} catch(InterruptedException e) {

@@ -19,14 +19,14 @@ public class Connection extends Thread {
 	private String clientIP = null;
 	private Socket client = null;
 	
-	private String sessionID = null;
+	//private String sessionID = null;
 	
 	private Slave slave = null;
 	
 	public static ArrayList<String> tasks = new ArrayList<String>();
 
-	public Connection(Socket connection, String sessionID) {
-		this.client = connection; this.sessionID = sessionID;
+	public Connection(Socket connection) {
+		this.client = connection; //this.sessionID = sessionID;
 		clientIP = client.getRemoteSocketAddress().toString();
 	}
 
@@ -94,8 +94,8 @@ public class Connection extends Thread {
 	
 	private void cleanUp() {
 		alive = false;
-		Server.db.getActiveUsers().remove(sessionID);
-		Server.setServerStatus("Connection " + sessionID + " timed out. DB: " + Server.db.getActiveUsers().keySet());
+		//Server.db.getActiveUsers().remove(sessionID);
+		//Server.setServerStatus("Connection " + sessionID + " timed out. DB: " + Server.db.getActiveUsers().keySet());
 		try {
 			input.close();
 			output.close();

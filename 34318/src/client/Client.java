@@ -17,7 +17,7 @@ public class Client extends Thread {
 
 	private Socket connection;
 	
-	private String sessionID = "-1";
+	//private String sessionID = "-1";
 	private String status = "";
 
 	public Client(String host, int port) {
@@ -32,7 +32,7 @@ public class Client extends Thread {
 			configureStreams();
 			whileConnected();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Lost connection to server for some reason, .. implement reestablish connection?");
 		}
 		super.run();
 	}
@@ -95,9 +95,9 @@ public class Client extends Thread {
 		}
 	}
 
-	public String getSessionID() {
-		return sessionID;
-	}
+//	public String getSessionID() {
+//		return sessionID;
+//	}
 
 	public String getStatus() {
 		return status;
