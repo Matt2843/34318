@@ -18,7 +18,8 @@ public class Client extends Thread {
 	private Socket connection;
 	
 	private String status = "";
-
+	private Object object = null;
+	
 	public Client(String host, int port) {
 		this.host = host;
 		this.port = port;
@@ -43,6 +44,7 @@ public class Client extends Thread {
 				message = (Message) input.readObject();
 				System.out.println("FROM SERVER: " + message.toString());
 				status = message.getCommand();
+				object = message.getObject();
 			} catch (ClassNotFoundException e) {
 				System.out.println("Couldn't cast message to the proper format");
 			}
@@ -98,6 +100,10 @@ public class Client extends Thread {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public Object getObject() {
+		return object;
 	}
 
 }

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,7 +22,12 @@ public class newPublicChat extends JFrame implements ActionListener, MouseListen
 	private JButton JBCreate;
 	private JTextField JTName;
 	private JLabel JLName;
-	public newPublicChat(){
+	private PanelLeft panelLeft;
+	private MainFrame mainFrame;
+	
+	public newPublicChat(PanelLeft panelLeft,MainFrame mainFrame){
+		this.panelLeft = panelLeft;
+		this.mainFrame = mainFrame;
 		setDefaultProperties();
 		makeComponents();
 		this.pack();
@@ -57,9 +63,19 @@ public class newPublicChat extends JFrame implements ActionListener, MouseListen
 	
 	private void makeNewChat(){
 		String name = JTName.getText();
+		String[] namea = {name};
+		ArrayList<String> okayFlags = new ArrayList<String>();
+		okayFlags.add("ABC1000");
 		if(!name.equals("")){
-			MainFrame.chatPanel.addTab(JTName.getText());
-			dispose();	
+			if (MainFrame.chatPanel.addTab(JTName.getText())){
+				MainFrame.client.sendMessage("C102",namea);
+				mainFrame.stall(okayFlags,mainFrame);
+				if(MainFrame.client.getStatus().equals("ABC1000")){
+					MainFrame.chatPanel.addTab(JTName.getText());
+					panelLeft.publicChats.add(new UserInformation(name));
+					dispose();
+				}				
+			}
 		}
 		else{
 			new DialogMessage("Enter new name");

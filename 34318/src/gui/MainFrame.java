@@ -40,7 +40,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    setDefaultProperties();
 	    createImageIcons();
 	    chatPanel = new ChatPanel();
-	    JPLeft = new PanelLeft();
+	    JPLeft = new PanelLeft(this);
 	    JPRight = new PanelRight();
 	    this.add(JPLeft,BorderLayout.WEST);
 	    this.add(JPRight,BorderLayout.CENTER);

@@ -44,7 +44,7 @@ public class ChatPanel extends JTabbedPane {
 		return tab.getName();
 	}
 	
-	public void addTab(String name){
+	public boolean addTab(String name){
 		boolean makeTab = true;
 		int index = getSelectedIndex();
 		for (int i = 0; i< chatTabs.size();i++){
@@ -59,9 +59,11 @@ public class ChatPanel extends JTabbedPane {
 			setTabComponentAt(getTabCount()-1, newTab.getTabContent());
 			chatTabs.add(newTab);
 			setSelectedIndex(getTabCount()-1);
+			return true;
 		}
 		else{
 			setSelectedIndex(index);
+			return false;
 		}
 		
 	}
