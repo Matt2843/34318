@@ -23,7 +23,7 @@ public class Slave extends Thread {
 	
 	public void decode(Message message) {
 		switch (message.getCommand()) {
-		case "L100": // Login FORMAT: "SESSIONID#USERNAME#USERINFORMATION"
+		case "L100": // Login 
 			username = message.getParams()[0];
 			password = message.getParams()[1];
 			if(Server.db.getRegisteredUsers().containsKey(username)) {
@@ -40,7 +40,7 @@ public class Slave extends Thread {
 				master.sendMessage("L400", params);
 			}
 			break;
-		case "L101": // Create User FORMAT: "SESSIONID#L101#USERNAME#USERINFORMATION"
+		case "L101": // Create User
 			// Notify client if username already exists in database.
 			userinformation = (UserInfo) message.getObject(); // Test if conversion is good.
 			username = userinformation.getUsername();
@@ -53,7 +53,7 @@ public class Slave extends Thread {
 				master.sendMessage("L401", params);
 			}
 			break;
-		case "L102": // Change Password FORMAT: "SESSIONID#L102#USERNAME#PASSWORD#NEWPASSWORD"
+		case "L102": // Change Password
 			if(master.isLoggedIn()) {
 				username = message.getParams()[0];
 				password = message.getParams()[1];	
@@ -68,7 +68,6 @@ public class Slave extends Thread {
 		case "L103": // Logout
 			if(master.isLoggedIn()) {
 				master.setLoggedIn(false);
-				
 			}
 			break;
 		case "C100": // Invite Private Chat

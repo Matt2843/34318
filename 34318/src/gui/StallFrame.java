@@ -14,16 +14,15 @@ public class StallFrame extends JFrame {
 	private Component parent;
 	
 	public StallFrame(Component parent) {
-		this.parent = parent;
-		
+		this.parent = parent;	
 		configureFrameProperties();
-		
 	}
 	
 	private void configureFrameProperties() {
 		setLayout(new BorderLayout());
 		setUndecorated(true);
 		JLabel stuff = new JLabel(new ImageIcon("pictures/wait.gif"));
+		stuff.setOpaque(false);
 		add(stuff, BorderLayout.CENTER);
 		setVisible(false);
 		setAlwaysOnTop(true);
@@ -39,13 +38,10 @@ public class StallFrame extends JFrame {
 			public void run() {
 				int countdown = 10;
 				while (!args.contains(MainFrame.client.getStatus())) {
-					System.out.println(MainFrame.client.getStatus());
 					try {
-						System.out.println("Countdown: " + countdown);
 						Thread.sleep(1000);
 						countdown -= 1;
 						if (countdown == 0) {
-							System.out.println("Reached 0");
 							dispose();
 							break;
 						}
@@ -55,7 +51,6 @@ public class StallFrame extends JFrame {
 					}
 				}
 				if (countdown > 0) {
-					System.out.println("Something happened before we reached 0.");
 					dispose();
 				}
 			}
