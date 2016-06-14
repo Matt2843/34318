@@ -31,7 +31,8 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	public static JDialog loading;
 	
 	public MainFrame(Client client){
-		this.client = client;
+		MainFrame.client = client;
+		client.start();
 		DLogin = new DialogLogin(this);
 		DLogin.setAlwaysOnTop(true);
 	    DLogin.setVisible(true);
@@ -45,7 +46,6 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    this.add(JPRight,BorderLayout.CENTER);
 	    this.validate();
 	}
-	
 	
 	private void setDefaultProperties(){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,21 +88,24 @@ public class MainFrame extends JFrame implements GeneralProperties {
         return result;
     }
 	
-	public static boolean stall(ArrayList<String> okayFlags){
-		int countdown = 200;
-		loading.setVisible(true);
-//		while(!okayFlags.contains(client.getStatus())) {
-//		    try {
-//		        Thread.sleep(50);
-//		        countdown -= 1;
-//		        if(countdown == 0) {
-//		            return false;              
-//		        }
-//		    } catch (InterruptedException e) {
-//		        e.printStackTrace();
-//		    }
-//		}
-		return true;
+	public void stall(ArrayList<String> okayFlags){
+		StallFrame stall = new StallFrame(DLogin);
+		stall.stall(okayFlags);
+		
+//		int countdown = 200;
+//		loading.setVisible(true);
+////		while(!okayFlags.contains(client.getStatus())) {
+////		    try {
+////		        Thread.sleep(50);
+////		        countdown -= 1;
+////		        if(countdown == 0) {
+////		            return false;              
+////		        }
+////		    } catch (InterruptedException e) {
+////		        e.printStackTrace();
+////		    }
+////		}
+//		return true;
 	}
 	
 

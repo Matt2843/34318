@@ -98,6 +98,10 @@ public class Client extends Thread {
 //	public String getSessionID() {
 //		return sessionID;
 //	}
+	
+	public void setStatus(String s) {
+		status = s;
+	}
 
 	public String getStatus() {
 		return status;

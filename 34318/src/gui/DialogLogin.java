@@ -218,24 +218,26 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			String newPassword = NewPassword.getText();
 			UserInfo info = new UserInfo(newUsername, newPassword);
 			String[] userInfo = {newUsername, newPassword};
-			MainFrame.client.sendMessage("L101",null, info);
 			ArrayList<String> parameters = new ArrayList<String>();
 			parameters.add("L401");
 			parameters.add("L101");
-			MainFrame.loading.setVisible(true);
-			if (MainFrame.stall(parameters)){
-				if(MainFrame.client.getStatus().equals("L101")){
-					DMessage = new DialogMessage("Creation Successfull");
-					this.setVisible(false);
-					parent.mainFrameSetVisible();
-					MainFrame.loading.setVisible(false);
-				}
-				else{
-					DMessage = new DialogMessage("Creattion Failed");
-					DMessage.setAlwaysOnTop(true);
-					MainFrame.loading.setVisible(false);
-				}
-			}
+			parent.stall(parameters);
+			MainFrame.client.sendMessage("L101", null, info);
+			
+//			MainFrame.loading.setVisible(true);
+//			if (MainFrame.stall(parameters)){
+//				if(MainFrame.client.getStatus().equals("L101")){
+//					DMessage = new DialogMessage("Creation Successfull");
+//					this.setVisible(false);
+//					parent.mainFrameSetVisible();
+//					MainFrame.loading.setVisible(false);
+//				}
+//				else{
+//					DMessage = new DialogMessage("Creattion Failed");
+//					DMessage.setAlwaysOnTop(true);
+//					MainFrame.loading.setVisible(false);
+//				}
+//			}
 			
 		}
 		else if (false){
@@ -251,23 +253,24 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	
 	public void login(){
 		String loginInfo[] = getLoginInfo();
-		MainFrame.client.sendMessage("L100",loginInfo);
 		ArrayList<String> parameters = new ArrayList<String>();
 		parameters.add("L400");
 		parameters.add("L100");
-		MainFrame.loading.setVisible(true);
-		MainFrame.loading.setAlwaysOnTop(true);
-		if (MainFrame.stall(parameters)){
-			if(MainFrame.client.getStatus().equals("L100")){
-				this.setVisible(false);
-				parent.mainFrameSetVisible();
-			}
-			else{
-				DMessage = new DialogMessage("Wrong login");
-				DMessage.setAlwaysOnTop(true);
-				MainFrame.loading.setVisible(false);
-			}
-		}
+		parent.stall(parameters);
+		MainFrame.client.sendMessage("L100",loginInfo);
+//		MainFrame.loading.setVisible(true);
+//		MainFrame.loading.setAlwaysOnTop(true);
+//		if (MainFrame.stall(parameters)){
+//			if(MainFrame.client.getStatus().equals("L100")){
+//				this.setVisible(false);
+//				parent.mainFrameSetVisible();
+//			}
+//			else{
+//				DMessage = new DialogMessage("Wrong login");
+//				DMessage.setAlwaysOnTop(true);
+//				MainFrame.loading.setVisible(false);
+//			}
+//		}
 	}
 	
 	@Override
