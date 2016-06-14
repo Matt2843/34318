@@ -8,10 +8,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Handler;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,11 +28,10 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	public static ChatPanel chatPanel;
 	public static Client client;
 	public static JLabel pleaseWait;
-	public static JFrame loading;
+	public static JDialog loading;
 	
 	public MainFrame(Client client){
 		this.client = client;
-		client.start();
 		DLogin = new DialogLogin(this);
 		DLogin.setAlwaysOnTop(true);
 	    DLogin.setVisible(true);
@@ -92,17 +91,17 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	public static boolean stall(ArrayList<String> okayFlags){
 		int countdown = 200;
 		loading.setVisible(true);
-		while(!okayFlags.contains(client.getStatus())) {
-		    try {
-		        Thread.sleep(50);
-		        countdown -= 1;
-		        if(countdown == 0) {
-		            return false;              
-		        }
-		    } catch (InterruptedException e) {
-		        e.printStackTrace();
-		    }
-		}
+//		while(!okayFlags.contains(client.getStatus())) {
+//		    try {
+//		        Thread.sleep(50);
+//		        countdown -= 1;
+//		        if(countdown == 0) {
+//		            return false;              
+//		        }
+//		    } catch (InterruptedException e) {
+//		        e.printStackTrace();
+//		    }
+//		}
 		return true;
 	}
 	
@@ -111,7 +110,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	public void makeLoadingJFrame(){
 	    pleaseWait = new JLabel(new ImageIcon("pictures/wait.gif"));
 	    pleaseWait.setVisible(true);
-	    loading = new JFrame();
+	    loading = new JDialog();
 	    loading.setSize(50,50);
 	    loading.setUndecorated(true);
 	    loading.add(pleaseWait);

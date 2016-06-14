@@ -250,17 +250,17 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 }
 	
 	public void login(){
-		MainFrame.loading.setVisible(true);
 		String loginInfo[] = getLoginInfo();
 		MainFrame.client.sendMessage("L100",loginInfo);
 		ArrayList<String> parameters = new ArrayList<String>();
 		parameters.add("L400");
 		parameters.add("L100");
+		MainFrame.loading.setVisible(true);
+		MainFrame.loading.setAlwaysOnTop(true);
 		if (MainFrame.stall(parameters)){
 			if(MainFrame.client.getStatus().equals("L100")){
 				this.setVisible(false);
 				parent.mainFrameSetVisible();
-				MainFrame.loading.setVisible(false);   
 			}
 			else{
 				DMessage = new DialogMessage("Wrong login");
