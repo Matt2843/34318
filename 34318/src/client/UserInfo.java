@@ -16,11 +16,9 @@ public class UserInfo implements Serializable {
 	
 	public UserInfo() {
 	}
-	
 	public UserInfo(String username, String password) {
 		this.password = password; this.username = username;
 	}
-	
 	public ArrayList<String> getFriends() {
 		return friends;
 	}
@@ -45,10 +43,7 @@ public class UserInfo implements Serializable {
 	public ArrayList<String> getBlocked() {
 		return blocked;
 	}
-
 	public void blockUser(String user) {
 		blocked.add(user);
-	}
-
-	
+	}	
 }
