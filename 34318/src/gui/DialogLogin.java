@@ -222,15 +222,18 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			ArrayList<String> parameters = new ArrayList<String>();
 			parameters.add("L401");
 			parameters.add("L101");
+			MainFrame.loading.setVisible(true);
 			if (MainFrame.stall(parameters)){
 				if(MainFrame.client.getStatus().equals("L101")){
 					DMessage = new DialogMessage("Creation Successfull");
 					this.setVisible(false);
 					parent.mainFrameSetVisible();
+					MainFrame.loading.setVisible(false);
 				}
 				else{
 					DMessage = new DialogMessage("Creattion Failed");
 					DMessage.setAlwaysOnTop(true);
+					MainFrame.loading.setVisible(false);
 				}
 			}
 			
@@ -247,6 +250,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 }
 	
 	public void login(){
+		MainFrame.loading.setVisible(true);
 		String loginInfo[] = getLoginInfo();
 		MainFrame.client.sendMessage("L100",loginInfo);
 		ArrayList<String> parameters = new ArrayList<String>();
@@ -256,10 +260,12 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			if(MainFrame.client.getStatus().equals("L100")){
 				this.setVisible(false);
 				parent.mainFrameSetVisible();
+				MainFrame.loading.setVisible(false);
 			}
 			else{
 				DMessage = new DialogMessage("Wrong login");
 				DMessage.setAlwaysOnTop(true);
+				MainFrame.loading.setVisible(false);
 			}
 		}
 	}
@@ -271,6 +277,9 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		}
 		if (e.getSource() == JLForgotPassword){
 			System.exit(0);
+		}
+		if (e.getSource() == Password){
+			login();
 		}
 		if (e.getSource() == JBLogin){
 			login();

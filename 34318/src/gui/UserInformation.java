@@ -1,4 +1,4 @@
-package gui;
+		package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -38,9 +38,6 @@ public class UserInformation implements MouseListener{
 		this.parent = parent; 
 		addUserInformation(info);
 		location = MouseInfo.getPointerInfo().getLocation();
-		x = (int) location.getX();
-		y = (int) location.getY();
-		frame.setLocation(x,y);
 		frame.setPreferredSize(GeneralProperties.userInformationTabSize);
 		frame.addFocusListener(new FocusListener(){
 			@Override
@@ -56,7 +53,7 @@ public class UserInformation implements MouseListener{
 		frame.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
 		frame.setVisible(true);
 		frame.pack();
-		frame.validate();
+		frame.setLocation(location);
 	}
 	
 	public void addUserInformation(UserInformation info){
@@ -88,14 +85,14 @@ public class UserInformation implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JPAddFriend){
+			frame.dispose();
 			DialogMessage DMessage = new DialogMessage(info.toString()+" added as friend");
 			DMessage.setAlwaysOnTop(true);
-			frame.dispose();
 		}
 		if (e.getSource() == JPBlockUser){
+			frame.dispose();
 			DialogMessage DMessage = new DialogMessage(info.toString() +" has been blocked");
 			DMessage.setAlwaysOnTop(true);
-			frame.dispose();
 		}
 		if(e.getSource() == JPSendMessage){
 			parent.addTab(info.toString());

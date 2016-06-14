@@ -8,10 +8,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import client.Client;
@@ -25,6 +27,8 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock,IAddFriend, ISendMessage;
 	public static ChatPanel chatPanel;
 	public static Client client;
+	public static JLabel pleaseWait;
+	public static JFrame loading;
 	
 	public MainFrame(Client client){
 		this.client = client;
@@ -34,6 +38,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    DLogin.setVisible(true);
 	    setDefaultProperties();
 	    createImageIcons();
+	    makeLoadingJFrame();
 	    chatPanel = new ChatPanel();
 	    JPLeft = new PanelLeft();
 	    JPRight = new PanelRight();
@@ -86,6 +91,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	
 	public static boolean stall(ArrayList<String> okayFlags){
 		int countdown = 200;
+		loading.setVisible(true);
 		while(!okayFlags.contains(client.getStatus())) {
 		    try {
 		        Thread.sleep(50);
@@ -100,7 +106,22 @@ public class MainFrame extends JFrame implements GeneralProperties {
 		return true;
 	}
 	
+
+	
+	public void makeLoadingJFrame(){
+	    pleaseWait = new JLabel(new ImageIcon("pictures/wait.gif"));
+	    pleaseWait.setVisible(true);
+	    loading = new JFrame();
+	    loading.setSize(50,50);
+	    loading.setUndecorated(true);
+	    loading.add(pleaseWait);
+	    loading.validate();
+	    loading.setAlwaysOnTop(true);
+	    loading.setLocationRelativeTo(null);
+	}
+	
 	public static void main(String[] args) {
-		new MainFrame(new Client("192.168.1.52", 1234));
+		//new MainFrame(new Client("192.168.1.52", 1234));
+		new MainFrame(new Client("localhost", 1234));
 	}
 }
