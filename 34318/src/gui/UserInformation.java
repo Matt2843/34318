@@ -100,7 +100,6 @@ public class UserInformation implements MouseListener{
 		if(e.getSource() == JPSendMessage){
 			parent.addTab(info.toString());
 			frame.dispose();
-			parent.setSelectedIndex(parent.getTabCount()-1);
 		}
 	}
 

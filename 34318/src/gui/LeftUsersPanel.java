@@ -37,7 +37,6 @@ public class LeftUsersPanel extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
 			MainFrame.chatPanel.addTab(onlineUsers.getSelectedValue().toString());
-			MainFrame.chatPanel.setSelectedIndex(MainFrame.chatPanel.getTabCount()-1);
 		  }
 		
 	}

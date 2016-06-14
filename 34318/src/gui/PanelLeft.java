@@ -10,7 +10,7 @@ import javax.swing.JTabbedPane;
 public class PanelLeft extends JPanel{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel JPPublic, JPPrivate;
+	private JPanel JPPublic, JPFriends;
 	private JTabbedPane tabbedPanel;
 	private  ArrayList<UserInformation> publicChats = new ArrayList<UserInformation>();
 	private ArrayList<UserInformation> privateChats = new ArrayList<UserInformation>();
@@ -19,7 +19,7 @@ public class PanelLeft extends JPanel{
 		setDefaultProperties();
 		setComponents();
 		tabbedPanel.addTab("Public",MainFrame.IPublic,JPPublic);
-		tabbedPanel.addTab("Private", MainFrame.IPrivate, JPPrivate);
+		tabbedPanel.addTab("Friends", MainFrame.IPrivate, JPFriends);
 		this.add(tabbedPanel, BorderLayout.CENTER);
 		this.validate();
 	}
@@ -37,7 +37,7 @@ public class PanelLeft extends JPanel{
 		publicChats.add(new UserInformation("Name 2"));
 		privateChats.add(new UserInformation("User 1"));
 		JPPublic = new LeftUsersPanel(publicChats);
-		JPPrivate = new LeftUsersPanel(privateChats);
+		JPFriends = new LeftUsersPanel(privateChats);
 		tabbedPanel = new JTabbedPane();
 		tabbedPanel.setBackground(Color.white);
 	}

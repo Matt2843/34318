@@ -43,6 +43,8 @@ public class DialogMessage extends JDialog implements MouseListener{
 		setDefaultProperties();
 		JBOK.addMouseListener(this);
 		JBTryAgain.addMouseListener(this);
+		panel.setBackground(Color.white);
+		this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
 		this.add(panel);
 		this.pack();
 		this.setVisible(true);
@@ -51,7 +53,6 @@ public class DialogMessage extends JDialog implements MouseListener{
 	
 	private void setDefaultProperties(){
 		this.setUndecorated(true);
-		this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setAlwaysOnTop(true);

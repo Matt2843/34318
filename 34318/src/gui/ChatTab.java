@@ -18,6 +18,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private ChatPanel parent;
 	private int tabIndex;
+	private String tabName;
 	
 	// The chat window including tab headers.
 	private JLabel icon,name;
@@ -36,6 +37,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	public ChatTab(ChatPanel parent, String tabName, int tabIndex) {
 		this.parent = parent;
 		this.tabIndex = tabIndex;
+		this.tabName = tabName;
 		setLayout(new BorderLayout());
 		configureChatArea(tabName);
 		setUsersInChat();
@@ -67,6 +69,14 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	public void addUserToList(UserInformation user) {
 		model.addElement(user);
+	}
+	
+	public DefaultListModel<UserInformation> getUserList(){
+		return model;
+	}
+	
+	public String getName(){
+		return tabName;
 	}
 
 	private void setUsersInChat() {
@@ -119,11 +129,10 @@ public class ChatTab extends JPanel implements MouseListener {
 			}
 		}
 		if(e.getSource() == JLAddUsers){
-			new Friends(this);
+			new Friends(this,parent);
 		}
 		if (e.getClickCount() == 2) {
 			parent.addTab(usersInChat.getSelectedValue().toString());
-			MainFrame.chatPanel.setSelectedIndex(MainFrame.chatPanel.getTabCount()-1);
 		  }
 		
 		
@@ -142,20 +151,14 @@ public class ChatTab extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public JPanel getTabContent() {

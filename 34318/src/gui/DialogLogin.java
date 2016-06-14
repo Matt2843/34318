@@ -54,6 +54,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		setJPLogin();
 		setJPNewUser();
 		panel = JPLogin;
+    	panel.setBackground(Color.WHITE);
 		this.add(panel);		
         setResizable(false);
 	}
@@ -65,9 +66,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		p.add(comp, c);
 }
 	private void setDefaultProperties(){
-    	this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
-    	this.setBackground(Color.GRAY);
-    	this.setUndecorated(true);
     	this.setPreferredSize(new Dimension(500,300));
     	this.pack();
     	this.setLocationRelativeTo(null);
@@ -169,7 +167,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		addC(JPNewUser, RepeatPassword,0,i,2);i++;
 		addC(JPNewUser, JBCreate,0,i,1); 
 		addC(JPNewUser, JBNewCancel,1,i,1);
-		
+		JPNewUser.setBackground(Color.WHITE);
 		RepeatPassword.addActionListener(this);
 		JBCreate.addMouseListener(this);
 		JBNewCancel.addMouseListener(this);
@@ -212,6 +210,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		this.pack();
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void createNewUser(){
 		
 		if(NewPassword.getText() != RepeatPassword.getText()){
@@ -219,8 +218,11 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			String newPassword = NewPassword.getText();
 			UserInfo info = new UserInfo(newUsername, newPassword);
 			MainFrame.client.sendMessage("L101#", info);
-			this.setVisible(false);
-        	parent.mainFrameSetVisible();
+			if (true){
+				DMessage = new DialogMessage("Creation Successfull");
+				this.setVisible(false);
+	        	parent.mainFrameSetVisible();
+			}
 		}
 		else if (false){
 			DMessage = new DialogMessage("User already exists");
@@ -294,8 +296,8 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == Password){
-			login();
+		if (e.getSource() == RepeatPassword){
+			createNewUser();
 		}
 		
 	}

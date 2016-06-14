@@ -13,13 +13,15 @@ import javax.swing.JScrollPane;
 
 public class Friends extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	private ChatTab parent;
+	private ChatTab chatTab;
+//	private ChatPanel chatPanel;
 	private JList<UserInformation> friendList;
 	private DefaultListModel<UserInformation> model;
 	private JScrollPane scrollPane;
 	
-	public Friends(ChatTab parent){
-		this.parent = parent;
+	public Friends(ChatTab chatTab, ChatPanel chatPanel){
+		this.chatTab = chatTab;
+//		this.cshatPanel = chatPanel;
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(GeneralProperties.friendsPanelSize);
 		model = new DefaultListModel<UserInformation>(); 
@@ -44,19 +46,15 @@ public class Friends extends JFrame implements MouseListener {
 		model.addElement(user);
 	}
 	@Override
-	public void mouseClicked(MouseEvent e) {
-			
+	public void mouseClicked(MouseEvent e) {			
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		
+	public void mouseEntered(MouseEvent e) {		
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void mouseExited(MouseEvent arg0) {		
 	}
 
 	@Override
@@ -67,11 +65,14 @@ public class Friends extends JFrame implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == friendList){
 			if (e.getClickCount() == 2) {
-				parent.addUserToList(friendList.getSelectedValue());
+				chatTab.addUserToList(friendList.getSelectedValue());
+//				int selectedIndex = chatPanel.getSelectedIndex();
+//				ChatTab selectedTab = chatPanel.chatTabs.get(selectedIndex);
+//				String name = selectedTab.getName();
+//				String newName = friendList.getSelectedValue().toString();
+				//chatPanel.chatTabs.set(selectedIndex, name + newName);
 				dispose();
 			}
-		}
-		
+		}		
 	}
-
 }
