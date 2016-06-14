@@ -24,4 +24,5 @@ public abstract class AbstractPanelList extends JPanel{
 	public abstract void addItem(Object o);
 	public abstract void setList(Object o);
 	public abstract void addElements();
+	public abstract void getListData();
 }

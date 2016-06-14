@@ -66,19 +66,10 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 	private void makeNewChat(){
 		String name = JTName.getText();
 		String[] namea = {name};
-		ArrayList<String> okayFlags = new ArrayList<String>();
-		okayFlags.add("ABC1000");
 		if(!name.equals("")){
-			if (MainFrame.chatPanel.addTab(JTName.getText())){
-				MainFrame.client.sendMessage("C102",namea);
-				mainFrame.stall(okayFlags,mainFrame);
-				if(MainFrame.client.getStatus().equals("ABC1000")){
-					@SuppressWarnings("unchecked")
-					ArrayList<ChatRoom> chats = (ArrayList<ChatRoom>)MainFrame.client.getObject();
-					panelLeft.updatePublicChats(chats);
-					dispose();
-				}				
-			}
+			MainFrame.client.sendMessage("C102",namea);
+			MainFrame.stall(mainFrame,"C100","C400");
+			dispose();		
 		}
 		else{
 			new DialogMessage("Enter new name");

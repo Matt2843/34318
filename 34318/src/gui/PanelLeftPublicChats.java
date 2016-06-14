@@ -43,6 +43,27 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 		add(scrollPane,BorderLayout.CENTER);
 		validate();
 	}
+	
+	@Override
+	public void getListData() {
+		new Thread(new Runnable() {
+			public void run() {
+				while (true){
+					MainFrame.client.sendMessage("D100", null);
+					MainFrame.stall(MainFrame.chatPanel,"D100");
+					if (MainFrame.client.getStatus().equals("D100")){
+						setList(MainFrame.client.getObject());
+					}
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+		
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -67,5 +88,7 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 	}
+
+	
 	
 }

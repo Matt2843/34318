@@ -80,9 +80,11 @@ public class Slave extends Thread {
 			break;
 		case "C102": // Start Public Group
 			String chatID = Utilities.generateID(5);
-			if(!Server.db.getPublicRooms().containsKey(chatID)){
-				ChatRoom newChatRoom = new ChatRoom(message.getParams()[0]);
-				
+			if(Server.db.addNewPublicChat(message.getParams()[0], chatID)){
+				master.sendMessage("C100", null);
+			} else{
+				setParams(1, "Roomname taken");
+				master.sendMessage("C400", params);
 			}
 			break;
 		case "S100": // Broadcast Message
@@ -107,6 +109,10 @@ public class Slave extends Thread {
 		case "F100": // Upload File
 			break;
 		case "F101": // Download File
+			break;
+		case "D100": // Get PublicRooms data
+			
+			master.sendMessage("D100", null);
 			break;
 		default:
 			break;

@@ -88,9 +88,13 @@ public class MainFrame extends JFrame implements GeneralProperties {
         return result;
     }
 	
-	public void stall(ArrayList<String> okayFlags, Component parent){
-		StallFrame stall = new StallFrame(parent);
-		stall.stall(okayFlags);
+	public static void stall(Component parent, String... okayFlags){
+		ArrayList<String> flags = new ArrayList<String>();
+		for (int i = 0; i<okayFlags.length;i++){
+			flags.add(okayFlags[i]);
+		}
+		StallFrame frame = new StallFrame(parent);
+		frame.stall(flags);
 	}
 	
 	public static void main(String[] args) {

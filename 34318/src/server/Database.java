@@ -52,6 +52,7 @@ public class Database {
 			}
 			ChatRoom newPublicRoom = new ChatRoom(name);
 			publicRooms.put(chatID, newPublicRoom);
+			System.out.println(publicRooms.keySet());
 			return true;
 		} else return false;
 	}

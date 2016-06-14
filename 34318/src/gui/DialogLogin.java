@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -217,12 +216,8 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			String newUsername = JTNewUsername.getText();
 			String newPassword = NewPassword.getText();
 			UserInfo info = new UserInfo(newUsername, newPassword);
-			String[] userInfo = {newUsername, newPassword};
-			ArrayList<String> parameters = new ArrayList<String>();
-			parameters.add("L401");
-			parameters.add("L101");
 			MainFrame.client.sendMessage("L101", null, info);
-			parent.stall(parameters,this);
+			MainFrame.stall(this,"L101","L401");
 			if(MainFrame.client.getStatus().equals("L101")){
 				DMessage = new DialogMessage("Creation Successfull");
 				this.setVisible(false);
@@ -244,11 +239,8 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	
 	public void login(){
 		String loginInfo[] = getLoginInfo();
-		ArrayList<String> parameters = new ArrayList<String>();
-		parameters.add("L400");
-		parameters.add("L100");
 		MainFrame.client.sendMessage("L100",loginInfo);
-		parent.stall(parameters,this);
+		MainFrame.stall(this,"L400","L100");
 		if(MainFrame.client.getStatus().equals("L100")){
 			this.setVisible(false);
 			parent.mainFrameSetVisible();
