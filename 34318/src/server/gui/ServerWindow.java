@@ -3,6 +3,8 @@ package server.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,7 +14,7 @@ import javax.swing.JTextArea;
 
 import server.Server;
 
-public class ServerWindow extends JFrame {
+public class ServerWindow extends JFrame implements WindowListener {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel contentPane;
@@ -58,7 +60,8 @@ public class ServerWindow extends JFrame {
 	private void configureMainWindow(String title, int w, int h) {
 		setSize(new Dimension(w, h));
 		setPreferredSize(new Dimension(w, h));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(this);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle(title);
 		setVisible(true);
 		contentPane = new JPanel(new BorderLayout());
@@ -68,6 +71,51 @@ public class ServerWindow extends JFrame {
 	
 	public static void main(String[] args) {
 		new ServerWindow("Server", 500, 500);
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		Server.db.updateAndSaveDatabase();
+		for(int i = 0; i < Server.db.getRegisteredUsers().size(); i++) {
+			System.out.println(Server.db.getRegisteredUsers().keySet());
+		}
+		System.exit(0);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

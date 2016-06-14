@@ -18,6 +18,7 @@ public class Client extends Thread {
 	private Socket connection;
 	
 	private String sessionID = "-1";
+	private String status = "";
 
 	public Client(String host, int port) {
 		this.host = host;
@@ -35,6 +36,22 @@ public class Client extends Thread {
 		}
 		super.run();
 	}
+	
+	public boolean stall(String[] okayFlags) {
+		int countdown = 200;
+		while(!status.equals(okayFlags)) {
+			try {
+				Thread.sleep(50);
+				countdown -= 1;
+				if(countdown == 0) {
+					return false;
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
 
 	private void whileConnected() throws IOException {
 		Message message = null;
@@ -42,6 +59,7 @@ public class Client extends Thread {
 			try {
 				message = (Message) input.readObject();
 				System.out.println("FROM SERVER: " + message.toString());
+				status = message.getCommand();
 			} catch (ClassNotFoundException e) {
 				System.out.println("Couldn't cast message to the proper format");
 			}
