@@ -36,22 +36,6 @@ public class Client extends Thread {
 		}
 		super.run();
 	}
-	
-	public boolean stall(String[] okayFlags) {
-		int countdown = 200;
-		while(!status.equals(okayFlags)) {
-			try {
-				Thread.sleep(50);
-				countdown -= 1;
-				if(countdown == 0) {
-					return false;
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		return true;
-	}
 
 	private void whileConnected() throws IOException {
 		Message message = null;
@@ -113,6 +97,10 @@ public class Client extends Thread {
 
 	public String getSessionID() {
 		return sessionID;
+	}
+
+	public String getStatus() {
+		return status;
 	}
 
 }
