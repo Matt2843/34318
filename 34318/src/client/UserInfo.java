@@ -13,7 +13,6 @@ public class UserInfo implements Serializable {
 	
 	private String username = null;
 	private String password = null;
-	private String alias = null;
 	
 	public UserInfo() {
 	}
@@ -42,12 +41,6 @@ public class UserInfo implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getAlias() {
-		return alias;
-	}
-	public void setAlias(String alias) {
-		this.alias = alias;
 	}
 	public ArrayList<String> getBlocked() {
 		return blocked;
