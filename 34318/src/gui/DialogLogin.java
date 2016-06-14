@@ -213,7 +213,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	@SuppressWarnings("deprecation")
 	private void createNewUser(){
 		
-		if(NewPassword.getText() != RepeatPassword.getText()){
+		if(NewPassword.getText().equals(RepeatPassword.getText())){
 			String newUsername = JTNewUsername.getText();
 			String newPassword = NewPassword.getText();
 			UserInfo info = new UserInfo(newUsername, newPassword);
@@ -229,14 +229,11 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 				parent.mainFrameSetVisible();
 			}
 			else{
-				DMessage = new DialogMessage("Creation Failed");
+
+				DMessage = new DialogMessage("User already exists");
 				DMessage.setAlwaysOnTop(true);
 			}
 			
-		}
-		else if (false){
-			DMessage = new DialogMessage("User already exists");
-			DMessage.setAlwaysOnTop(true);
 		}
 		else{
 			DMessage = new DialogMessage("Passwords doesn't match");

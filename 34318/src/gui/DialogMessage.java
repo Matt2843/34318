@@ -33,7 +33,7 @@ public class DialogMessage extends JDialog implements MouseListener, KeyListener
 		addC(JLMessage,0,0,1);
 		c.ipady = 0;
 		
-		if (message == "User already exists" || message == "Creation Failed" || message == "Passwords doesn't match"){
+		if (message == "User already exists" || message == "Passwords doesn't match"){
 			addC(JBTryAgain,0,1,1);
 		}
 		else{
