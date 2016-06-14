@@ -17,7 +17,6 @@ public class Client extends Thread {
 
 	private Socket connection;
 	
-	//private String sessionID = "-1";
 	private String status = "";
 
 	public Client(String host, int port) {
@@ -64,6 +63,7 @@ public class Client extends Thread {
 	}
 
 	public void sendMessage(String command, String[] params) {
+		status = "";
 		Message m = new Message(command, params);
 		try {
 			output.writeObject(m);
@@ -74,6 +74,7 @@ public class Client extends Thread {
 	}
 
 	public void sendMessage(String command, String[] params, Object object) {
+		status = "";
 		Message m = new Message(command, params, object);
 		try {
 			output.writeObject(m);
@@ -93,14 +94,6 @@ public class Client extends Thread {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-//	public String getSessionID() {
-//		return sessionID;
-//	}
-	
-	public void setStatus(String s) {
-		status = s;
 	}
 
 	public String getStatus() {
