@@ -16,7 +16,7 @@ import client.UserInfo;
 public class Database {
 	private ArrayList<Connection> activeUsers = new ArrayList<Connection>();	
 	private HashMap<String, Object> storedFiles = null;									 // K: FileID		V: File
-	private HashMap<String, UserInfo> registeredUsers = null;								 // CHANGE THIS
+	private HashMap<String, UserInfo> registeredUsers = null;							 // CHANGE THIS
 	private HashMap<String, ChatRoom> publicRooms = null;								 // K: ChatID		V: ChatRoom
 
 	public Database() {
@@ -43,8 +43,15 @@ public class Database {
 		}
 	}
 
-	public void addNewPublicChat(String name, String chatID){
-		
+	public boolean addNewPublicChat(String name, String chatID){
+		for(ChatRoom value : publicRooms.values()) {
+			if(value.getChatName().equals(name)) {
+				return false;
+			}
+		}
+		ChatRoom newPublicRoom = new ChatRoom(name);
+		publicRooms.put(chatID, newPublicRoom);
+		return true;
 	}
 	
 	public void updateAndSaveDatabase() {
