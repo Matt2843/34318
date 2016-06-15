@@ -14,14 +14,14 @@ import javax.swing.JScrollPane;
 public class LeftUsersPanel extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 1L;
-	private JList<UserInformation> onlineUsers;
-	private DefaultListModel<UserInformation> model;
+	private JList<String> onlineUsers;
+	private DefaultListModel<String> model;
 	private JScrollPane scrollPane;
 	
-	public LeftUsersPanel(ArrayList<UserInformation> users){
+	public LeftUsersPanel(ArrayList<String> users){
 		this.setLayout(new BorderLayout());
-		model = new DefaultListModel<UserInformation>();
-		onlineUsers = new JList<UserInformation>(model);
+		model = new DefaultListModel<String>();
+		onlineUsers = new JList<String>(model);
 		onlineUsers.addMouseListener(this);
 
 		scrollPane = new JScrollPane(onlineUsers);
@@ -58,7 +58,8 @@ public class LeftUsersPanel extends JPanel implements MouseListener {
 		if (e.getSource() == onlineUsers){
 			if (e.getButton() == MouseEvent.BUTTON3){
 				int x = onlineUsers.getSelectedIndex();
-				onlineUsers.getModel().getElementAt(x).addJFrame(onlineUsers.getModel().getElementAt(x),MainFrame.chatPanel);
+				//onlineUsers.getModel().getElementAt(x).addJFrame(onlineUsers.getModel().getElementAt(x));
+				new UserInformation(onlineUsers.getModel().getElementAt(x));
 			}
 		}
 		

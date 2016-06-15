@@ -15,48 +15,42 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class UserInformation implements MouseListener{
+public class UserInformation extends JFrame implements MouseListener{
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private Point location;
-	private int x,y;
 	private JFrame frame = new JFrame();
 	private JPanel JPAddFriend,JPBlockUser,JPSendMessage, userInfo;
 	
-	private ChatPanel parent;
-	private UserInformation info;
 	
 	public UserInformation(String username) {
 		this.username = username;
 		setDefaultProperties();
+		setComponents();
+		this.pack();
+		this.setLocation(location);
 	}
 	
 	private void setDefaultProperties(){
-	}
-	
-	public void addJFrame(UserInformation info, ChatPanel parent){
-		this.info = info;
-		this.parent = parent; 
-		addUserInformation(info);
 		location = MouseInfo.getPointerInfo().getLocation();
-		frame.setPreferredSize(GeneralProperties.userInformationTabSize);
-		frame.addFocusListener(new FocusListener(){
+		this.setPreferredSize(GeneralProperties.userInformationTabSize);
+		this.addFocusListener(new FocusListener(){
 			@Override
 		    public void focusLost( FocusEvent e ) {
-		          frame.dispose();
+		          dispose();
 			}
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
 			}
 		});
-		frame.setUndecorated(true);
-		frame.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
-		frame.setVisible(true);
-		frame.pack();
-		frame.setLocation(location);
+		this.setUndecorated(true);
+		this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
+		this.setVisible(true);
+		
 	}
 	
-	public void addUserInformation(UserInformation info){
+	private void setComponents(){
 		JPAddFriend = new JPanel(new BorderLayout());
 		JPAddFriend.add(new JLabel(MainFrame.IAddFriend),BorderLayout.WEST);
 		JPAddFriend.add(new JLabel("  Add Friend"),BorderLayout.CENTER);
@@ -74,7 +68,7 @@ public class UserInformation implements MouseListener{
 		userInfo.add(JPAddFriend);
 		userInfo.add(JPBlockUser); 
 		userInfo.add(JPSendMessage);
-		frame.add(userInfo);
+		this.add(userInfo);
 	}
 	
 	@Override
@@ -86,16 +80,16 @@ public class UserInformation implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JPAddFriend){
 			frame.dispose();
-			DialogMessage DMessage = new DialogMessage(info.toString()+" added as friend");
+			DialogMessage DMessage = new DialogMessage(username+" added as friend");
 			DMessage.setAlwaysOnTop(true);
 		}
 		if (e.getSource() == JPBlockUser){
 			frame.dispose();
-			DialogMessage DMessage = new DialogMessage(info.toString() +" has been blocked");
+			DialogMessage DMessage = new DialogMessage(username +" has been blocked");
 			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){
-			parent.addTab(info.toString());
+			MainFrame.chatPanel.addTab(username);
 			frame.dispose();
 		}
 	}

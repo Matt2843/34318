@@ -15,8 +15,8 @@ public class Friends extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private ChatTab chatTab;
 //	private ChatPanel chatPanel;
-	private JList<UserInformation> friendList;
-	private DefaultListModel<UserInformation> model;
+	private JList<String> friendList;
+	private DefaultListModel<String> model;
 	private JScrollPane scrollPane;
 	
 	public Friends(ChatTab chatTab, ChatPanel chatPanel){
@@ -24,15 +24,12 @@ public class Friends extends JFrame implements MouseListener {
 //		this.cshatPanel = chatPanel;
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(GeneralProperties.friendsPanelSize);
-		model = new DefaultListModel<UserInformation>(); 
-		friendList = new JList<UserInformation>(model);
+		model = new DefaultListModel<String>(); 
+		friendList = new JList<String>(model);
 		friendList.addMouseListener(this);
 		scrollPane = new JScrollPane(friendList);
 		scrollPane.setBackground(Color.WHITE);
-		for (int i = 0; i<4;i++){
-			UserInformation user = new UserInformation("Friend" + i);
-			addUserToList(user);
-		}
+		addUserToList("Friend");
 		this.setTitle("Add friend");
 		this.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
 		this.add(scrollPane, BorderLayout.CENTER);
@@ -42,7 +39,7 @@ public class Friends extends JFrame implements MouseListener {
 		this.setLocationRelativeTo(null);
 	}
 	
-	public void addUserToList(UserInformation user) {
+	public void addUserToList(String user) {
 		model.addElement(user);
 	}
 	@Override

@@ -69,7 +69,6 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
 			MainFrame.chatPanel.addTab(list.getSelectedValue().toString());
-			System.out.println("klikket");
 		}
 	}
 

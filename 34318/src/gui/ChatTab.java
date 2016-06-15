@@ -28,8 +28,8 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JScrollPane ChatScrollPane;
 	
 	// The users-online list elements.
-	private JList<UserInformation> usersInChat;
-	private DefaultListModel<UserInformation> model;
+	private JList<String> usersInChat;
+	private DefaultListModel<String> model;
 	private JScrollPane scrollPane;
 	private JLabel JLAddUsers;
 	private JPanel usersInChatRight, JPUsersTop;
@@ -43,10 +43,8 @@ public class ChatTab extends JPanel implements MouseListener {
 		configureChatArea(tabName);
 		setUsersInChat();
 		validate();
-		for (int i = 0; i<2; i++){
-			UserInformation user = new UserInformation("User" + i);
-			addUserToList(user);
-		}
+		addUserToList("User 1");
+		addUserToList("User 2");
 	}
 	
 	public void updateTabIndex(int index) {
@@ -68,11 +66,11 @@ public class ChatTab extends JPanel implements MouseListener {
 		model.removeElement(user);
 	}
 	
-	public void addUserToList(UserInformation user) {
+	public void addUserToList(String user) {
 		model.addElement(user);
 	}
 	
-	public DefaultListModel<UserInformation> getUserList(){
+	public DefaultListModel<String> getUserList(){
 		return model;
 	}
 	
@@ -82,8 +80,8 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	private void setUsersInChat() {
 		makeTopPanel();	
-		model = new DefaultListModel<UserInformation>();
-		usersInChat = new JList<UserInformation>(model);
+		model = new DefaultListModel<String>();
+		usersInChat = new JList<String>(model);
 		usersInChat.addMouseListener(this);
 		scrollPane = new JScrollPane(usersInChat);
 		scrollPane.setPreferredSize(GeneralProperties.panelUsersSize);
@@ -143,7 +141,8 @@ public class ChatTab extends JPanel implements MouseListener {
 		if (e.getSource() == usersInChat){
 			if(e.getButton() == MouseEvent.BUTTON3){
 				int x = usersInChat.getSelectedIndex();
-				usersInChat.getModel().getElementAt(x).addJFrame(usersInChat.getModel().getElementAt(x),parent);
+				//usersInChat.getModel().getElementAt(x).addJFrame(usersInChat.getModel().getElementAt(x),parent);
+				new UserInformation(usersInChat.getModel().getElementAt(x));
 			}
 		}
 		

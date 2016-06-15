@@ -18,8 +18,8 @@ public class PanelLeft extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel  JPPublic,JPFriends, addChat;
 	private JTabbedPane tabbedPanel;
-	public static ArrayList<UserInformation> publicChats = new ArrayList<UserInformation>();
-	private ArrayList<UserInformation> privateChats = new ArrayList<UserInformation>();
+	public static ArrayList<String> publicChats = new ArrayList<String>();
+	private ArrayList<String> privateChats = new ArrayList<String>();
 	private MainFrame parent;
 	private PanelLeftPublicChats PLPublicChats = new PanelLeftPublicChats();
 	
@@ -42,9 +42,9 @@ public class PanelLeft extends JPanel implements MouseListener{
 	}
 	
 	public void setComponents(){
-		publicChats.add(new UserInformation("Name 1"));
-		publicChats.add(new UserInformation("Name 2"));
-		privateChats.add(new UserInformation("User 1"));
+		publicChats.add(("Name 1"));
+		publicChats.add(("Name 2"));
+		privateChats.add(("User 1"));
 		makePublicChat();
 		JPFriends = new LeftUsersPanel(privateChats);
 		tabbedPanel = new JTabbedPane();
@@ -72,7 +72,6 @@ public class PanelLeft extends JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == addChat){
-			System.out.println("add new chat here");
 			new NewPublicChat(this,parent);
 		}
 		
