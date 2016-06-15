@@ -1,31 +1,39 @@
 package client;
 
 public final class Encrypt {
+	private static int v;
+	private static String hashKey;
 	public static void encryptString(String string) {
 		try {
-			String hashKey = byteArrayToHexString(Encrypt.computeHashkey(string));
+			hashKey = ToHexString(Encrypt.Hashkey(string));
 			System.out.println(hashKey);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	private static byte[] computeHashkey(String string) throws Exception {
-		java.security.MessageDigest algorithm = java.security.MessageDigest.getInstance("SHA-1");
-		algorithm.reset();
-		algorithm.update(string.getBytes());
-		return algorithm.digest();
+// Generate the hashkey
+	private static byte[] Hashkey(String string) throws Exception {
+		java.security.MessageDigest hash = java.security.MessageDigest.getInstance("SHA-1");
+		hash.reset();
+		hash.update(string.getBytes());
+		return hash.digest();
 	}
-
-	private static String byteArrayToHexString(byte[] buffer) {
+// Compute the hexadecimal encryptet password
+	private static String ToHexString(byte[] buffer) {
 		StringBuffer stringBuffer = new StringBuffer(buffer.length * 2);
+		System.out.println(buffer);
 		for (int i = 0; i < buffer.length; i++) {
-			int v = buffer[i] & 0xaa;
+			v = buffer[i] & 0xff;
 			if (v < 16) {
 				stringBuffer.append('0');
 			}
 			stringBuffer.append(Integer.toHexString(v));
 		}
-		return stringBuffer.toString().toUpperCase();
+		return stringBuffer.toString();
+	}
+	public static void main(String[] args){
+		String hans = "hansi";
+		encryptString(hans);
 	}
 }
+// DA39A3EE5E6B4B0D3255BFEF95601890AFD80709
