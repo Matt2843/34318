@@ -17,7 +17,6 @@ public class PanelRight extends JTabbedPane {
 	}
 	
 	private void setDefaultProperties(){
-		this.setPreferredSize(GeneralProperties.panelRightTopSize);
 		this.setBackground(Color.white);
 		this.setVisible(true);
 		this.validate();

@@ -36,6 +36,7 @@ public class ChatArea extends JPanel implements MouseListener, KeyListener{
 	
 	private void setDefaultProperties(){
 		this.setLayout(new BorderLayout());
+		this.setPreferredSize(GeneralProperties.panelRightBottomSize);
 		this.setBackground(Color.white);
 	}
 	
@@ -61,7 +62,6 @@ public class ChatArea extends JPanel implements MouseListener, KeyListener{
 		
 		JTText = new JTextPane();
 		JTText.addKeyListener(this);
-		JTText.setPreferredSize(GeneralProperties.panelRightBottomSize);
 		//JTText.setLineWrap(true);
 		JTText.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"doNothing");
 		JTText.setFont(new Font(("DejaVu Sans"), Font.PLAIN,14));
