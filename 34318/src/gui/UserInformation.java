@@ -19,7 +19,6 @@ public class UserInformation extends JFrame implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private Point location;
-	private JFrame frame = new JFrame();
 	private JPanel JPAddFriend,JPBlockUser,JPSendMessage, userInfo;
 	
 	
@@ -79,18 +78,18 @@ public class UserInformation extends JFrame implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JPAddFriend){
-			frame.dispose();
+			dispose();
 			DialogMessage DMessage = new DialogMessage(username+" added as friend");
 			DMessage.setAlwaysOnTop(true);
 		}
 		if (e.getSource() == JPBlockUser){
-			frame.dispose();
+			dispose();
 			DialogMessage DMessage = new DialogMessage(username +" has been blocked");
 			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){
 			MainFrame.chatPanel.addTab(username);
-			frame.dispose();
+			dispose();
 		}
 	}
 

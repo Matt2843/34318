@@ -6,9 +6,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -28,9 +26,6 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JScrollPane ChatScrollPane;
 	
 	// The users-online list elements.
-	private JList<String> usersInChat;
-	private DefaultListModel<String> model;
-	private JScrollPane scrollPane;
 	private JLabel JLAddUsers;
 	private JPanel usersInChatRight, JPUsersTop;
 	
@@ -43,8 +38,6 @@ public class ChatTab extends JPanel implements MouseListener {
 		configureChatArea(tabName);
 		setUsersInChat();
 		validate();
-		addUserToList("User 1");
-		addUserToList("User 2");
 	}
 	
 	public void updateTabIndex(int index) {
@@ -62,17 +55,6 @@ public class ChatTab extends JPanel implements MouseListener {
 		}
 	}
 	
-	public void removeUserFromList(String user) {
-		model.removeElement(user);
-	}
-	
-	public void addUserToList(String user) {
-		model.addElement(user);
-	}
-	
-	public DefaultListModel<String> getUserList(){
-		return model;
-	}
 	
 	public String getName(){
 		return tabName;
@@ -80,14 +62,11 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	private void setUsersInChat() {
 		makeTopPanel();	
-		model = new DefaultListModel<String>();
-		usersInChat = new JList<String>(model);
-		usersInChat.addMouseListener(this);
-		scrollPane = new JScrollPane(usersInChat);
-		scrollPane.setPreferredSize(GeneralProperties.panelUsersSize);
-		scrollPane.setBackground(Color.WHITE);
+		PanelRightUsersInChat panel = new PanelRightUsersInChat();
+		panel.setPreferredSize(GeneralProperties.panelUsersSize);
+		panel.setBackground(Color.white);
 		usersInChatRight.add(JPUsersTop,BorderLayout.NORTH);
-		usersInChatRight.add(scrollPane,BorderLayout.CENTER);
+		usersInChatRight.add(panel,BorderLayout.CENTER);
 		add(usersInChatRight, BorderLayout.EAST);
 		
 	}
@@ -128,23 +107,13 @@ public class ChatTab extends JPanel implements MouseListener {
 			}
 		}
 		if(e.getSource() == JLAddUsers){
-			new Friends(this,parent);
-		}
-		if (e.getClickCount() == 2) {
-			parent.addTab(usersInChat.getSelectedValue().toString());
+			new Friends();
 		}
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (e.getSource() == usersInChat){
-			if(e.getButton() == MouseEvent.BUTTON3){
-				int x = usersInChat.getSelectedIndex();
-				//usersInChat.getModel().getElementAt(x).addJFrame(usersInChat.getModel().getElementAt(x),parent);
-				new UserInformation(usersInChat.getModel().getElementAt(x));
-			}
-		}
 		
 	}
 

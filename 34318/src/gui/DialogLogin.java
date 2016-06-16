@@ -34,7 +34,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private JPasswordField Password;
 	private JLabel JLLogin, JLUsername, JLPassword, JLNewUser, JLForgotPassword;
 	private JButton JBLogin, JBCancel;
-	private String username, password, info;
+	private String username, password;
     private Insets normalInsets = new Insets(2,2,2,2);
     private Insets biggerInsets = new Insets(10,2,2,2);
     
@@ -44,7 +44,6 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private JButton JBCreate, JBNewCancel;
     
     private DialogMessage DMessage;
-    private UserInfo userinfo;
 	
 	public DialogLogin(MainFrame parent){
 		this.parent = parent;

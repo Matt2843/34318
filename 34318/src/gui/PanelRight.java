@@ -27,7 +27,6 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	private JButton JBSend;
 	private JTextPane JTText;
 	private JScrollPane scrollPane;
-	private String id = "Username";
 	
 	
 	public PanelRight(){
@@ -90,9 +89,9 @@ public class PanelRight extends JPanel implements MouseListener, KeyListener{
 	
 	private void sendText(String message){
 		JTText.setText(null);
-		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
-		String[] params = {((ChatTab) MainFrame.chatPanel.getSelectedComponent()).getChatID(), message};
-		MainFrame.client.sendMessage("S100", params);
+//		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
+		String[] chat = {((ChatTab) MainFrame.chatPanel.getSelectedComponent()).getChatID(), message};
+		MainFrame.client.sendMessage("S100", chat);
 	}
 	
 	public void addSmiley(ImageIcon smiley){

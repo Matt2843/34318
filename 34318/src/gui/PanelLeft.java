@@ -72,7 +72,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == addChat){
-			new NewPublicChat(this,parent);
+			new NewPublicChat(parent);
 		}
 		
 	}

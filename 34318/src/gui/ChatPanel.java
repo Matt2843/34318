@@ -7,9 +7,6 @@ import javax.swing.JTabbedPane;
 
 public class ChatPanel extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
-
-	private String[] Chats = {"Name 1", "Name 2", "Chat 3", "Chat 4"};
-
 	public static ArrayList <ChatTab> chatTabs;
 	
 	
@@ -31,13 +28,6 @@ public class ChatPanel extends JTabbedPane {
 		
 	}
 	
-	private void addFirstTabs(String name){
-		ChatTab newTab = new ChatTab(this,name,getTabCount());
-		newTab.setChatID("Chatte");
-		addTab(null, newTab);
-		setTabComponentAt(getTabCount()-1, newTab.getTabContent());
-		chatTabs.add(newTab);
-	}
 	
 	public String getName(ChatTab tab){
 		return tab.getName();

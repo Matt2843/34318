@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,17 +17,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import chat.ChatRoom;
-
 public class NewPublicChat extends JFrame implements ActionListener, MouseListener{
+	private static final long serialVersionUID = 1L;
 	private JButton JBCreate;
 	private JTextField JTName;
 	private JLabel JLName;
-	private PanelLeft panelLeft;
 	private MainFrame mainFrame;
 	
-	public NewPublicChat(PanelLeft panelLeft,MainFrame mainFrame){
-		this.panelLeft = panelLeft;
+	public NewPublicChat(MainFrame mainFrame){
 		this.mainFrame = mainFrame;
 		setDefaultProperties();
 		makeComponents();

@@ -13,15 +13,11 @@ import javax.swing.JScrollPane;
 
 public class Friends extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	private ChatTab chatTab;
-//	private ChatPanel chatPanel;
 	private JList<String> friendList;
 	private DefaultListModel<String> model;
 	private JScrollPane scrollPane;
 	
-	public Friends(ChatTab chatTab, ChatPanel chatPanel){
-		this.chatTab = chatTab;
-//		this.cshatPanel = chatPanel;
+	public Friends(){
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(GeneralProperties.friendsPanelSize);
 		model = new DefaultListModel<String>(); 
@@ -42,6 +38,36 @@ public class Friends extends JFrame implements MouseListener {
 	public void addUserToList(String user) {
 		model.addElement(user);
 	}
+	private void addUser(){
+		String name = friendList.getSelectedValue();
+//		String[] namea = {name};
+		if(!name.equals("")){
+			new Thread(new Runnable() {
+				public void run() {
+					
+//					MainFrame.client.sendMessage("G101", namea);
+//					MainFrame.stall(MainFrame.chatPanel,"G101","G400");
+					MainFrame.client.sendMessage("D100", null);
+					MainFrame.stall(MainFrame.chatPanel,"D100");
+					if (MainFrame.client.getStatus().equals("D100")){
+						MainFrame.chatPanel.addTab(name);
+						dispose();
+					}
+					else{
+						new DialogMessage("Failed to add person");
+					}
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+				}
+			}).start();
+			
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {			
 	}
@@ -62,12 +88,7 @@ public class Friends extends JFrame implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == friendList){
 			if (e.getClickCount() == 2) {
-				chatTab.addUserToList(friendList.getSelectedValue());
-//				int selectedIndex = chatPanel.getSelectedIndex();
-//				ChatTab selectedTab = chatPanel.chatTabs.get(selectedIndex);
-//				String name = selectedTab.getName();
-//				String newName = friendList.getSelectedValue().toString();
-				//chatPanel.chatTabs.set(selectedIndex, name + newName);
+				addUser();
 				dispose();
 			}
 		}		
