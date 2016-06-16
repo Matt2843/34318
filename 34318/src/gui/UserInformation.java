@@ -17,13 +17,14 @@ import javax.swing.JPanel;
 
 public class UserInformation extends JFrame implements MouseListener{
 	private static final long serialVersionUID = 1L;
-	private String username;
+	private String username, panelSide;
 	private Point location;
 	private JPanel JPAddFriend,JPBlockUser,JPSendMessage, userInfo;
 	
 	
-	public UserInformation(String username) {
+	public UserInformation(String username, String panelSide) {
 		this.username = username;
+		this.panelSide = panelSide;
 		setDefaultProperties();
 		setComponents();
 		this.pack();
@@ -32,7 +33,6 @@ public class UserInformation extends JFrame implements MouseListener{
 	
 	private void setDefaultProperties(){
 		location = MouseInfo.getPointerInfo().getLocation();
-		this.setPreferredSize(GeneralProperties.userInformationTabSize);
 		this.addFocusListener(new FocusListener(){
 			@Override
 		    public void focusLost( FocusEvent e ) {
@@ -62,11 +62,21 @@ public class UserInformation extends JFrame implements MouseListener{
 		JPSendMessage.add(new JLabel(MainFrame.ISendMessage),BorderLayout.WEST);
 		JPSendMessage.add(new JLabel("  Send Message"),BorderLayout.CENTER);
 		JPSendMessage.addMouseListener(this);
-		userInfo  = new JPanel(new GridLayout(4,1));
-		userInfo.setVisible(true);
-		userInfo.add(JPAddFriend);
-		userInfo.add(JPBlockUser); 
-		userInfo.add(JPSendMessage);
+		if (panelSide.equals("left")){
+			this.setPreferredSize(GeneralProperties.userInformationLeftTabSize);
+			userInfo  = new JPanel(new GridLayout(2,1));
+			userInfo.setVisible(true);
+			userInfo.add(JPBlockUser); 
+			userInfo.add(JPSendMessage);
+		} else {
+			this.setPreferredSize(GeneralProperties.userInformationRightTabSize);
+			userInfo  = new JPanel(new GridLayout(3,1));
+			userInfo.setVisible(true);
+			userInfo.add(JPAddFriend);
+			userInfo.add(JPBlockUser); 
+			userInfo.add(JPSendMessage);
+		}
+		
 		this.add(userInfo);
 	}
 	

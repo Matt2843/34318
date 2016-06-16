@@ -31,8 +31,8 @@ public class StallFrame extends JFrame {
 	}
 
 	public void stall(ArrayList<String> args) {
-		this.setVisible(true);
-		parent.setEnabled(false);
+//		this.setVisible(true);
+//		parent.setEnabled(false);
 		new Thread(new Runnable() {
 			public void run() {
 				int countdown = 10;

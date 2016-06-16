@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -42,6 +43,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private JTextField JTNewUsername;
 	private JPasswordField NewPassword, RepeatPassword;
 	private JButton JBCreate, JBNewCancel;
+	private JLabel wait;
     
     private DialogMessage DMessage;
 	
@@ -64,7 +66,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		p.add(comp, c);
 }
 	private void setDefaultProperties(){
-    	this.setPreferredSize(new Dimension(500,300));
+    	this.setPreferredSize(new Dimension(500,350));
     	this.pack();
     	this.setLocationRelativeTo(null);
     	
@@ -128,6 +130,9 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		setJButton(JBNewCancel);
 		
 		JPButtonsLogin = new JPanel(new GridLayout(1,2));
+		
+		wait = new JLabel(new ImageIcon("pictures/wait.gif"));
+		wait.setVisible(true);
 	}
 
 	private void setJPLogin(){
@@ -155,10 +160,10 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private void setJPNewUser(){
 		JPNewUser = new JPanel(new GridBagLayout());
 		int i = 0;
-		c.anchor = GridBagConstraints.NORTHWEST;	
-		addC(JPNewUser, JLCreateNewUser,0,i,2);i++;  c.insets = new Insets(2,2,2,2);
+		c.anchor = GridBagConstraints.NORTHWEST;
+		addC(JPNewUser, JLCreateNewUser,0,i,2);i++; c.insets = normalInsets;
 		addC(JPNewUser, JLNewUsername,0,i,1); i++;
-		addC(JPNewUser, JTNewUsername,0,i,2); i++; c.insets = new Insets(10,2,2,2);
+		addC(JPNewUser, JTNewUsername,0,i,2); i++; c.insets = biggerInsets;
 		addC(JPNewUser, JLNewPassword,0,i,1); i++;
 		addC(JPNewUser, NewPassword,0,i,2); i++;
 		addC(JPNewUser, JLRepeatPassword,0,i,1); i++;

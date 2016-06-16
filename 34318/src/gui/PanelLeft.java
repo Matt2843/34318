@@ -46,7 +46,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 		publicChats.add(("Name 2"));
 		privateChats.add(("User 1"));
 		makePublicChat();
-		JPFriends = new LeftUsersPanel(privateChats);
+		JPFriends = new PanelLeftFriends();
 		tabbedPanel = new JTabbedPane();
 		tabbedPanel.setBackground(Color.white);
 	}
