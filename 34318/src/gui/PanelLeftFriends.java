@@ -14,7 +14,11 @@ import chat.ChatRoom;
 @SuppressWarnings("unchecked")
 public class PanelLeftFriends extends AbstractPanelList implements MouseListener {
 	private static final long serialVersionUID = 1L;
-
+	private MainFrame mainFrame;
+	
+	public PanelLeftFriends(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
+	}
 	@Override
 	public void setVariables() {
 		model = new DefaultListModel<ChatRoom>();		
@@ -49,18 +53,18 @@ public class PanelLeftFriends extends AbstractPanelList implements MouseListener
 	public void getListData() {
 		new Thread(new Runnable() {
 			public void run() {
-//				while (true){
-//					MainFrame.client.sendMessage("D102", null);
-//					MainFrame.stall(MainFrame.chatPanel,"D102");
-//					if (MainFrame.client.getStatus().equals("D102")){
-//						setList(MainFrame.client.getObject());
-//					}
-//					try {
-//						Thread.sleep(3000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//				}
+				while (true){
+					MainFrame.client.sendMessage("D102", null);
+					MainFrame.stall(MainFrame.chatPanel,"D102");
+					if (MainFrame.client.getStatus().equals("D102")){
+						setList(MainFrame.client.getObject());
+					}
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}).start();
 		
@@ -86,7 +90,7 @@ public class PanelLeftFriends extends AbstractPanelList implements MouseListener
 		if (e.getSource() == list){
 			if (e.getButton() == MouseEvent.BUTTON3){
 				int x = list.getSelectedIndex();
-				new UserInformation(list.getModel().getElementAt(x).toString(), "left");
+				new UserInformation(list.getModel().getElementAt(x).toString(), "left",mainFrame);
 			}
 		}
 	}

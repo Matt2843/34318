@@ -16,8 +16,10 @@ public class Friends extends JFrame implements MouseListener {
 	private JList<String> friendList;
 	private DefaultListModel<String> model;
 	private JScrollPane scrollPane;
+	private MainFrame parent;
 	
-	public Friends(){
+	public Friends(MainFrame parent){
+		this.parent = parent;
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(GeneralProperties.friendsPanelSize);
 		model = new DefaultListModel<String>(); 
@@ -50,7 +52,7 @@ public class Friends extends JFrame implements MouseListener {
 						MainFrame.chatPanel.addTab(name);
 						dispose();
 					} else{
-						new DialogMessage("Failed to add person");
+						new DialogMessage("Failed to add person",parent);
 					}
 					try {
 						Thread.sleep(3000);

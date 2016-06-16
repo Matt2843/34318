@@ -1,0 +1,53 @@
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Logout extends JPanel implements MouseListener{
+	private static final long serialVersionUID = 1L;
+	private MainFrame parent;
+	
+	public Logout(MainFrame parent) {
+		this.parent = parent;
+		setLayout(new BorderLayout());
+		setPreferredSize(GeneralProperties.panelLeftaddChat);
+		add(new JLabel(MainFrame.ILogout),BorderLayout.WEST);
+		add(new JLabel(" Log out"), BorderLayout.CENTER);
+		setBackground(Color.white);
+		addMouseListener(this);
+	}
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		new DialogMessage("Log out?",parent);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

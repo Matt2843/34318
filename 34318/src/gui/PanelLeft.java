@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -42,11 +43,10 @@ public class PanelLeft extends JPanel implements MouseListener{
 	}
 	
 	public void setComponents(){
-		publicChats.add(("Name 1"));
-		publicChats.add(("Name 2"));
-		privateChats.add(("User 1"));
 		makePublicChat();
-		JPFriends = new PanelLeftFriends();
+		JPFriends = new JPanel(new BorderLayout());
+		JPFriends.add(new PanelLeftFriends(parent),BorderLayout.CENTER);
+		JPFriends.add(new Logout(parent),BorderLayout.SOUTH);
 		tabbedPanel = new JTabbedPane();
 		tabbedPanel.setBackground(Color.white);
 	}
@@ -55,13 +55,16 @@ public class PanelLeft extends JPanel implements MouseListener{
 		JPPublic = new JPanel(new BorderLayout());
 		JPPublic.add(PLPublicChats, BorderLayout.CENTER);
 		addChat = new JPanel(new BorderLayout());
+		addChat.setPreferredSize(GeneralProperties.panelLeftaddChat);
 		addChat.add(new JLabel(MainFrame.IAdd),BorderLayout.WEST);
 		addChat.add(new JLabel(" Add public chat"),BorderLayout.CENTER);
 		addChat.setFont(new Font("SansSerif", Font.BOLD, 14));
 		addChat.addMouseListener(this);
 		addChat.setBackground(Color.white);
-		addChat.setPreferredSize(GeneralProperties.panelLeftaddChat);
-		JPPublic.add(addChat,BorderLayout.SOUTH);
+		JPanel bottom = new JPanel(new GridLayout(2,1));
+		bottom.add(addChat);
+		bottom.add(new Logout(parent));
+		JPPublic.add(bottom,BorderLayout.SOUTH);
 	}
 	
 	public void updatePublicChats(ArrayList<ChatRoom> publicChats){
@@ -73,8 +76,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == addChat){
 			new NewPublicChat(parent);
-		}
-		
+		}		
 	}
 
 	@Override

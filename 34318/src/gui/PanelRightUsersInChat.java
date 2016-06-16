@@ -14,7 +14,11 @@ import chat.ChatRoom;
 @SuppressWarnings("unchecked")
 public class PanelRightUsersInChat extends AbstractPanelList implements MouseListener{
 	private static final long serialVersionUID = 1L;
-
+	private MainFrame mainFrame;
+	
+	public PanelRightUsersInChat(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
+	}
 	@Override
 	public void setVariables() {
 		model = new DefaultListModel<ChatRoom>();		
@@ -84,7 +88,7 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3){
 			int x = list.getSelectedIndex();
-			new UserInformation(list.getModel().getElementAt(x).toString(),"right");		
+			new UserInformation(list.getModel().getElementAt(x).toString(),"right",mainFrame);		
 		}
 	}
 

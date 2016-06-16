@@ -14,9 +14,10 @@ import javax.swing.text.BadLocationException;
 
 public class ChatTab extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	private PanelRight parent;
+	private PanelRight panelRight;
 	private int tabIndex;
 	private String tabName;
+	private MainFrame mainFrame;
 	private String chatID;
 	private JPanel top = new JPanel(new BorderLayout());
 	
@@ -31,10 +32,11 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JPanel usersInChatRight, JPUsersTop;
 	
 	
-	public ChatTab(PanelRight parent, String tabName, int tabIndex) {
-		this.parent = parent;
+	public ChatTab(PanelRight panelRight, String tabName, int tabIndex, MainFrame mainFrame) {
+		this.panelRight = panelRight;
 		this.tabIndex = tabIndex;
 		this.tabName = tabName;
+		this.mainFrame = mainFrame;
 		setLayout(new BorderLayout());
 		configureChatArea(tabName);
 		setUsersInChat();
@@ -86,7 +88,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	private void setUsersInChat() {
 		makeTopPanel();	
-		PanelRightUsersInChat panel = new PanelRightUsersInChat();
+		PanelRightUsersInChat panel = new PanelRightUsersInChat(mainFrame);
 		panel.setPreferredSize(GeneralProperties.panelUsersSize);
 		panel.setBackground(Color.white);
 		usersInChatRight.add(JPUsersTop,BorderLayout.NORTH);
@@ -125,13 +127,13 @@ public class ChatTab extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == icon){
-			parent.removeTabAt(tabIndex);
+			panelRight.removeTabAt(tabIndex);
 			for(int i = 0; i < PanelRight.chatTabs.size(); i++) {
 				PanelRight.chatTabs.get(i).updateTabIndex(tabIndex);
 			}
 		}
 		if(e.getSource() == JLAddUsers){
-			new Friends();
+			new Friends(mainFrame);
 		}
 		
 	}

@@ -25,7 +25,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	private static final long serialVersionUID = 1L;
 	private DialogLogin DLogin;
 	public JPanel JPLeft, JPRight;
-	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock,IAddFriend, ISendMessage;
+	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock,IAddFriend, ISendMessage, ILogout;
 	public static PanelRight chatPanel;
 	public static Client client;
 	public static JLabel pleaseWait;
@@ -39,7 +39,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    DLogin.setVisible(true);
 	    setDefaultProperties();
 	    createImageIcons();
-	    chatPanel = new PanelRight();
+	    chatPanel = new PanelRight(this);
 	    JPLeft = new PanelLeft(this);
 	    JPRight = new JPanel(new BorderLayout());
 	    JPRight.setBackground(Color.white);;
@@ -60,10 +60,6 @@ public class MainFrame extends JFrame implements GeneralProperties {
 		this.setLocationRelativeTo(null);
 	}
 	
-	public void mainFrameSetVisible(){
-		this.setVisible(true);
-	}
-	
 	public void createImageIcons(){
 		try {
 			IPublic = createResizedImageIcon(ImageIO.read(new File("pictures/public.png")), 20, 20);
@@ -75,6 +71,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 		    IBlock = createResizedImageIcon(ImageIO.read(new File("pictures/block.png")), 12, 12);
 		    IAddFriend = createResizedImageIcon(ImageIO.read(new File("pictures/addFriend.png")), 12, 12);
 		    ISendMessage = createResizedImageIcon(ImageIO.read(new File("pictures/sendMessage.png")), 12, 12);
+		    ILogout = createResizedImageIcon(ImageIO.read(new File("pictures/logout.png")), 12, 12);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

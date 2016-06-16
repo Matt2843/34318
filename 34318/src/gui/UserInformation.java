@@ -20,11 +20,13 @@ public class UserInformation extends JFrame implements MouseListener{
 	private String username, panelSide;
 	private Point location;
 	private JPanel JPAddFriend,JPBlockUser,JPSendMessage, userInfo;
+	private MainFrame mainFrame;
 	
 	
-	public UserInformation(String username, String panelSide) {
+	public UserInformation(String username, String panelSide, MainFrame mainFrame) {
 		this.username = username;
 		this.panelSide = panelSide;
+		this.mainFrame = mainFrame;
 		setDefaultProperties();
 		setComponents();
 		this.pack();
@@ -89,12 +91,12 @@ public class UserInformation extends JFrame implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JPAddFriend){
 			dispose();
-			DialogMessage DMessage = new DialogMessage(username+" added as friend");
+			DialogMessage DMessage = new DialogMessage(username+" added as friend",mainFrame);
 			DMessage.setAlwaysOnTop(true);
 		}
 		if (e.getSource() == JPBlockUser){
 			dispose();
-			DialogMessage DMessage = new DialogMessage(username +" has been blocked");
+			DialogMessage DMessage = new DialogMessage(username +" has been blocked",mainFrame);
 			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){

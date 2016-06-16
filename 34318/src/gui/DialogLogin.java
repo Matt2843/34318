@@ -223,19 +223,19 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			MainFrame.client.sendMessage("L101", null, info);
 			MainFrame.stall(this,"L101","L401");
 			if(MainFrame.client.getStatus().equals("L101")){
-				DMessage = new DialogMessage("Creation Successfull");
+				DMessage = new DialogMessage("Creation Successfull",parent);
 				this.setVisible(false);
-				parent.mainFrameSetVisible();
+				parent.setVisible(true);
 			}
 			else{
 
-				DMessage = new DialogMessage("User already exists");
+				DMessage = new DialogMessage("User already exists",parent);
 				DMessage.setAlwaysOnTop(true);
 			}
 			
 		}
 		else{
-			DMessage = new DialogMessage("Passwords doesn't match");
+			DMessage = new DialogMessage("Passwords doesn't match", parent);
 			DMessage.setAlwaysOnTop(true);
 		}
 	
@@ -247,10 +247,10 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 		MainFrame.stall(this,"L400","L100");
 		if(MainFrame.client.getStatus().equals("L100")){
 			this.setVisible(false);
-			parent.mainFrameSetVisible();
+			parent.setVisible(true);
 		}
 		else{
-			DMessage = new DialogMessage("Wrong login");
+			DMessage = new DialogMessage("Wrong login",parent);
 			DMessage.setAlwaysOnTop(true);
 		}
 	}

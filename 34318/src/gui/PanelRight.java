@@ -8,9 +8,10 @@ import javax.swing.JTabbedPane;
 public class PanelRight extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 	public static ArrayList <ChatTab> chatTabs;
+	private MainFrame mainFrame;
 	
-	
-	public PanelRight(){
+	public PanelRight(MainFrame mainFrame){
+		this.mainFrame = mainFrame;
 		chatTabs = new ArrayList<ChatTab>();
 		setDefaultProperties();
 		setComponents();
@@ -42,7 +43,7 @@ public class PanelRight extends JTabbedPane {
 			}
 		}
 		if (makeTab){
-			ChatTab newTab = new ChatTab(this,name,getTabCount());
+			ChatTab newTab = new ChatTab(this,name,getTabCount(),mainFrame);
 			addTab(null, newTab);
 			
 			setTabComponentAt(getTabCount()-1, newTab.getTabContent());

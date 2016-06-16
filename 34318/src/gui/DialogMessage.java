@@ -23,22 +23,34 @@ public class DialogMessage extends JDialog implements MouseListener, KeyListener
 	private GridBagConstraints c = new GridBagConstraints();
 	private JPanel panel = new JPanel(new GridBagLayout());
 	private JLabel JLMessage; /*JLPasswordDoesntMatch, JLUserAlreadyExist;*/
-	private JButton JBOK, JBTryAgain;
+	private JButton JBOK, JBTryAgain, JBYes,JBNo;
+	private MainFrame mainframe;
+	private DialogLogin DLogin;
 	
-	public DialogMessage(String message){
-		setJComponents(message);
-		
+	public DialogMessage(String message,MainFrame mainframe){
+		this.mainframe = mainframe;
+		setJComponents(message);		
 		this.setPreferredSize(new Dimension(400,150));
-		c.ipady = 50;
-		addC(JLMessage,0,0,1);
-		c.ipady = 0;
+		if (message == "Log out?"){
+			c.ipady = 50;
+			addC(JLMessage,0,0,2);
+			c.ipady = 0;
+			addC(JBYes,0,1,1);
+			addC(JBNo,1,1,1);
+		}else{
+			c.ipady = 50;
+			addC(JLMessage,0,0,1);
+			c.ipady = 0;
+			
+			if (message == "User already exists" || message == "Passwords doesn't match"){
+				addC(JBTryAgain,0,1,1);
+			} 
+				
+			else{
+				addC(JBOK,0,1,1);
+			}
+		}
 		
-		if (message == "User already exists" || message == "Passwords doesn't match"){
-			addC(JBTryAgain,0,1,1);
-		}
-		else{
-			addC(JBOK,0,1,1);
-		}
 		setDefaultProperties();
 		JBOK.addMouseListener(this);
 		JBTryAgain.addMouseListener(this);
@@ -67,6 +79,14 @@ public class DialogMessage extends JDialog implements MouseListener, KeyListener
 		
 		JBTryAgain = new JButton("Try again");
 		setJButton(JBTryAgain);
+		
+		JBYes = new JButton("Yes");
+		setJButton(JBYes);
+		
+		JBNo = new JButton("No");
+		setJButton(JBNo);
+		
+		DLogin  = new DialogLogin(mainframe);
 	}
 	
 	private void setJLabel(JLabel name){
@@ -96,7 +116,15 @@ public class DialogMessage extends JDialog implements MouseListener, KeyListener
 		if(e.getSource() == JBTryAgain){
 			this.setVisible(false);
 		}
-		
+		if (e.getSource()==JBYes){
+			this.setVisible(false);
+			MainFrame.client.sendMessage("L103",null);
+			mainframe.setVisible(false);
+			DLogin.setVisible(true);
+		}
+		if (e.getSource() == JBNo){
+			this.setVisible(false);
+		}
 	}
 
 	@Override
