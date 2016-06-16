@@ -49,18 +49,18 @@ public class PanelLeftFriends extends AbstractPanelList implements MouseListener
 	public void getListData() {
 		new Thread(new Runnable() {
 			public void run() {
-				while (true){
-					MainFrame.client.sendMessage("D102", null);
-					MainFrame.stall(MainFrame.chatPanel,"D102");
-					if (MainFrame.client.getStatus().equals("D102")){
-						setList(MainFrame.client.getObject());
-					}
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
+//				while (true){
+//					MainFrame.client.sendMessage("D102", null);
+//					MainFrame.stall(MainFrame.chatPanel,"D102");
+//					if (MainFrame.client.getStatus().equals("D102")){
+//						setList(MainFrame.client.getObject());
+//					}
+//					try {
+//						Thread.sleep(3000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
 			}
 		}).start();
 		

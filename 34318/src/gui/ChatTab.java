@@ -14,10 +14,11 @@ import javax.swing.text.BadLocationException;
 
 public class ChatTab extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	private ChatPanel parent;
+	private PanelRight parent;
 	private int tabIndex;
 	private String tabName;
 	private String chatID;
+	private JPanel top = new JPanel(new BorderLayout());
 	
 	// The chat window including tab headers.
 	private JLabel icon,name;
@@ -30,13 +31,15 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JPanel usersInChatRight, JPUsersTop;
 	
 	
-	public ChatTab(ChatPanel parent, String tabName, int tabIndex) {
+	public ChatTab(PanelRight parent, String tabName, int tabIndex) {
 		this.parent = parent;
 		this.tabIndex = tabIndex;
 		this.tabName = tabName;
 		setLayout(new BorderLayout());
 		configureChatArea(tabName);
 		setUsersInChat();
+		add(top,BorderLayout.CENTER);
+		add(new ChatArea(this),BorderLayout.SOUTH);
 		validate();
 	}
 	
@@ -88,7 +91,7 @@ public class ChatTab extends JPanel implements MouseListener {
 		panel.setBackground(Color.white);
 		usersInChatRight.add(JPUsersTop,BorderLayout.NORTH);
 		usersInChatRight.add(panel,BorderLayout.CENTER);
-		add(usersInChatRight, BorderLayout.EAST);
+		top.add(usersInChatRight, BorderLayout.EAST);
 		
 	}
 	
@@ -116,15 +119,15 @@ public class ChatTab extends JPanel implements MouseListener {
 		tabContent.setOpaque(false);
 		tabContent.add(name, BorderLayout.WEST);
 		tabContent.add(icon,BorderLayout.EAST);
-		add(ChatScrollPane, BorderLayout.CENTER);
+		top.add(ChatScrollPane, BorderLayout.CENTER);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == icon){
 			parent.removeTabAt(tabIndex);
-			for(int i = 0; i < ChatPanel.chatTabs.size(); i++) {
-				ChatPanel.chatTabs.get(i).updateTabIndex(tabIndex);
+			for(int i = 0; i < PanelRight.chatTabs.size(); i++) {
+				PanelRight.chatTabs.get(i).updateTabIndex(tabIndex);
 			}
 		}
 		if(e.getSource() == JLAddUsers){

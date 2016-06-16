@@ -27,7 +27,7 @@ public class ChatArea extends JPanel implements MouseListener, KeyListener{
 	private JScrollPane scrollPane;
 	private ChatTab parent;
 	
-	public ChatArea(){
+	public ChatArea(ChatTab parent){
 		this.parent = parent;
 		setDefaultProperties();
 		setComponents();
@@ -82,8 +82,9 @@ public class ChatArea extends JPanel implements MouseListener, KeyListener{
 		JTText.setText(null);
 //		String[] chat = {((ChatTab) MainFrame.chatPanel.getSelectedComponent()).getChatID(), message};
 //		MainFrame.client.sendMessage("S100", chat);
-		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
-		MainFrame.chatPanel.chatTabs.get(selectedTab).appendToTextArea(message);
+//		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
+//		MainFrame.chatPanel.chatTabs.get(selectedTab).appendToTextArea(message);
+		parent.appendToTextArea(message);
 	}
 	
 

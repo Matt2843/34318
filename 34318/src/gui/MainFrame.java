@@ -26,7 +26,7 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	private DialogLogin DLogin;
 	public JPanel JPLeft, JPRight;
 	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock,IAddFriend, ISendMessage;
-	public static ChatPanel chatPanel;
+	public static PanelRight chatPanel;
 	public static Client client;
 	public static JLabel pleaseWait;
 	public static JDialog loading;
@@ -39,9 +39,11 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    DLogin.setVisible(true);
 	    setDefaultProperties();
 	    createImageIcons();
-	    chatPanel = new ChatPanel();
+	    chatPanel = new PanelRight();
 	    JPLeft = new PanelLeft(this);
-	    JPRight = new PanelRight();
+	    JPRight = new JPanel(new BorderLayout());
+	    JPRight.setBackground(Color.white);;
+	    JPRight.add(chatPanel);
 	    this.add(JPLeft,BorderLayout.WEST);
 	    this.add(JPRight,BorderLayout.CENTER);
 	    this.validate();
