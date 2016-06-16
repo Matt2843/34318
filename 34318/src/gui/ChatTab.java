@@ -48,11 +48,32 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	public void appendToTextArea(String string) {
 		// TO-DO: Add standard format + timestamp?
+		string = ("Username:    " + string);
 		try {
 			chatArea.getDocument().insertString(chatArea.getDocument().getLength(), string  + "\n", null);
+			replaceWithSmileys(chatArea.getDocument().toString());
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void replaceWithSmileys(String string){
+		int S1 = string.indexOf(":)");
+		int S2 = string.indexOf("8D");
+		int S3 = string.indexOf(":I");
+		int S4 = string.indexOf(";)");
+		int S5 = string.indexOf("<<33");
+		int S6 = string.indexOf(":(");
+		int S7 = string.indexOf(":'(");
+		int S8 = string.indexOf(":''(");
+		int S9 = string.indexOf("D:");
+		int S10 = string.indexOf(";P");
+		int S11 = string.indexOf("8I");
+		int S12 = string.indexOf("'I(");
+		int S13 = string.indexOf(":*");
+		int S14 = string.indexOf(":'D");
+		int S15 = string.indexOf(":D");
+		int S16 = string.indexOf(":P");
 	}
 	
 	

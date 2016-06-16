@@ -24,9 +24,9 @@ public class SmileyMenu extends JFrame implements MouseListener {
 	private int smileys = 16;
 	private Point location;
 	private int x,y;
-	private PanelRight parent;
+	private ChatArea parent;
 	
-	public SmileyMenu(PanelRight parent) {
+	public SmileyMenu(ChatArea parent) {
 		this.parent = parent;
 		createImageIcons();
 		location = MouseInfo.getPointerInfo().getLocation();
@@ -88,12 +88,75 @@ public class SmileyMenu extends JFrame implements MouseListener {
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		for (int i = 0; i<smileys;i++)
-			if (e.getSource() == JLSmileys[i]){
-				parent.addSmiley(Smileys[i]);
-				dispose();
-			}
-		
+//		for (int i = 0; i<smileys;i++)
+//			if (e.getSource() == JLSmileys[i]){
+//				parent.addSmiley(Smileys[i]);
+//				dispose();
+//			}
+		if(e.getSource() == JLSmileys[0]){
+			parent.addSmiley(":)");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[1]){
+			parent.addSmiley("8D");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[2]){
+			parent.addSmiley(":I");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[3]){
+			parent.addSmiley(";)");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[4]){
+			parent.addSmiley("<<33");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[5]){
+			parent.addSmiley(":(");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[6]){
+			parent.addSmiley(":'(");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[7]){
+			parent.addSmiley(":''(");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[8]){
+			parent.addSmiley("D:");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[9]){
+			parent.addSmiley(";P");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[10]){
+			parent.addSmiley("8I");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[11]){
+			parent.addSmiley("'I(");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[12]){
+			parent.addSmiley(":*");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[13]){
+			parent.addSmiley(":'D");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[14]){
+			parent.addSmiley(":D");
+			dispose();
+		}
+		if(e.getSource() == JLSmileys[15]){
+			parent.addSmiley(":P");
+			dispose();
+		}
 	}
 
 	@Override

@@ -40,20 +40,16 @@ public class Friends extends JFrame implements MouseListener {
 	}
 	private void addUser(){
 		String name = friendList.getSelectedValue();
-//		String[] namea = {name};
+		String[] namea = {name};
 		if(!name.equals("")){
 			new Thread(new Runnable() {
 				public void run() {
-					
-//					MainFrame.client.sendMessage("G101", namea);
-//					MainFrame.stall(MainFrame.chatPanel,"G101","G400");
-					MainFrame.client.sendMessage("D100", null);
-					MainFrame.stall(MainFrame.chatPanel,"D100");
-					if (MainFrame.client.getStatus().equals("D100")){
+					MainFrame.client.sendMessage("G101", namea);
+					MainFrame.stall(MainFrame.chatPanel,"G101","G400");
+					if (MainFrame.client.getStatus().equals("G101")){
 						MainFrame.chatPanel.addTab(name);
 						dispose();
-					}
-					else{
+					} else{
 						new DialogMessage("Failed to add person");
 					}
 					try {
