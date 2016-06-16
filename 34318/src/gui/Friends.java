@@ -4,67 +4,138 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-public class Friends extends JFrame implements MouseListener {
+import chat.ChatRoom;
+
+public class Friends extends AbstractPanelList implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	private JList<String> friendList;
-	private DefaultListModel<String> model;
-	private JScrollPane scrollPane;
-	private MainFrame parent;
+	private MainFrame mainFrame;
+	private JFrame frame;
+	private boolean bool = true;
 	
-	public Friends(MainFrame parent){
-		this.parent = parent;
-		this.setLayout(new BorderLayout());
-		this.setPreferredSize(GeneralProperties.friendsPanelSize);
+	public Friends(MainFrame mainFrame, JFrame frame) {
+		this.mainFrame = mainFrame;
+		this.frame = frame;
+	}
+	
+	@Override
+	public void setVariables() {
 		model = new DefaultListModel<String>(); 
-		friendList = new JList<String>(model);
-		friendList.addMouseListener(this);
-		scrollPane = new JScrollPane(friendList);
+		list = new JList<String>(model);
+		list.addMouseListener(this);
+		scrollPane = new JScrollPane(list);
 		scrollPane.setBackground(Color.WHITE);
-		addUserToList("Friend");
-		this.setTitle("Add friend");
-		this.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
-		this.add(scrollPane, BorderLayout.CENTER);
-		this.setVisible(true);
-		this.pack();
-		this.validate();
-		this.setLocationRelativeTo(null);
 	}
-	
-	public void addUserToList(String user) {
-		model.addElement(user);
+
+
+	@Override
+	public void addItem(Object o) {
+		String copy = (String) o;
+		model.addElement(copy);	
 	}
-	private void addUser(){
-		String name = friendList.getSelectedValue();
-		String[] namea = {name};
-		if(!name.equals("")){
-			new Thread(new Runnable() {
-				public void run() {
-					MainFrame.client.sendMessage("G101", namea);
-					MainFrame.stall(MainFrame.chatPanel,"G101","G400");
-					if (MainFrame.client.getStatus().equals("G101")){
-						MainFrame.chatPanel.addTab(name);
-						dispose();
-					} else{
-						new DialogMessage("Failed to add person",parent);
+
+	@Override
+	public void setList(Object o) {
+		model.removeAllElements();
+		ArrayList<String> copy = (ArrayList<String>) o;
+		for (int i =0; i< copy.size();i++){
+			addItem(copy.get(i).toString());
+		}
+	}
+
+	@Override
+	public void addElements() {
+		add(scrollPane,BorderLayout.CENTER);
+		validate();
+	}
+
+	@Override
+	public void getListData() {
+		new Thread(new Runnable() {
+			public void run() {
+				while(bool){
+					MainFrame.client.sendMessage("V104", null);
+					MainFrame.stall(MainFrame.chatPanel,"V104");
+					if (MainFrame.client.getStatus().equals("V104")){
+						setList(MainFrame.client.getObject());
 					}
 					try {
 						Thread.sleep(3000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					
 				}
-			}).start();
-			
-		}
+			}
+		}).start();
 	}
+	private void addPerson(){
+		String name = list.getSelectedValue().toString();
+		String[] namea = {name};
+		new Thread(new Runnable() {
+			public void run() {
+				MainFrame.client.sendMessage("G101", namea);
+				MainFrame.stall(MainFrame.chatPanel,"G101","G400");
+				if (MainFrame.client.getStatus().equals("G400")){
+					new DialogMessage("Failed to add person",mainFrame);
+				} 
+				bool = false;
+				frame.dispose();
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}).start();
+	
+	}
+	
+	
+	
+//	public void setList(Object o) {
+//		model.removeAllElements();
+//		ArrayList<ChatRoom> copy = (ArrayList<ChatRoom>) o;
+//		for (int i =0; i< copy.size();i++){
+//			addUserToList(copy.get(i).toString());
+//		}
+//	}
+//	
+//	public void addUserToList(String user) {
+//		model.addElement(user);
+//	}
+//	
+//	
+//	private void addUser(){
+//		String name = friendList.getSelectedValue();
+//		String[] namea = {name};
+//		if(!name.equals("")){
+//			new Thread(new Runnable() {
+//				public void run() {
+//					MainFrame.client.sendMessage("G101", namea);
+//					MainFrame.stall(MainFrame.chatPanel,"G101","G400");
+//					if (MainFrame.client.getStatus().equals("G101")){
+//						dispose();
+//					} else{
+//						new DialogMessage("Failed to add person",parent);
+//					}
+//					try {
+//						Thread.sleep(3000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//					
+//				}
+//			}).start();
+//			
+//		}
+//	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {			
@@ -84,11 +155,13 @@ public class Friends extends JFrame implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (e.getSource() == friendList){
+		if (e.getSource() == list){
 			if (e.getClickCount() == 2) {
-				addUser();
-				dispose();
+				addPerson();
 			}
 		}		
 	}
+
+
+	
 }

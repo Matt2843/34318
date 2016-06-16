@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,6 +22,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	private MainFrame mainFrame;
 	private String chatID;
 	private JPanel top = new JPanel(new BorderLayout());
+	private JFrame friends;
 	
 	// The chat window including tab headers.
 	private JLabel icon,name;
@@ -123,6 +126,17 @@ public class ChatTab extends JPanel implements MouseListener {
 		tabContent.add(icon,BorderLayout.EAST);
 		top.add(ChatScrollPane, BorderLayout.CENTER);
 	}
+	
+	private void makeFriendFrame(){
+		friends = new JFrame();
+		friends.setPreferredSize(GeneralProperties.friendsPanelSize);
+		friends.setTitle("Add friend");
+		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
+		friends.add(new Friends(mainFrame,friends), BorderLayout.CENTER);
+		friends.setVisible(true);
+		friends.pack();
+		friends.setLocationRelativeTo(null);
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -133,7 +147,8 @@ public class ChatTab extends JPanel implements MouseListener {
 			}
 		}
 		if(e.getSource() == JLAddUsers){
-			new Friends(mainFrame);
+			makeFriendFrame();
+			
 		}
 		
 	}

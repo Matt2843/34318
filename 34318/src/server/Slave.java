@@ -14,6 +14,9 @@ public class Slave extends Thread {
 	private UserInfo userinformation;
 	private String[] params;
 	
+	private ArrayList<ChatRoom> privateRoom = new ArrayList<ChatRoom>();
+	private ArrayList<String> friends = new ArrayList<String>();
+	
 	public Slave(Connection master) {
 		this.master = master;
 	}
@@ -100,9 +103,16 @@ public class Slave extends Thread {
 			break;
 		case "V103": // Block Person
 			break;
+		case "V104": // Get Friends
+			friends.add("Friend 1");
+			master.sendMessage("V104", null, friends);
+			break;
 		case "G100": // Join Public Chat
 			break;
 		case "G101": // Join Private Group
+			String name =  message.getParams()[0];
+			privateRoom.add(new ChatRoom(name));
+			master.sendMessage("G101", null, privateRoom );
 			break;
 		case "G102": // Remove Person from Chat
 			break;
@@ -112,6 +122,10 @@ public class Slave extends Thread {
 			break;
 		case "D100": // Get PublicRooms data
 			master.sendMessage("D100", null, Server.db.generatePublicChatRoomsData());
+			break;
+		case "D101": // Get PrivateRooms data
+			privateRoom.add(new ChatRoom("User 1"));
+			master.sendMessage("D101", null, privateRoom );
 			break;
 		default:
 			break;
