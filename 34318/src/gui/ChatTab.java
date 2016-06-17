@@ -23,7 +23,8 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	private ChatRoom chatRoom;
 	
-	private String chatID;
+	private boolean open = false;
+	
 	private JPanel top = new JPanel(new BorderLayout());
 	private JFrame friends;
 	
@@ -38,10 +39,10 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JPanel usersInChatRight, JPUsersTop;
 	
 	
-	public ChatTab(PanelRight panelRight, ChatRoom chatRoom, MainFrame mainFrame) {
+	public ChatTab(MainFrame parent, PanelRight panelRight, ChatRoom chatRoom) {
 		this.panelRight = panelRight;
 		this.chatRoom = chatRoom;
-		this.parent = mainFrame;
+		this.parent = parent;
 		setLayout(new BorderLayout());
 		configureChatArea(chatRoom.toString());
 		setUsersInChat();
@@ -49,13 +50,7 @@ public class ChatTab extends JPanel implements MouseListener {
 		add(new ChatArea(this),BorderLayout.SOUTH);
 		validate();
 	}
-//	
-//	public void updateTabIndex(int index) {
-//		if(tabIndex != index && tabIndex > index) {
-//			tabIndex -= 1;
-//		}
-//	}
-//	
+	
 	public void appendToTextArea(String string) {
 		try {
 			chatArea.getDocument().insertString(chatArea.getDocument().getLength(), string  + "\n", null);
@@ -114,6 +109,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	}
 
 	private void configureChatArea(String tabName) {
+		System.out.println(tabName);
 		name = new JLabel(tabName);
 		icon = new JLabel(MainFrame.IClose);
 		chatArea = new JTextPane();
@@ -141,18 +137,12 @@ public class ChatTab extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == icon){
-			//panelRight.removeTabAt(tabIndex);
-//			for(int i = 0; i < PanelRight.chatTabs.size(); i++) {
-//				PanelRight.chatTabs.get(i).updateTabIndex(tabIndex);
-//			}
-			panelRight.removeTabAt(panelRight.getSelectedIndex());
-			String[] params = {chatID};
-			System.out.println(params);
+			panelRight.removeTab(chatRoom);
+			String[] params = {chatRoom.getChatID()};
 			MainFrame.client.sendMessage("G103", params);
 		}
 		if(e.getSource() == JLAddUsers){
 			makeFriendFrame();
-			
 		}
 		
 	}
@@ -181,16 +171,18 @@ public class ChatTab extends JPanel implements MouseListener {
 	public JTextPane getChatArea() {
 		return chatArea;
 	}
-
-	public String getChatID() {
-		return chatID;
-	}
-
-	public void setChatID(String chatID) {
-		this.chatID = chatID;
-	}
+	
 	public ChatRoom getChatRoom() {
 		return chatRoom;
 	}
+
+	public boolean isOpen() {
+		return open;
+	}
+
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
+	
 	
 }

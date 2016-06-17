@@ -41,8 +41,9 @@ public class ClientSlave extends Thread {
 			break;
 			
 		case "S100": // Received Message
-			String msg = message.getParams()[0];
-			chatID = message.getParams()[1];
+			String usr = message.getParams()[0];
+			String msg = usr + ": " +message.getParams()[1];
+			chatID = message.getParams()[2];
 			PanelRight.chatTabs.get(chatID).appendToTextArea(msg);
 			break;
 		case "S101":

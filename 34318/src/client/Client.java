@@ -97,7 +97,7 @@ public class Client extends Thread {
 	}
 
 	private void cleanUp() {
-		System.out.println("Closing connection...");
+		System.out.println("[CLIENT]Closing connection...");
 		try {
 			slave.join();
 			output.close();

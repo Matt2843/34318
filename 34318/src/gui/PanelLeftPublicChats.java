@@ -49,8 +49,10 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 		if (e.getClickCount() == 2 && e.getSource() == list) {
 			ChatRoom selectedChatRoom = (ChatRoom) list.getSelectedValue();
 			String[] params = {selectedChatRoom.getChatID()};
-			MainFrame.client.sendMessage("G100", params);
 			MainFrame.chatPanel.addTab(selectedChatRoom);
+			if(!((ChatTab)MainFrame.chatPanel.getSelectedComponent()).isOpen()) {
+				MainFrame.client.sendMessage("G100", params);
+			}
 		}
 	}
 

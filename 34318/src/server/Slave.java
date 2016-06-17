@@ -86,9 +86,10 @@ public class Slave extends Thread {
 			chatID = message.getParams()[0];
 			String msg = message.getParams()[1];
 			for(int i = 0; i < Server.db.getPublicRooms().get(chatID).getChatUsers().size(); i++) {
-				String username = Server.db.getPublicRooms().get(chatID).getChatUsers().get(i);
-				setParams(2, msg, chatID);
-				Server.db.getActiveUsers().get(username).sendMessage("S100", params);
+				String usr = Server.db.getPublicRooms().get(chatID).getChatUsers().get(i);
+				System.out.println(usr);
+				setParams(3, master.getUsername(), msg, chatID);
+				Server.db.getActiveUsers().get(usr).sendMessage("S100", params);
 			}
 			break;
 		case "S101": // Private Message
@@ -114,7 +115,7 @@ public class Slave extends Thread {
 			break;
 		case "G103": // Left Public Chat
 			chatID = message.getParams()[0];
-			Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
+			//Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
 			break;
 			
 		case "F100": // Upload File
@@ -167,7 +168,9 @@ public class Slave extends Thread {
 	public void stopUpdateUserThread() {
 		updateUser = false;
 		try {
-			updateThread.join();
+			if(updateThread != null) {
+				updateThread.join();
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

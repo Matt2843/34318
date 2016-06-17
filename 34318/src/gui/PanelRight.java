@@ -12,7 +12,7 @@ public class PanelRight extends JTabbedPane {
 	private MainFrame parent;
 	
 	//public static ArrayList <ChatTab> chatTabs;
-	public static HashMap<String, ChatTab> chatTabs;
+	public static HashMap<String, ChatTab> chatTabs; // 
 	
 	
 	public PanelRight(MainFrame parent){
@@ -37,29 +37,26 @@ public class PanelRight extends JTabbedPane {
 		return tab.getName();
 	}
 	
-	public boolean addTab(ChatRoom chatRoom){
-		boolean makeTab = true;
-		int index = getSelectedIndex();
-		for (int i = 0; i< chatTabs.size();i++){
-			if (chatTabs.get(i).getName().equals(chatRoom.toString())){
-				index = i;
-				makeTab = false;
+	public void removeTab(ChatRoom chatRoom) {
+		if(chatTabs.containsKey(chatRoom.getChatID())) {
+			chatTabs.remove(chatRoom.getChatID());
+		}
+		removeTabAt(getSelectedIndex());
+	}
+	
+	public void addTab(ChatRoom chatRoom){
+		for(ChatTab value : chatTabs.values()) {
+			if(value.getChatRoom().toString().equals(chatRoom.toString())) {
+				value.setOpen(true);
+				setSelectedComponent(value);
+				return;
 			}
 		}
-		if (makeTab){
-			ChatTab newTab = new ChatTab(this, chatRoom, parent);
-			addTab(null, newTab);
-			
-			setTabComponentAt(getTabCount()-1, newTab.getTabContent());
-			chatTabs.put(chatRoom.getChatID(), newTab);
-			setSelectedIndex(getTabCount()-1);
-			return true;
-		}
-		else{
-			setSelectedIndex(index);
-			return false;
-		}
-		
+		ChatTab newTab = new ChatTab(parent, this, chatRoom);
+		addTab(null, newTab);
+		chatTabs.put(chatRoom.getChatID(), newTab);
+		setSelectedComponent(newTab);
+		setTabComponentAt(getSelectedIndex(), newTab.getTabContent());
 	}
 
 }

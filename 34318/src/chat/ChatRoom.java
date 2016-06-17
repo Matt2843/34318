@@ -37,33 +37,37 @@ public class ChatRoom implements Serializable {
 	public String getChatName() {
 		return chatName;
 	}
+	
 	public void setChatName(String chatName) {
 		this.chatName = chatName;
 	}
+	
 	public ArrayList<String> getChatUsers() {
 		return chatUsers;
 	}
+	
 	public void setChatUsers(ArrayList<String> chatUsers) {
 		this.chatUsers = chatUsers;
 	}
+	
 	public ArrayList<String> getChatAdmins() {
 		return chatAdmins;
 	}
+	
 	public void setChatAdmins(ArrayList<String> chatAdmins) {
 		this.chatAdmins = chatAdmins;
 	}
+	
 	public String getChatHistory(String room) {
 		return chatHistory;
 	}
+	
 	public String getChatID() {
 		return chatID;
 	}
+	
 	public void setChatID(String chatID) {
 		this.chatID = chatID;
-	}
-	@Override
-	public String toString() {
-		return chatName;
 	}
 
 	public ArrayList<String> getChatModerators() {
@@ -76,6 +80,11 @@ public class ChatRoom implements Serializable {
 
 	public String getChatHistory() {
 		return chatHistory;
+	}
+	
+	@Override
+	public String toString() {
+		return chatName;
 	}
 
 }

@@ -89,7 +89,7 @@ public class Connection extends Thread {
 	}
 	
 	private void cleanUp() {
-		System.out.println("Cleaning up...");
+		System.out.println("[CONNECTION]Cleaning up...");
 		if(username != null) Server.db.getActiveUsers().remove(username);
 		try {
 			slave.stopUpdateUserThread();
