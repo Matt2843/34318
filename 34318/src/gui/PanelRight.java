@@ -24,9 +24,10 @@ public class PanelRight extends JTabbedPane {
 	}
 	
 	private void setDefaultProperties(){
-		this.setBackground(Color.white);
-		this.setVisible(true);
-		this.validate();
+		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		setBackground(Color.white);
+		setVisible(true);
+		validate();
 	}
 	
 	private void setComponents(){

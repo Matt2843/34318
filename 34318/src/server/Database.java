@@ -15,9 +15,9 @@ import client.UserInfo;
 @SuppressWarnings("unchecked")
 public class Database {
 	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>(); // K: Username		V: Connection	
-	private HashMap<String, UserInfo> registeredUsers;							 // K: Username		V: Userinformation
-	private HashMap<String, Object> storedFiles;									 // K: FileID		V: File
-	private HashMap<String, ChatRoom> publicRooms;								 // K: ChatID		V: ChatRoom
+	private HashMap<String, UserInfo> registeredUsers;							 		 // K: Username		V: Userinformation
+	private HashMap<String, Object> storedFiles;									 	 // K: FileID		V: File
+	private HashMap<String, ChatRoom> publicRooms;								 		 // K: ChatID		V: ChatRoom
 
 	public Database() {
 		String path = "data/registeredUsers.db";
@@ -32,22 +32,6 @@ public class Database {
 		}
 		System.out.println(registeredUsers.keySet() + " size: " + registeredUsers.size());
 		saveData();
-	}
-	
-	private void saveData() {
-		new Thread(new Runnable() {
-			public void run() {
-				int minutes = 5 * 60;
-				while(true) {	
-					try {
-						Thread.sleep(minutes * 1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					updateAndSaveDatabase();
-				}
-			}
-		}).start();
 	}
 	
 	public boolean authenticateUser(String user, String password) {
@@ -91,6 +75,14 @@ public class Database {
 		return result;
 	}
 	
+	public ArrayList<String> generateOnlinePublicUsersData(String chatID) {
+		ArrayList<String> result = new ArrayList<String>();
+		for(int i = 0; i < publicRooms.get(chatID).getChatUsers().size(); i++) {
+			result.add(publicRooms.get(chatID).getChatUsers().get(i));
+		}
+		return result;
+	}
+	
 	public void updateAndSaveDatabase() {
 		if(!new File("data").exists()) {
 			File dir = new File("data");
@@ -118,6 +110,22 @@ public class Database {
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(obj);
 		oos.close();
+	}
+	
+	private void saveData() {
+		new Thread(new Runnable() {
+			public void run() {
+				int minutes = 5 * 60;
+				while(true) {	
+					try {
+						Thread.sleep(minutes * 1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					updateAndSaveDatabase();
+				}
+			}
+		}).start();
 	}
 
 	public HashMap<String, UserInfo> getRegisteredUsers() {

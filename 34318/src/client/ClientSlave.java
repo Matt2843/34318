@@ -85,14 +85,16 @@ public class ClientSlave extends Thread {
 		case "C401":
 			break;	
 			
-		case "U100": // Public Chats Updated.
+		case "U100": // Public Chats list update.
 			PanelLeft.PLPublicChats.setList(message.getObject());
 			break;
 		case "U101":
 			break;
 		case "U102":
 			break;
-		case "U103":
+		case "U103": // Online users list update.
+			chatID = message.getParams()[0];
+			PanelRight.chatTabs.get(chatID).getOnlineUsers().setList(message.getObject());
 			break;
 		
 		default:

@@ -30,7 +30,7 @@ public class ChatRoom implements Serializable {
 	
 	public void removeUser(String user) {
 		if(chatUsers.contains(user)) {
-			removeUser(user);
+			chatUsers.remove(user);
 		}
 	}
 	

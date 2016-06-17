@@ -54,7 +54,8 @@ public class Client extends Thread {
 				if(message.getCommand().equals("K100")) break; // Kick Command
 			} while(running);
 		} catch (Exception e) {
-			System.out.println("Something stopped the client.");
+			e.printStackTrace();
+			//System.out.println("Something stopped the client.");
 		} finally {
 			cleanUp();
 		}

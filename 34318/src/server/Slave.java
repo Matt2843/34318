@@ -12,6 +12,7 @@ public class Slave extends Thread {
 	private Thread updateThread;
 	private boolean updateUser = true;
 	
+	private ArrayList<String> onlineUsers;
 	private String username, password;
 	private UserInfo userinformation;
 	
@@ -82,15 +83,23 @@ public class Slave extends Thread {
 				master.sendMessage("C400", params);
 			}
 			break;
+			
 		case "S100": // Broadcast Message
 			chatID = message.getParams()[0];
-			String msg = message.getParams()[1];
-			for(int i = 0; i < Server.db.getPublicRooms().get(chatID).getChatUsers().size(); i++) {
-				String usr = Server.db.getPublicRooms().get(chatID).getChatUsers().get(i);
-				System.out.println(usr);
-				setParams(3, master.getUsername(), msg, chatID);
-				Server.db.getActiveUsers().get(usr).sendMessage("S100", params);
-			}
+			String msg = message.getParams()[1];		
+			broadcastToPublicRoom(chatID, msg);
+			
+//			setParams(3, master.getUsername(), msg, chatID);
+//			for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
+//				Server.db.getActiveUsers().get(value).sendMessage("S100", params);
+//			}
+			
+//			for(int i = 0; i < Server.db.getPublicRooms().get(chatID).getChatUsers().size(); i++) {
+//				String usr = Server.db.getPublicRooms().get(chatID).getChatUsers().get(i);
+//				System.out.println(usr);
+//				setParams(3, master.getUsername(), msg, chatID);
+//				Server.db.getActiveUsers().get(usr).sendMessage("S100", params);
+//			}
 			break;
 		case "S101": // Private Message
 			break;
@@ -108,6 +117,10 @@ public class Slave extends Thread {
 		case "G100": // Join Public Chat
 			chatID = message.getParams()[0];
 			Server.db.getPublicRooms().get(chatID).addUser(master.getUsername());
+			
+			// Broadcast the event: User joined chat.
+			onlineUsers = Server.db.generateOnlinePublicUsersData(chatID);
+			broadcastObjectToPublicRoom(chatID, "U103", onlineUsers);
 			break;
 		case "G101": // Join Private Group
 			break;
@@ -115,21 +128,46 @@ public class Slave extends Thread {
 			break;
 		case "G103": // Left Public Chat
 			chatID = message.getParams()[0];
-			//Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
+			Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
+			
+			// Broadcast the event: User left chat.
+			onlineUsers = Server.db.generateOnlinePublicUsersData(chatID);
+			broadcastObjectToPublicRoom(chatID, "U103", onlineUsers);
 			break;
 			
 		case "F100": // Upload File
 			break;
 		case "F101": // Download File
 			break;
-		case "D100": // Get PublicRooms data
+			
+		case "U100": // Get PublicRooms data
 			master.sendMessage("D100", null, Server.db.generatePublicChatRoomsData());
 			break;
-		case "D101": // Get PrivateRooms data
+		case "U101": // Get PrivateRooms data
+			break;
+		case "U102": // Get Friends data
+			break;
+		case "U103": // Get online users data
+			chatID = message.getParams()[0];
+			master.sendMessage("U103", null, Server.db.generateOnlinePublicUsersData(chatID));
 			break;
 			
 		default:
 			break;
+		}
+	}
+	
+	private void broadcastToPublicRoom(String chatID, String msg) {
+		setParams(3, master.getUsername(), msg, chatID);
+		for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
+			Server.db.getActiveUsers().get(value).sendMessage("S100", params);
+		}
+	}
+	
+	private void broadcastObjectToPublicRoom(String chatID, String cmd, Object o) {
+		setParams(1, chatID);
+		for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
+			Server.db.getActiveUsers().get(value).sendMessage(cmd, params, o);
 		}
 	}
 	

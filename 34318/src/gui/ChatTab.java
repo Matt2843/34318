@@ -25,6 +25,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	private boolean open = false;
 	
+	private PanelRightUsersInChat onlineUsers;
 	private JPanel top = new JPanel(new BorderLayout());
 	private JFrame friends;
 	
@@ -86,17 +87,16 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	private void setUsersInChat() {
 		makeTopPanel();	
-		PanelRightUsersInChat panel = new PanelRightUsersInChat(parent);
-		panel.setPreferredSize(GeneralProperties.panelUsersSize);
-		panel.setBackground(Color.white);
+		onlineUsers = new PanelRightUsersInChat();
+		onlineUsers.setPreferredSize(GeneralProperties.panelUsersSize);
+		onlineUsers.setBackground(Color.white);
 		usersInChatRight.add(JPUsersTop,BorderLayout.NORTH);
-		usersInChatRight.add(panel,BorderLayout.CENTER);
+		usersInChatRight.add(onlineUsers,BorderLayout.CENTER);
 		top.add(usersInChatRight, BorderLayout.EAST);
 		
 	}
 	
 	private void makeTopPanel(){
-
 		JLAddUsers = new JLabel(MainFrame.IAdd);
 		JLAddUsers.addMouseListener(this);
 		usersInChatRight = new JPanel( new BorderLayout());;
@@ -182,6 +182,10 @@ public class ChatTab extends JPanel implements MouseListener {
 
 	public void setOpen(boolean open) {
 		this.open = open;
+	}
+
+	public PanelRightUsersInChat getOnlineUsers() {
+		return onlineUsers;
 	}
 	
 	
