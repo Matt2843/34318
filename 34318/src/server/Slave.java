@@ -8,57 +8,33 @@ import utility.Message;
 import utility.Utilities;
 
 public class Slave extends Thread {
-
 	private Connection master;
+	private Thread updateThread;
+	private boolean updateUser = true;
+	
 	private String username, password;
 	private UserInfo userinformation;
+	
 	private String[] params;
-
-	private ArrayList<ChatRoom> privateRoom = new ArrayList<ChatRoom>();
-	private ArrayList<String> friends = new ArrayList<String>();
 
 	public Slave(Connection master) {
 		this.master = master;
-		updateUser();
-	}
-
-	private void setParams(int length, String... p) {
-		params = new String[length];
-		for (int i = 0; i < length; i++) {
-			params[i] = p[i];
-		}
-	}
-	
-	private void updateUser() {
-		new Thread(new Runnable() {
-			public void run() {
-				int seconds = 20;
-				while(true) {
-					ArrayList<ChatRoom> publicRoomsData = Server.db.generatePublicChatRoomsData();
-					if(publicRoomsData.size() > 0) master.sendMessage("U100", null, publicRoomsData);
-					try {
-						Thread.sleep(seconds * 1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
 	}
 
 	public void translate(Message message) {
 		switch (message.getCommand()) {
 		case "L100": // Login
-			System.out.println(Server.db.getRegisteredUsers().keySet());
 			username = message.getParams()[0];
 			password = message.getParams()[1];
-			if (Server.db.getRegisteredUsers().get(username).getPassword().equals(password)) {
+			if(Server.db.authenticateUser(username, password)) {
+				master.setUsername(username);
 				Server.db.addNewConnection(username, master);
 				master.sendMessage("L100", null);
 			} else {
 				setParams(1, "Wrong credentials");
 				master.sendMessage("L400", params);
 			}
+			startUpdateUserThread();
 			break;
 		case "L101": // Create User
 			// Notify client if username already exists in database.
@@ -100,7 +76,6 @@ public class Slave extends Thread {
 			String chatID = Utilities.generateID(5);
 			if (Server.db.addNewPublicChat(message.getParams()[0], chatID)) {
 				ArrayList<ChatRoom> data = Server.db.generatePublicChatRoomsData();
-				System.out.println(data);
 				master.sendMessage("C100", null, data);
 			} else {
 				setParams(1, "Roomname taken");
@@ -108,7 +83,13 @@ public class Slave extends Thread {
 			}
 			break;
 		case "S100": // Broadcast Message
-			System.out.println(message.toString());
+			chatID = message.getParams()[0];
+			String msg = message.getParams()[1];
+			for(int i = 0; i < Server.db.getPublicRooms().get(chatID).getChatUsers().size(); i++) {
+				String username = Server.db.getPublicRooms().get(chatID).getChatUsers().get(i);
+				setParams(2, msg, chatID);
+				Server.db.getActiveUsers().get(username).sendMessage("S100", params);
+			}
 			break;
 		case "S101": // Private Message
 			break;
@@ -121,18 +102,21 @@ public class Slave extends Thread {
 		case "V103": // Block Person
 			break;
 		case "V104": // Get Friends
-			friends.add("Friend 1");
-			master.sendMessage("V104", null, friends);
 			break;
+			
 		case "G100": // Join Public Chat
+			chatID = message.getParams()[0];
+			Server.db.getPublicRooms().get(chatID).addUser(master.getUsername());
 			break;
 		case "G101": // Join Private Group
-			String name = message.getParams()[0];
-			privateRoom.add(new ChatRoom(name));
-			master.sendMessage("G101", null, privateRoom);
 			break;
 		case "G102": // Remove Person from Chat
 			break;
+		case "G103": // Left Public Chat
+			chatID = message.getParams()[0];
+			Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
+			break;
+			
 		case "F100": // Upload File
 			break;
 		case "F101": // Download File
@@ -141,11 +125,51 @@ public class Slave extends Thread {
 			master.sendMessage("D100", null, Server.db.generatePublicChatRoomsData());
 			break;
 		case "D101": // Get PrivateRooms data
-			privateRoom.add(new ChatRoom("User 1"));
-			master.sendMessage("D101", null, privateRoom);
 			break;
+			
 		default:
 			break;
+		}
+	}
+	
+	private void setParams(int length, String... p) {
+		params = new String[length];
+		for (int i = 0; i < length; i++) {
+			params[i] = p[i];
+		}
+	}
+	
+	private boolean sendUpdatedInfo() {
+		if(updateUser) {
+			ArrayList<ChatRoom> publicRoomsData = Server.db.generatePublicChatRoomsData();
+			if(publicRoomsData.size() > 0) master.sendMessage("U100", null, publicRoomsData);
+			return true;
+		} else return false;
+	}
+	
+	private void startUpdateUserThread() {
+		updateThread = new Thread(new Runnable() {
+			public void run() {
+				int seconds = 20;
+				while(true) {
+					if(!sendUpdatedInfo()) break;
+					try {
+						Thread.sleep(seconds * 1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		updateThread.start();
+	}
+	
+	public void stopUpdateUserThread() {
+		updateUser = false;
+		try {
+			updateThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 

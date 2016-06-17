@@ -100,7 +100,7 @@ public class UserInformation extends JFrame implements MouseListener{
 			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){
-			MainFrame.chatPanel.addTab(username);
+			//MainFrame.chatPanel.addTab(username);
 			dispose();
 		}
 	}

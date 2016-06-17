@@ -10,7 +10,7 @@ import server.gui.ServerWindow;
 public class Server extends Thread {
 	private static String serverStatus = null;
 
-	public static Database db = new Database();
+	public static Database db;
 	
 	private boolean running = true;
 	private boolean ready = false;
@@ -21,6 +21,7 @@ public class Server extends Thread {
 
 	public Server(int port) {
 		this.port = port;
+		db = new Database();
 	}
 	
 	@Override
@@ -52,7 +53,7 @@ public class Server extends Thread {
 			Connection newClient = new Connection(connection);
 			newClient.start();
 			//db.addNewConnection(newClient);
-			setServerStatus("New client " + newClient.toString() + " connected.");
+			setServerStatus("New client " + newClient.getClientIP() + " connected.");
 			//db.addNewConnection(sessionID, newClient);
 			//setServerStatus("New client " + sessionID + " connected." + db.getActiveUsers().keySet());
 			try {
@@ -64,9 +65,6 @@ public class Server extends Thread {
 	}
 
 	private void cleanUp() {
-		for(int i = 0; i < db.getActiveUsers().size(); i++) {
-			db.getActiveUsers().get(i).stopConnection();
-		}
 		try {
 			db.updateAndSaveDatabase();
 			connection.close();

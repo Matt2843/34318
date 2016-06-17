@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -18,7 +20,9 @@ import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.text.BadLocationException;
 
-public class ChatArea extends JPanel implements MouseListener, KeyListener{
+import chat.ChatRoom;
+
+public class ChatArea extends JPanel implements ActionListener, KeyListener, MouseListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel  Menu, JPPictures;
 	private JLabel JLSmiley, JLFile;
@@ -58,7 +62,7 @@ public class ChatArea extends JPanel implements MouseListener, KeyListener{
 		JBSend = new JButton("Send");
 		JBSend.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		JBSend.setBackground(Color.WHITE);
-		JBSend.addMouseListener(this);
+		JBSend.addActionListener(this);
 		
 		JTText = new JTextPane();
 		JTText.addKeyListener(this);
@@ -80,27 +84,22 @@ public class ChatArea extends JPanel implements MouseListener, KeyListener{
 	
 	private void sendText(String message){
 		JTText.setText(null);
-//		String[] chat = {((ChatTab) MainFrame.chatPanel.getSelectedComponent()).getChatID(), message};
-//		MainFrame.client.sendMessage("S100", chat);
-//		int selectedTab = MainFrame.chatPanel.getSelectedIndex();
-//		MainFrame.chatPanel.chatTabs.get(selectedTab).appendToTextArea(message);
-		parent.appendToTextArea(message);
+		ChatRoom room = ((ChatTab)MainFrame.chatPanel.getSelectedComponent()).getChatRoom();
+		String targetChatID = room.getChatID();
+		String[] params = {targetChatID, message};
+		MainFrame.client.sendMessage("S100", params);
 	}
 	
-
 //	public void addSmiley(ImageIcon smiley){
-//		JTText.insertIcon( smiley);
-//	}
-	
+//	JTText.insertIcon( smiley);
+//}
+
 	public void addSmiley(String smiley){
 		JTText.setText(JTText.getText()+ smiley);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == JBSend){
-			sendText(JTText.getText());
-		}
 		if (e.getSource() == JLSmiley){
 			new SmileyMenu(this);
 		}
@@ -134,11 +133,17 @@ public class ChatArea extends JPanel implements MouseListener, KeyListener{
 			} catch (BadLocationException e1) {
 				e1.printStackTrace();
 			}
-        }
-		else if (e.getKeyCode() == KeyEvent.VK_ENTER){			
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER){			
 			if (!JTText.getText().trim().equals("")){
 				sendText(JTText.getText());
 			}	
+		}
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == JBSend){
+			sendText(JTText.getText());
 		}
 	}
 
@@ -147,4 +152,6 @@ public class ChatArea extends JPanel implements MouseListener, KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }

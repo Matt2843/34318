@@ -1,5 +1,6 @@
 package client;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -33,9 +34,9 @@ public class Client extends Thread {
 			setupSlave();
 			whileConnected();
 		} catch (IOException e) {
-			System.out.println("Lost connection to server for some reason, .. implement reestablish connection?");
+			e.printStackTrace();
+			//System.out.println("Lost connection to server for some reason, .. implement reestablish connection?");
 		}
-		super.run();
 	}
 
 	private void setupSlave() {
@@ -45,18 +46,18 @@ public class Client extends Thread {
 
 	private void whileConnected() throws IOException {
 		Message message = null;
-		while(running) {
-			try {
+		try {
+			do {
 				message = (Message) input.readObject();
-				System.out.println("FROM SERVER: " + message.toString());
 				slave.translate(message);
-			} catch (ClassNotFoundException e) {
-				System.out.println("Couldn't cast message to the proper format");
-			}
-			if(message.getCommand().equals("K100")) break;
-			if(message.getCommand().equals("Q999")) sendMessage("K999", null);
+				System.out.println("FROM SERVER: " + message.toString());
+				if(message.getCommand().equals("K100")) break; // Kick Command
+			} while(running);
+		} catch (Exception e) {
+			System.out.println("Something stopped the client.");
+		} finally {
+			cleanUp();
 		}
-		cleanUp();
 	}
 
 	private void configureStreams() throws IOException {
@@ -96,7 +97,7 @@ public class Client extends Thread {
 	}
 
 	private void cleanUp() {
-		System.out.println("Closing connection.");
+		System.out.println("Closing connection...");
 		try {
 			slave.join();
 			output.close();

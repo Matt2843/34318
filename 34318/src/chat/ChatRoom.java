@@ -3,22 +3,37 @@ package chat;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import server.Database;
-
 public class ChatRoom implements Serializable {
 	private static final long serialVersionUID = -48495501677067685L;
-	public static Database db = new Database();
 	
-	private String chatName = null;
-	private String chatHistory = null;
+	private String chatName = "";
+	private String chatID = "";
+	private String chatHistory = "";
 	
-	private ArrayList<String> chatUsers = null;
-	private ArrayList<String> chatModeratiors = null;
-	private ArrayList<String> chatAdmins = null;
+	private ArrayList<String> chatUsers;
+	private ArrayList<String> chatModerators;
+	private ArrayList<String> chatAdmins;
 	
-	public ChatRoom(String chatName){
+	public ChatRoom(String chatName, String chatID){
 		this.chatName = chatName;
+		this.chatID = chatID;
+		chatUsers = new ArrayList<String>();
+		chatModerators = new ArrayList<String>();
+		chatAdmins = new ArrayList<String>();
 	}
+	
+	public void addUser(String user) {
+		if(!chatUsers.contains(user)) {
+			chatUsers.add(user);
+		}
+	}
+	
+	public void removeUser(String user) {
+		if(chatUsers.contains(user)) {
+			removeUser(user);
+		}
+	}
+	
 	public String getChatName() {
 		return chatName;
 	}
@@ -31,12 +46,6 @@ public class ChatRoom implements Serializable {
 	public void setChatUsers(ArrayList<String> chatUsers) {
 		this.chatUsers = chatUsers;
 	}
-	public ArrayList<String> getChatModeratiors() {
-		return chatModeratiors;
-	}
-	public void setChatModeratiors(ArrayList<String> chatModeratiors) {
-		this.chatModeratiors = chatModeratiors;
-	}
 	public ArrayList<String> getChatAdmins() {
 		return chatAdmins;
 	}
@@ -44,13 +53,29 @@ public class ChatRoom implements Serializable {
 		this.chatAdmins = chatAdmins;
 	}
 	public String getChatHistory(String room) {
-		db.getPublicRooms().get(room);
 		return chatHistory;
+	}
+	public String getChatID() {
+		return chatID;
+	}
+	public void setChatID(String chatID) {
+		this.chatID = chatID;
 	}
 	@Override
 	public String toString() {
 		return chatName;
 	}
-	
+
+	public ArrayList<String> getChatModerators() {
+		return chatModerators;
+	}
+
+	public void setChatModerators(ArrayList<String> chatModerators) {
+		this.chatModerators = chatModerators;
+	}
+
+	public String getChatHistory() {
+		return chatHistory;
+	}
 
 }

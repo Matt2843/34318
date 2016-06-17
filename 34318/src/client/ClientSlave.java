@@ -2,11 +2,13 @@ package client;
 
 import gui.GUIEngine;
 import gui.PanelLeft;
+import gui.PanelRight;
 import utility.Message;
 
 public class ClientSlave extends Thread {
 	
 	private Client master;
+	private String chatID = null;
 	
 	public ClientSlave(Client master) {
 		this.master = master;
@@ -38,7 +40,10 @@ public class ClientSlave extends Thread {
 		case "F401":
 			break;
 			
-		case "S100":
+		case "S100": // Received Message
+			String msg = message.getParams()[0];
+			chatID = message.getParams()[1];
+			PanelRight.chatTabs.get(chatID).appendToTextArea(msg);
 			break;
 		case "S101":
 			break;

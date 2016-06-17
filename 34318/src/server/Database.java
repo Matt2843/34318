@@ -15,9 +15,9 @@ import client.UserInfo;
 @SuppressWarnings("unchecked")
 public class Database {
 	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>(); // K: Username		V: Connection	
-	private HashMap<String, UserInfo> registeredUsers = null;							 // K: Username		V: Userinformation
-	private HashMap<String, Object> storedFiles = null;									 // K: FileID		V: File
-	private HashMap<String, ChatRoom> publicRooms = null;								 // K: ChatID		V: ChatRoom
+	private HashMap<String, UserInfo> registeredUsers;							 // K: Username		V: Userinformation
+	private HashMap<String, Object> storedFiles;									 // K: FileID		V: File
+	private HashMap<String, ChatRoom> publicRooms;								 // K: ChatID		V: ChatRoom
 
 	public Database() {
 		String path = "data/registeredUsers.db";
@@ -30,7 +30,7 @@ public class Database {
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(registeredUsers.keySet());
+		System.out.println(registeredUsers.keySet() + " size: " + registeredUsers.size());
 		saveData();
 	}
 	
@@ -48,6 +48,14 @@ public class Database {
 				}
 			}
 		}).start();
+	}
+	
+	public boolean authenticateUser(String user, String password) {
+		if(registeredUsers.containsKey(user)) {
+			if(registeredUsers.get(user).getPassword().equals(password)) {
+				return true;
+			} else return false;
+		} else return false;
 	}
 
 	public void registerNewUser(String username, UserInfo userinformation) {
@@ -68,7 +76,8 @@ public class Database {
 					return false;
 				}
 			}
-			ChatRoom newPublicRoom = new ChatRoom(name);
+			ChatRoom newPublicRoom = new ChatRoom(name, chatID);
+			System.out.println(newPublicRoom.getChatUsers());
 			publicRooms.put(chatID, newPublicRoom);
 			return true;
 		} else return false;

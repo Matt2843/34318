@@ -51,8 +51,9 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 
 	@Override
 	public void mouseClicked(MouseEvent e) {	
-		if (e.getClickCount() == 2) {
-			MainFrame.chatPanel.addTab(list.getSelectedValue().toString());
+		if (e.getClickCount() == 2 && e.getSource() == list) {
+			ChatRoom selectedChatRoom = (ChatRoom) list.getSelectedValue();
+			MainFrame.chatPanel.addTab(selectedChatRoom);
 		}
 	}
 

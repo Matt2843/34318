@@ -12,7 +12,7 @@ import javax.swing.JScrollPane;
 import chat.ChatRoom;
 
 @SuppressWarnings("unchecked")
-public class PanelLeftPublicChats extends AbstractPanelList implements MouseListener{
+public class PanelLeftPublicChats extends AbstractPanelList implements MouseListener {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -46,8 +46,11 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getClickCount() == 2) {
-			MainFrame.chatPanel.addTab(list.getSelectedValue().toString());
+		if (e.getClickCount() == 2 && e.getSource() == list) {
+			ChatRoom selectedChatRoom = (ChatRoom) list.getSelectedValue();
+			String[] params = {selectedChatRoom.getChatID()};
+			MainFrame.client.sendMessage("G100", params);
+			MainFrame.chatPanel.addTab(selectedChatRoom);
 		}
 	}
 

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +20,7 @@ import javax.swing.JPanel;
 import client.Client;
 
 
-public class MainFrame extends JFrame implements GeneralProperties {
+public class MainFrame extends JFrame implements GeneralProperties, WindowListener {
 	private static final long serialVersionUID = 1L;
 	public static Client client;
 	
@@ -42,20 +44,20 @@ public class MainFrame extends JFrame implements GeneralProperties {
 	    JPRight = new JPanel(new BorderLayout());
 	    JPRight.setBackground(Color.white);;
 	    JPRight.add(chatPanel);
-	    this.add(JPLeft,BorderLayout.WEST);
-	    this.add(JPRight,BorderLayout.CENTER);
-	    this.validate();
+	    add(JPLeft,BorderLayout.WEST);
+	    add(JPRight,BorderLayout.CENTER);
+	    validate();
 	}
 	
 	private void setDefaultProperties(){
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getContentPane().setBackground(Color.white);
-		this.setTitle("Chat project");
-		this.setIconImage(new ImageIcon("pictures/chat.png").getImage());
-		this.setLayout(new BorderLayout());
-		this.setPreferredSize(GeneralProperties.frameSize);
-		this.pack();
-		this.setLocationRelativeTo(null);
+		getContentPane().setBackground(Color.white);
+		setTitle("Chat project");
+		setIconImage(new ImageIcon("pictures/chat.png").getImage());
+		setLayout(new BorderLayout());
+		setPreferredSize(GeneralProperties.frameSize);
+		addWindowListener(this);
+		pack();
+		setLocationRelativeTo(null);
 	}
 	
 	public void createImageIcons(){
@@ -84,6 +86,58 @@ public class MainFrame extends JFrame implements GeneralProperties {
         ImageIcon result = new ImageIcon(bi);
         return result;
     }
+	
+	public static void beforeClosing() {
+		if(client.isRunning()) {
+			client.sendMessage("X999", null);
+		}
+//		try {
+//			client.join();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		beforeClosing();
+		System.exit(0);
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 //	public static void stall(Component parent, String... okayFlags){
 //		ArrayList<String> flags = new ArrayList<String>();

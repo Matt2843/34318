@@ -14,18 +14,21 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
+import chat.ChatRoom;
+
 public class ChatTab extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
+	private MainFrame parent;
 	private PanelRight panelRight;
-	private int tabIndex;
-	private String tabName;
-	private MainFrame mainFrame;
+	
+	private ChatRoom chatRoom;
+	
 	private String chatID;
 	private JPanel top = new JPanel(new BorderLayout());
 	private JFrame friends;
 	
 	// The chat window including tab headers.
-	private JLabel icon,name;
+	private JLabel icon, name;
 	private JPanel tabContent;
 	private JTextPane chatArea;
 	private JScrollPane ChatScrollPane;
@@ -35,28 +38,25 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JPanel usersInChatRight, JPUsersTop;
 	
 	
-	public ChatTab(PanelRight panelRight, String tabName, int tabIndex, MainFrame mainFrame) {
+	public ChatTab(PanelRight panelRight, ChatRoom chatRoom, MainFrame mainFrame) {
 		this.panelRight = panelRight;
-		this.tabIndex = tabIndex;
-		this.tabName = tabName;
-		this.mainFrame = mainFrame;
+		this.chatRoom = chatRoom;
+		this.parent = mainFrame;
 		setLayout(new BorderLayout());
-		configureChatArea(tabName);
+		configureChatArea(chatRoom.toString());
 		setUsersInChat();
 		add(top,BorderLayout.CENTER);
 		add(new ChatArea(this),BorderLayout.SOUTH);
 		validate();
 	}
-	
-	public void updateTabIndex(int index) {
-		if(tabIndex != index && tabIndex > index) {
-			tabIndex -= 1;
-		}
-	}
-	
+//	
+//	public void updateTabIndex(int index) {
+//		if(tabIndex != index && tabIndex > index) {
+//			tabIndex -= 1;
+//		}
+//	}
+//	
 	public void appendToTextArea(String string) {
-		// TO-DO: Add standard format + timestamp?
-		string = ("Username:    " + string);
 		try {
 			chatArea.getDocument().insertString(chatArea.getDocument().getLength(), string  + "\n", null);
 			replaceWithSmileys(chatArea.getDocument().toString());
@@ -86,12 +86,12 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	
 	public String getName(){
-		return tabName;
+		return chatRoom.toString();
 	}
 	
 	private void setUsersInChat() {
 		makeTopPanel();	
-		PanelRightUsersInChat panel = new PanelRightUsersInChat(mainFrame);
+		PanelRightUsersInChat panel = new PanelRightUsersInChat(parent);
 		panel.setPreferredSize(GeneralProperties.panelUsersSize);
 		panel.setBackground(Color.white);
 		usersInChatRight.add(JPUsersTop,BorderLayout.NORTH);
@@ -132,7 +132,7 @@ public class ChatTab extends JPanel implements MouseListener {
 		friends.setPreferredSize(GeneralProperties.friendsPanelSize);
 		friends.setTitle("Add friend");
 		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
-		friends.add(new Friends(mainFrame,friends), BorderLayout.CENTER);
+		friends.add(new Friends(parent,friends), BorderLayout.CENTER);
 		friends.setVisible(true);
 		friends.pack();
 		friends.setLocationRelativeTo(null);
@@ -141,10 +141,14 @@ public class ChatTab extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == icon){
-			panelRight.removeTabAt(tabIndex);
-			for(int i = 0; i < PanelRight.chatTabs.size(); i++) {
-				PanelRight.chatTabs.get(i).updateTabIndex(tabIndex);
-			}
+			//panelRight.removeTabAt(tabIndex);
+//			for(int i = 0; i < PanelRight.chatTabs.size(); i++) {
+//				PanelRight.chatTabs.get(i).updateTabIndex(tabIndex);
+//			}
+			panelRight.removeTabAt(panelRight.getSelectedIndex());
+			String[] params = {chatID};
+			System.out.println(params);
+			MainFrame.client.sendMessage("G103", params);
 		}
 		if(e.getSource() == JLAddUsers){
 			makeFriendFrame();
@@ -185,7 +189,8 @@ public class ChatTab extends JPanel implements MouseListener {
 	public void setChatID(String chatID) {
 		this.chatID = chatID;
 	}
-	
-	
+	public ChatRoom getChatRoom() {
+		return chatRoom;
+	}
 	
 }

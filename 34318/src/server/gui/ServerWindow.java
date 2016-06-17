@@ -88,9 +88,6 @@ public class ServerWindow extends JFrame implements WindowListener {
 	@Override
 	public void windowClosing(WindowEvent e) {
 		Server.db.updateAndSaveDatabase();
-		for(int i = 0; i < Server.db.getRegisteredUsers().size(); i++) {
-			System.out.println(Server.db.getRegisteredUsers().keySet());
-		}
 		System.exit(0);
 	}
 

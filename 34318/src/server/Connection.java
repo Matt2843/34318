@@ -12,8 +12,7 @@ public class Connection extends Thread {
 
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
-
-	private boolean alive = true;
+	
 	private boolean loggedIn = false;
 
 	private String clientIP = null;
@@ -28,6 +27,7 @@ public class Connection extends Thread {
 	public Connection(Socket connection) {
 		this.client = connection; //this.sessionID = sessionID;
 		slave = new Slave(this);
+		slave.start();
 		clientIP = client.getRemoteSocketAddress().toString();
 	}
 
@@ -37,18 +37,14 @@ public class Connection extends Thread {
 			Message message;
 			configureStreams();
 			greetUser();
-			slave.start();
-			while(alive) {
+			do {
 				message = (Message) input.readObject();
 				System.out.println("FROM CLIENT: " + message.toString());
 				slave.translate(message);
-				if(message.getCommand().equals("L103")) {
-					alive = false;
-					break;
-				}
-			}
+				if(message.getCommand().equals("X999")) break;
+			} while(true);
 		} catch (Exception e) {
-			System.out.println("Socket or streams closed, running cleanUp.");
+			e.printStackTrace();
 		} finally {
 			cleanUp();
 		}
@@ -93,9 +89,10 @@ public class Connection extends Thread {
 	}
 	
 	private void cleanUp() {
-		alive = false;
-		Server.db.getActiveUsers().remove(username);
+		System.out.println("Cleaning up...");
+		if(username != null) Server.db.getActiveUsers().remove(username);
 		try {
+			slave.stopUpdateUserThread();
 			slave.join();
 			input.close();
 			output.close();
@@ -104,15 +101,7 @@ public class Connection extends Thread {
 			e.printStackTrace();
 		}
 	}
-
-	public boolean isConnectionAlive() {
-		return alive;
-	}
 	
-	public void stopConnection() {
-		alive = false;
-	}
-
 	public String getClientIP() {
 		return clientIP;
 	}
@@ -123,6 +112,14 @@ public class Connection extends Thread {
 
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }
