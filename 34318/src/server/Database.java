@@ -14,9 +14,9 @@ import client.UserInfo;
 
 @SuppressWarnings("unchecked")
 public class Database {
-	private ArrayList<Connection> activeUsers = new ArrayList<Connection>();	
+	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>(); // K: Username		V: Connection	
+	private HashMap<String, UserInfo> registeredUsers = null;							 // K: Username		V: Userinformation
 	private HashMap<String, Object> storedFiles = null;									 // K: FileID		V: File
-	private HashMap<String, UserInfo> registeredUsers = null;							 // CHANGE THIS
 	private HashMap<String, ChatRoom> publicRooms = null;								 // K: ChatID		V: ChatRoom
 
 	public Database() {
@@ -37,9 +37,10 @@ public class Database {
 		registeredUsers.put(username, userinformation);
 	}
 	
-	public void addNewConnection(Connection connection) {
-		if(!activeUsers.contains(connection)) {
-			activeUsers.add(connection);
+	public void addNewConnection(String username, Connection connection) {
+		System.out.println("Username: " + username + " set as active user.");
+		if(!activeUsers.containsKey(username)) {
+			activeUsers.put(username, connection);
 		}
 	}
 
@@ -52,7 +53,6 @@ public class Database {
 			}
 			ChatRoom newPublicRoom = new ChatRoom(name);
 			publicRooms.put(chatID, newPublicRoom);
-			System.out.println(publicRooms.keySet());
 			return true;
 		} else return false;
 	}
@@ -106,7 +106,7 @@ public class Database {
 		return storedFiles;
 	}
 
-	public ArrayList<Connection> getActiveUsers() {
+	public HashMap<String, Connection> getActiveUsers() {
 		return activeUsers;
 	}
 

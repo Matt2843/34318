@@ -15,14 +15,16 @@ import javax.swing.JTabbedPane;
 import chat.ChatRoom;
 
 public class PanelLeft extends JPanel implements MouseListener{
-
 	private static final long serialVersionUID = 1L;
+	
+	public static PanelLeftPublicChats PLPublicChats;
+	
 	private JPanel  JPPublic,JPFriends, addChat;
 	private JTabbedPane tabbedPanel;
 	public static ArrayList<String> publicChats = new ArrayList<String>();
 	private ArrayList<String> privateChats = new ArrayList<String>();
 	private MainFrame parent;
-	private PanelLeftPublicChats PLPublicChats = new PanelLeftPublicChats();
+	
 	
 	public PanelLeft(MainFrame parent){
 		this.parent = parent;
@@ -43,6 +45,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 	}
 	
 	public void setComponents(){
+		PLPublicChats = new PanelLeftPublicChats();
 		makePublicChat();
 		JPFriends = new JPanel(new BorderLayout());
 		JPFriends.add(new PanelLeftFriends(parent),BorderLayout.CENTER);

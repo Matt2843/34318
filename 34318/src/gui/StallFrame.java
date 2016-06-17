@@ -33,27 +33,27 @@ public class StallFrame extends JFrame {
 	public void stall(ArrayList<String> args) {
 //		this.setVisible(true);
 //		parent.setEnabled(false);
-		new Thread(new Runnable() {
-			public void run() {
-				int countdown = 10;
-				while (!args.contains(MainFrame.client.getStatus())) {
-					try {
-						Thread.sleep(1000);
-						countdown -= 1;
-						if (countdown == 0) {
-							dispose();
-							break;
-						}
-
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				if (countdown > 0) {
-					dispose();
-				}
-			}
-		}).start();
+//		new Thread(new Runnable() {
+//			public void run() {
+//				int countdown = 10;
+//				while (!args.contains(MainFrame.client.getStatus())) {
+//					try {
+//						Thread.sleep(1000);
+//						countdown -= 1;
+//						if (countdown == 0) {
+//							dispose();
+//							break;
+//						}
+//
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//				if (countdown > 0) {
+//					dispose();
+//				}
+//			}
+//		}).start();
 	}
 	
 	@Override

@@ -221,38 +221,40 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			String newPassword = NewPassword.getText();
 			UserInfo info = new UserInfo(newUsername, newPassword);
 			MainFrame.client.sendMessage("L101", null, info);
-			MainFrame.stall(this,"L101","L401");
-			if(MainFrame.client.getStatus().equals("L101")){
-				DMessage = new DialogMessage("Creation Successfull",parent);
-				this.setVisible(false);
-				parent.setVisible(true);
-			}
-			else{
-
-				DMessage = new DialogMessage("User already exists",parent);
-				DMessage.setAlwaysOnTop(true);
-			}
+		}
+//			MainFrame.stall(this,"L101","L401");
+//			if(MainFrame.client.getStatus().equals("L101")){
+//				DMessage = new DialogMessage("Creation Successfull",parent);
+//				this.setVisible(false);
+//				parent.setVisible(true);
+//			}
+//			else{
+//
+//				DMessage = new DialogMessage("User already exists",parent);
+//				DMessage.setAlwaysOnTop(true);
+//			}
 			
-		}
-		else{
-			DMessage = new DialogMessage("Passwords doesn't match", parent);
-			DMessage.setAlwaysOnTop(true);
-		}
+		
+//		else{
+//			DMessage = new DialogMessage("Passwords doesn't match", parent);
+//			DMessage.setAlwaysOnTop(true);
+//		}
 	
 }
 	
 	public void login(){
 		String loginInfo[] = getLoginInfo();
-		MainFrame.client.sendMessage("L100",loginInfo);
-		MainFrame.stall(this,"L400","L100");
-		if(MainFrame.client.getStatus().equals("L100")){
-			this.setVisible(false);
-			parent.setVisible(true);
-		}
-		else{
-			DMessage = new DialogMessage("Wrong login",parent);
-			DMessage.setAlwaysOnTop(true);
-		}
+		MainFrame.client.sendMessage("L100", loginInfo);		
+		setVisible(false);
+//		MainFrame.stall(this,"L400","L100");
+//		if(MainFrame.client.getStatus().equals("L100")){
+//			this.setVisible(false);
+//			parent.setVisible(true);
+//		}
+//		else{
+//			DMessage = new DialogMessage("Wrong login",parent);
+//			DMessage.setAlwaysOnTop(true);
+//		}
 	}
 	
 	@Override

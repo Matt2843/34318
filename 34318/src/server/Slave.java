@@ -8,50 +8,47 @@ import utility.Message;
 import utility.Utilities;
 
 public class Slave extends Thread {
-	
+
 	private Connection master;
 	private String username, password;
 	private UserInfo userinformation;
 	private String[] params;
-	
+
 	private ArrayList<ChatRoom> privateRoom = new ArrayList<ChatRoom>();
 	private ArrayList<String> friends = new ArrayList<String>();
-	
+
 	public Slave(Connection master) {
 		this.master = master;
 	}
-	
+
 	private void setParams(int length, String... p) {
 		params = new String[length];
-		for(int i = 0; i < length; i++) {
+		for (int i = 0; i < length; i++) {
 			params[i] = p[i];
 		}
 	}
-	
-	public void decode(Message message) {
+
+	public void translate(Message message) {
 		switch (message.getCommand()) {
-		case "L100": // Login 
+		case "L100": // Login
+			System.out.println(Server.db.getRegisteredUsers().keySet());
 			username = message.getParams()[0];
 			password = message.getParams()[1];
-			if(Server.db.getRegisteredUsers().containsKey(username)) {
-				userinformation = (UserInfo) message.getObject();
-				if(Server.db.getRegisteredUsers().get(username).getPassword().equals(password)) {
-					master.setLoggedIn(true);
-					master.sendMessage("L100", null,userinformation);
-				} else {
-					setParams(1, "Wrong Password");
-					master.sendMessage("L400", params);
-				}
+			if (Server.db.getRegisteredUsers().get(username).getPassword().equals(password)) {
+				Server.db.addNewConnection(username, master);
+				master.sendMessage("L100", null);
 			} else {
-				setParams(1, "Username doesn't exist.");
+				setParams(1, "Wrong credentials");
 				master.sendMessage("L400", params);
 			}
 			break;
 		case "L101": // Create User
 			// Notify client if username already exists in database.
-			userinformation = (UserInfo) message.getObject(); // Test if conversion is good.
+			userinformation = (UserInfo) message.getObject(); // Test if
+																// conversion is
+																// good.
 			username = userinformation.getUsername();
-			if(!Server.db.getRegisteredUsers().containsKey(username)) {
+			if (!Server.db.getRegisteredUsers().containsKey(username)) {
 				Server.db.registerNewUser(username, userinformation);
 				Server.setServerStatus("User " + username + " added to database.");
 				master.sendMessage("L101", null);
@@ -61,19 +58,19 @@ public class Slave extends Thread {
 			}
 			break;
 		case "L102": // Change Password
-			if(master.isLoggedIn()) {
+			if (master.isLoggedIn()) {
 				username = message.getParams()[0];
-				password = message.getParams()[1];	
-				if(Server.db.getRegisteredUsers().get(username).getPassword().equals(password)) {
+				password = message.getParams()[1];
+				if (Server.db.getRegisteredUsers().get(username).getPassword().equals(password)) {
 					Server.db.getRegisteredUsers().get(username).setPassword(message.getParams()[2]);
 				} else {
 					setParams(1, "Wrong Password");
 					master.sendMessage("L400", params);
 				}
-			} 
+			}
 			break;
 		case "L103": // Logout
-			if(master.isLoggedIn()) {
+			if (master.isLoggedIn()) {
 				master.setLoggedIn(false);
 			}
 			break;
@@ -83,9 +80,11 @@ public class Slave extends Thread {
 			break;
 		case "C102": // Start Public Group
 			String chatID = Utilities.generateID(5);
-			if(Server.db.addNewPublicChat(message.getParams()[0], chatID)){
-				master.sendMessage("C100", null);
-			} else{
+			if (Server.db.addNewPublicChat(message.getParams()[0], chatID)) {
+				ArrayList<ChatRoom> data = Server.db.generatePublicChatRoomsData();
+				System.out.println(data);
+				master.sendMessage("C100", null, data);
+			} else {
 				setParams(1, "Roomname taken");
 				master.sendMessage("C400", params);
 			}
@@ -110,9 +109,9 @@ public class Slave extends Thread {
 		case "G100": // Join Public Chat
 			break;
 		case "G101": // Join Private Group
-			String name =  message.getParams()[0];
+			String name = message.getParams()[0];
 			privateRoom.add(new ChatRoom(name));
-			master.sendMessage("G101", null, privateRoom );
+			master.sendMessage("G101", null, privateRoom);
 			break;
 		case "G102": // Remove Person from Chat
 			break;
@@ -125,11 +124,11 @@ public class Slave extends Thread {
 			break;
 		case "D101": // Get PrivateRooms data
 			privateRoom.add(new ChatRoom("User 1"));
-			master.sendMessage("D101", null, privateRoom );
+			master.sendMessage("D101", null, privateRoom);
 			break;
 		default:
 			break;
 		}
 	}
-	
+
 }

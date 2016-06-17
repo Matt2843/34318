@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import gui.MainFrame;
 import utility.Message;
 
 public class Client extends Thread {
@@ -16,9 +17,9 @@ public class Client extends Thread {
 	private int port;
 
 	private Socket connection;
+	private boolean running = false;
 	
-	private String status = "";
-	private Object object = null;
+	private ClientSlave slave;
 	
 	public Client(String host, int port) {
 		this.host = host;
@@ -30,6 +31,7 @@ public class Client extends Thread {
 		try {
 			connectToServer();
 			configureStreams();
+			setupSlave();
 			whileConnected();
 		} catch (IOException e) {
 			System.out.println("Lost connection to server for some reason, .. implement reestablish connection?");
@@ -37,14 +39,18 @@ public class Client extends Thread {
 		super.run();
 	}
 
+	private void setupSlave() {
+		slave = new ClientSlave(this);
+		slave.start();
+	}
+
 	private void whileConnected() throws IOException {
 		Message message = null;
-		while(true) {
+		while(running) {
 			try {
 				message = (Message) input.readObject();
 				System.out.println("FROM SERVER: " + message.toString());
-				status = message.getCommand();
-				object = message.getObject();
+				slave.translate(message);
 			} catch (ClassNotFoundException e) {
 				System.out.println("Couldn't cast message to the proper format");
 			}
@@ -65,7 +71,6 @@ public class Client extends Thread {
 	}
 
 	public void sendMessage(String command, String[] params) {
-		status = "";
 		Message m = new Message(command, params);
 		try {
 			output.writeObject(m);
@@ -74,9 +79,14 @@ public class Client extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public synchronized void start() {
+		running = true;
+		super.start();
+	}
 
 	public void sendMessage(String command, String[] params, Object object) {
-		status = "";
 		Message m = new Message(command, params, object);
 		try {
 			output.writeObject(m);
@@ -87,7 +97,6 @@ public class Client extends Thread {
 	}
 
 	private void cleanUp() {
-		//sendMessage("L103", null); // ADD PARAMS?
 		System.out.println("Closing connection.");
 		try {
 			output.close();
@@ -98,12 +107,8 @@ public class Client extends Thread {
 		}
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public Object getObject() {
-		return object;
+	public boolean isRunning() {
+		return running;
 	}
 
 }

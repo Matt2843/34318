@@ -50,26 +50,6 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 	}
 
 	@Override
-	public void getListData() {
-		new Thread(new Runnable() {
-			public void run() {
-				while (true){
-					MainFrame.client.sendMessage("D101", null);
-					MainFrame.stall(MainFrame.chatPanel,"D101");
-					if (MainFrame.client.getStatus().equals("D101")){
-						setList(MainFrame.client.getObject());
-					}
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
-	}
-
-	@Override
 	public void mouseClicked(MouseEvent e) {	
 		if (e.getClickCount() == 2) {
 			MainFrame.chatPanel.addTab(list.getSelectedValue().toString());

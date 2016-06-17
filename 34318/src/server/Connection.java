@@ -41,7 +41,7 @@ public class Connection extends Thread {
 			while(alive) {
 				message = (Message) input.readObject();
 				System.out.println("FROM CLIENT: " + message.toString());
-				slave.decode(message);
+				slave.translate(message);
 				if(message.getCommand().equals("L103")) {
 					alive = false;
 					break;

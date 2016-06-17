@@ -25,7 +25,7 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 
 	@Override
 	public void addItem(Object o) {
-		String copy = (String) o;
+		ChatRoom copy = (ChatRoom) o;
 		model.addElement(copy);		
 	}
 
@@ -34,7 +34,7 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 		model.removeAllElements();
 		ArrayList<ChatRoom> copy = (ArrayList<ChatRoom>) o;
 		for (int i =0; i< copy.size();i++){
-			addItem(copy.get(i).toString());
+			addItem(copy.get(i));
 		}
 	}
 
@@ -42,27 +42,6 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 	public void addElements() {
 		add(scrollPane,BorderLayout.CENTER);
 		validate();
-	}
-	
-	@Override
-	public void getListData() {
-		new Thread(new Runnable() {
-			public void run() {
-				while (true){
-					MainFrame.client.sendMessage("D100", null);
-					MainFrame.stall(MainFrame.chatPanel,"D100");
-					if (MainFrame.client.getStatus().equals("D100")){
-						setList(MainFrame.client.getObject());
-					}
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
-		
 	}
 
 	@Override
@@ -87,7 +66,5 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 	}
-
-	
 	
 }

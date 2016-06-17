@@ -54,48 +54,29 @@ public class Friends extends AbstractPanelList implements MouseListener {
 		add(scrollPane,BorderLayout.CENTER);
 		validate();
 	}
-
-	@Override
-	public void getListData() {
-		new Thread(new Runnable() {
-			public void run() {
-				while(bool){
-					MainFrame.client.sendMessage("V104", null);
-					MainFrame.stall(MainFrame.chatPanel,"V104");
-					if (MainFrame.client.getStatus().equals("V104")){
-						setList(MainFrame.client.getObject());
-					}
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
-	}
-	private void addPerson(){
-		String name = list.getSelectedValue().toString();
-		String[] namea = {name};
-		new Thread(new Runnable() {
-			public void run() {
-				MainFrame.client.sendMessage("G101", namea);
-				MainFrame.stall(MainFrame.chatPanel,"G101","G400");
-				if (MainFrame.client.getStatus().equals("G400")){
-					new DialogMessage("Failed to add person",mainFrame);
-				} 
-				bool = false;
-				frame.dispose();
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				
-			}
-		}).start();
 	
-	}
+//	private void addPerson(){
+//		String name = list.getSelectedValue().toString();
+//		String[] namea = {name};
+//		new Thread(new Runnable() {
+//			public void run() {
+//				MainFrame.client.sendMessage("G101", namea);
+//				MainFrame.stall(MainFrame.chatPanel,"G101","G400");
+//				if (MainFrame.client.getStatus().equals("G400")){
+//					new DialogMessage("Failed to add person",mainFrame);
+//				} 
+//				bool = false;
+//				frame.dispose();
+//				try {
+//					Thread.sleep(3000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//		}).start();
+//	
+//	}
 	
 	
 	
@@ -157,11 +138,9 @@ public class Friends extends AbstractPanelList implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == list){
 			if (e.getClickCount() == 2) {
-				addPerson();
+//				addPerson();
 			}
 		}		
 	}
-
-
 	
 }

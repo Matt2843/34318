@@ -64,10 +64,10 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 		String[] namea = {name};
 		if(!name.equals("")){
 			MainFrame.client.sendMessage("C102",namea);
-			MainFrame.stall(mainFrame,"C100","C400");
-			if (MainFrame.client.getStatus().equals("C100")){
-				MainFrame.chatPanel.addTab(name);
-			}
+//			MainFrame.stall(mainFrame,"C100","C400");
+//			if (MainFrame.client.getStatus().equals("C100")){
+//				MainFrame.chatPanel.addTab(name);
+//			}
 			dispose();		
 		}
 		else{

@@ -2,13 +2,11 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,18 +19,18 @@ import client.Client;
 
 
 public class MainFrame extends JFrame implements GeneralProperties {
-
 	private static final long serialVersionUID = 1L;
+	public static Client client;
+	
 	private DialogLogin DLogin;
 	public JPanel JPLeft, JPRight;
 	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock,IAddFriend, ISendMessage, ILogout;
 	public static PanelRight chatPanel;
-	public static Client client;
 	public static JLabel pleaseWait;
 	public static JDialog loading;
 	
-	public MainFrame(Client client){
-		MainFrame.client = client;
+	public MainFrame(){
+		client = new Client("localhost", 1234);
 		client.start();
 		DLogin = new DialogLogin(this);
 		DLogin.setAlwaysOnTop(true);
@@ -87,17 +85,13 @@ public class MainFrame extends JFrame implements GeneralProperties {
         return result;
     }
 	
-	public static void stall(Component parent, String... okayFlags){
-		ArrayList<String> flags = new ArrayList<String>();
-		for (int i = 0; i<okayFlags.length;i++){
-			flags.add(okayFlags[i]);
-		}
-		StallFrame frame = new StallFrame(parent);
-		frame.stall(flags);
-	}
+//	public static void stall(Component parent, String... okayFlags){
+//		ArrayList<String> flags = new ArrayList<String>();
+//		for (int i = 0; i<okayFlags.length;i++){
+//			flags.add(okayFlags[i]);
+//		}
+//		StallFrame frame = new StallFrame(parent);
+//		frame.stall(flags);
+//	}
 	
-	public static void main(String[] args) {
-		//new MainFrame(new Client("192.168.1.52", 1234));
-		new MainFrame(new Client("localhost", 1234));
-	}
 }
