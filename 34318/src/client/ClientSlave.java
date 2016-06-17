@@ -1,7 +1,6 @@
 package client;
 
 import gui.GUIEngine;
-import gui.MainFrame;
 import gui.PanelLeft;
 import utility.Message;
 
@@ -79,6 +78,16 @@ public class ClientSlave extends Thread {
 			break;
 		case "C401":
 			break;	
+			
+		case "U100": // Public Chats Updated.
+			PanelLeft.PLPublicChats.setList(message.getObject());
+			break;
+		case "U101":
+			break;
+		case "U102":
+			break;
+		case "U103":
+			break;
 		
 		default:
 			break;

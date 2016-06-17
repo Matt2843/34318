@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import gui.MainFrame;
 import utility.Message;
 
 public class Client extends Thread {
@@ -99,6 +98,7 @@ public class Client extends Thread {
 	private void cleanUp() {
 		System.out.println("Closing connection.");
 		try {
+			slave.join();
 			output.close();
 			input.close();
 			connection.close();

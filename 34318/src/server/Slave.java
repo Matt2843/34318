@@ -19,6 +19,7 @@ public class Slave extends Thread {
 
 	public Slave(Connection master) {
 		this.master = master;
+		updateUser();
 	}
 
 	private void setParams(int length, String... p) {
@@ -26,6 +27,23 @@ public class Slave extends Thread {
 		for (int i = 0; i < length; i++) {
 			params[i] = p[i];
 		}
+	}
+	
+	private void updateUser() {
+		new Thread(new Runnable() {
+			public void run() {
+				int seconds = 20;
+				while(true) {
+					ArrayList<ChatRoom> publicRoomsData = Server.db.generatePublicChatRoomsData();
+					if(publicRoomsData.size() > 0) master.sendMessage("U100", null, publicRoomsData);
+					try {
+						Thread.sleep(seconds * 1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 	}
 
 	public void translate(Message message) {

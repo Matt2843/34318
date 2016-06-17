@@ -31,8 +31,25 @@ public class Database {
 			e.printStackTrace();
 		}
 		System.out.println(registeredUsers.keySet());
+		saveData();
 	}
 	
+	private void saveData() {
+		new Thread(new Runnable() {
+			public void run() {
+				int minutes = 5 * 60;
+				while(true) {	
+					try {
+						Thread.sleep(minutes * 1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					updateAndSaveDatabase();
+				}
+			}
+		}).start();
+	}
+
 	public void registerNewUser(String username, UserInfo userinformation) {
 		registeredUsers.put(username, userinformation);
 	}

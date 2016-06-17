@@ -19,7 +19,7 @@ public class Connection extends Thread {
 	private String clientIP = null;
 	private Socket client = null;
 	
-	//private String sessionID = null;
+	private String username = null;
 	
 	private Slave slave = null;
 	
@@ -27,6 +27,7 @@ public class Connection extends Thread {
 
 	public Connection(Socket connection) {
 		this.client = connection; //this.sessionID = sessionID;
+		slave = new Slave(this);
 		clientIP = client.getRemoteSocketAddress().toString();
 	}
 
@@ -36,7 +37,6 @@ public class Connection extends Thread {
 			Message message;
 			configureStreams();
 			greetUser();
-			slave = new Slave(this);
 			slave.start();
 			while(alive) {
 				message = (Message) input.readObject();
@@ -94,13 +94,13 @@ public class Connection extends Thread {
 	
 	private void cleanUp() {
 		alive = false;
-		//Server.db.getActiveUsers().remove(sessionID);
-		//Server.setServerStatus("Connection " + sessionID + " timed out. DB: " + Server.db.getActiveUsers().keySet());
+		Server.db.getActiveUsers().remove(username);
 		try {
+			slave.join();
 			input.close();
 			output.close();
 			client.close();
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
