@@ -37,7 +37,7 @@ public class MainFrame extends JFrame implements GeneralProperties, WindowListen
 	    addElements(); 
 	    
 	    startDialogLogin();
-	    startClient("localhost", 1234);
+	    startClient("90.184.124.62", 1234);
 	    
 	    pack();
 		setLocationRelativeTo(null);
