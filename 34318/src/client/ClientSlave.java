@@ -13,7 +13,9 @@ public class ClientSlave extends Thread {
 	public void translate(Message message) {
 		switch(message.getCommand()) {
 		case "L100":	// LOGIN SUCCEEDED
-			MainFrame.client.setProfile((UserInfo) message.getObject());
+			UserInfo profile = (UserInfo) message.getObject();
+			MainFrame.client.setProfile(profile);
+			//Profile.setUserName(profile.getUsername());
 			MainFrame.DLogin.setVisible(false);
 			GUIEngine.mainFrame.setVisible(true);
 			break;
