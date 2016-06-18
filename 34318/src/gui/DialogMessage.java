@@ -52,19 +52,19 @@ public class DialogMessage extends JDialog implements MouseListener, KeyListener
 		JBOK.addMouseListener(this);
 		JBTryAgain.addMouseListener(this);
 		panel.setBackground(Color.white);
-		this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
-		this.add(panel);
-		this.pack();
-		this.setVisible(true);
+		getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
+		add(panel);
+		pack();
+		setVisible(true);
 		
 	}
 	
 	private void setDefaultProperties(){
-		this.setUndecorated(true);
-		this.pack();
-		this.setLocationRelativeTo(null);
-		this.setAlwaysOnTop(true);
-		this.setVisible(true);
+		setUndecorated(true);
+		pack();
+		setLocationRelativeTo(null);
+		setAlwaysOnTop(true);
+		setVisible(true);
 	}
 	
 	private void setJComponents(String msg){

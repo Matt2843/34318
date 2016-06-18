@@ -24,6 +24,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import client.UserInfo;
+import utility.Utilities;
 
 
 
@@ -216,17 +217,19 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private void createNewUser(){
 		
 		if(NewPassword.getText().equals(RepeatPassword.getText())){
-			String newUsername = JTNewUsername.getText();
-			String newPassword = NewPassword.getText();
-			UserInfo info = new UserInfo(newUsername, newPassword);
+			String[] userInfo = getLoginInfo();
+			String encryptedPassword = Utilities.encryptString(userInfo[1]);
+			UserInfo info = new UserInfo(userInfo[0], encryptedPassword);
 			MainFrame.client.sendMessage("L101", null, info);
 		}
 	
 	}
 	
 	public void login(){
-		String loginInfo[] = getLoginInfo();
-		MainFrame.client.sendMessage("L100", loginInfo);
+		String userInfo[] = getLoginInfo();
+		String encryptedPassword = Utilities.encryptString(userInfo[1]);
+		userInfo[1] = encryptedPassword;
+		MainFrame.client.sendMessage("L100", userInfo);
 	}
 	
 	@Override
