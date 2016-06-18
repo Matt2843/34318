@@ -92,7 +92,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	}
 	
 	private void makeTopPanel(){
-		JLAddUsers = new JLabel(MainFrame.IAdd);
+		JLAddUsers = new JLabel(GeneralProperties.IAdd);
 		JLAddUsers.addMouseListener(this);
 		usersInChatRight = new JPanel( new BorderLayout());;
 		JPUsersTop = new JPanel(new BorderLayout());
@@ -106,7 +106,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	private void configureChatArea(String tabName) {
 		System.out.println(tabName);
 		name = new JLabel(tabName);
-		icon = new JLabel(MainFrame.IClose);
+		icon = new JLabel(GeneralProperties.IClose);
 		chatArea = new JTextPane();
 		chatArea.setEditable(false);
 		ChatScrollPane = new JScrollPane(chatArea);

@@ -51,15 +51,15 @@ public class UserInformation extends JFrame implements MouseListener {
 	
 	private void setComponents(){
 		JPAddFriend = new JPanel(new BorderLayout());
-		JPAddFriend.add(new JLabel(MainFrame.IAddFriend),BorderLayout.WEST);
+		JPAddFriend.add(new JLabel(GeneralProperties.IAddFriend),BorderLayout.WEST);
 		JPAddFriend.add(new JLabel("  Add Friend"),BorderLayout.CENTER);
 		JPAddFriend.addMouseListener(this);
 		JPBlockUser = new JPanel(new BorderLayout());
-		JPBlockUser.add(new JLabel(MainFrame.IBlock),BorderLayout.WEST);
+		JPBlockUser.add(new JLabel(GeneralProperties.IBlock),BorderLayout.WEST);
 		JPBlockUser.add(new JLabel("  Block User"), BorderLayout.CENTER);
 		JPBlockUser.addMouseListener(this);
 		JPSendMessage = new JPanel(new BorderLayout());
-		JPSendMessage.add(new JLabel(MainFrame.ISendMessage),BorderLayout.WEST);
+		JPSendMessage.add(new JLabel(GeneralProperties.ISendMessage),BorderLayout.WEST);
 		JPSendMessage.add(new JLabel("  Send Message"),BorderLayout.CENTER);
 		JPSendMessage.addMouseListener(this);
 		if (panelSide.equals("left")){

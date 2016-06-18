@@ -50,11 +50,11 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 		JPPictures = new JPanel(new GridLayout(1,2));
 		JPPictures.setBackground(Color.WHITE);
 				
-		JLSmiley = new JLabel(MainFrame.ISmiley);
+		JLSmiley = new JLabel(GeneralProperties.ISmiley);
 		JLSmiley.addMouseListener(this);
 		JLSmiley.setOpaque(false);
 		
-		JLFile = new JLabel(MainFrame.IFile);
+		JLFile = new JLabel(GeneralProperties.IFile);
 		JLFile.setOpaque(false);
 		
 		JBSend = new JButton("Send");

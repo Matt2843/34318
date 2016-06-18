@@ -13,12 +13,10 @@ import javax.swing.JScrollPane;
 
 public class Friends extends AbstractPanelList implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	private MainFrame mainFrame;
 	private JFrame frame;
 	private boolean bool = true;
 	
-	public Friends(MainFrame mainFrame, JFrame frame) {
-		this.mainFrame = mainFrame;
+	public Friends(JFrame frame) {
 		this.frame = frame;
 	}
 	

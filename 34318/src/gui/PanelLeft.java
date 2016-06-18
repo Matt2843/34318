@@ -28,8 +28,8 @@ public class PanelLeft extends JPanel implements MouseListener{
 	public PanelLeft() {
 		setDefaultProperties();
 		setComponents();
-		tabbedPanel.addTab("Public",MainFrame.IPublic,JPPublic);
-		tabbedPanel.addTab("Friends", MainFrame.IPrivate, JPFriends);
+		tabbedPanel.addTab("Public",GeneralProperties.IPublic,JPPublic);
+		tabbedPanel.addTab("Friends", GeneralProperties.IPrivate, JPFriends);
 		this.add(tabbedPanel, BorderLayout.CENTER);
 		this.validate();
 	}
@@ -57,7 +57,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 		JPPublic.add(PLPublicChats, BorderLayout.CENTER);
 		addChat = new JPanel(new BorderLayout());
 		addChat.setPreferredSize(GeneralProperties.panelLeftaddChat);
-		addChat.add(new JLabel(MainFrame.IAdd),BorderLayout.WEST);
+		addChat.add(new JLabel(GeneralProperties.IAdd),BorderLayout.WEST);
 		addChat.add(new JLabel(" Add public chat"),BorderLayout.CENTER);
 		addChat.setFont(new Font("SansSerif", Font.BOLD, 14));
 		addChat.addMouseListener(this);
