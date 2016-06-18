@@ -61,7 +61,6 @@ public class Database {
 				}
 			}
 			ChatRoom newPublicRoom = new ChatRoom(name, chatID);
-			System.out.println(newPublicRoom.getChatUsers());
 			publicRooms.put(chatID, newPublicRoom);
 			return true;
 		} else return false;

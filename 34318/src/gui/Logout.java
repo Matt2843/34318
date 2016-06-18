@@ -10,10 +10,8 @@ import javax.swing.JPanel;
 
 public class Logout extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;
-	private MainFrame parent;
 	
-	public Logout(MainFrame parent) {
-		this.parent = parent;
+	public Logout() {
 		setLayout(new BorderLayout());
 		setPreferredSize(GeneralProperties.panelLeftaddChat);
 		add(new JLabel(MainFrame.ILogout),BorderLayout.WEST);
@@ -23,7 +21,7 @@ public class Logout extends JPanel implements MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		new DialogMessage("Log out?",parent);
+		new DialogMessage("Log out?");
 	}
 
 	@Override

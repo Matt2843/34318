@@ -22,10 +22,8 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 	private JButton JBCreate;
 	private JTextField JTName;
 	private JLabel JLName;
-	private MainFrame mainFrame;
 	
-	public NewPublicChat(MainFrame mainFrame){
-		this.mainFrame = mainFrame;
+	public NewPublicChat() {
 		setDefaultProperties();
 		makeComponents();
 		this.pack();
@@ -71,7 +69,7 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 			dispose();		
 		}
 		else{
-			new DialogMessage("Enter new name",mainFrame);
+			new DialogMessage("Enter new name");
 		}
 	}
 

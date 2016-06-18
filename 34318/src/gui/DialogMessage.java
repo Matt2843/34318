@@ -24,11 +24,8 @@ public class DialogMessage extends JDialog implements MouseListener, KeyListener
 	private JPanel panel = new JPanel(new GridBagLayout());
 	private JLabel JLMessage; /*JLPasswordDoesntMatch, JLUserAlreadyExist;*/
 	private JButton JBOK, JBTryAgain, JBYes,JBNo;
-	private MainFrame mainframe;
-	private DialogLogin DLogin;
 	
-	public DialogMessage(String message,MainFrame mainframe){
-		this.mainframe = mainframe;
+	public DialogMessage(String message) {
 		setJComponents(message);		
 		this.setPreferredSize(new Dimension(400,150));
 		if (message == "Log out?"){
@@ -86,7 +83,7 @@ public class DialogMessage extends JDialog implements MouseListener, KeyListener
 		JBNo = new JButton("No");
 		setJButton(JBNo);
 		
-		DLogin  = new DialogLogin(mainframe);
+		// DLogin  = new DialogLogin(); // ?????????????????????
 	}
 	
 	private void setJLabel(JLabel name){
@@ -119,8 +116,8 @@ public class DialogMessage extends JDialog implements MouseListener, KeyListener
 		if (e.getSource()==JBYes){
 			this.setVisible(false);
 			MainFrame.client.sendMessage("L103",null);
-			mainframe.setVisible(false);
-			DLogin.setVisible(true);
+			GUIEngine.mainFrame.setVisible(false);
+			MainFrame.DLogin.setVisible(true);
 		}
 		if (e.getSource() == JBNo){
 			this.setVisible(false);

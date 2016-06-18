@@ -1,6 +1,7 @@
 package client;
 
 import gui.GUIEngine;
+import gui.MainFrame;
 import gui.PanelLeft;
 import gui.PanelRight;
 import utility.Message;
@@ -18,7 +19,7 @@ public class ClientSlave extends Thread {
 		switch(message.getCommand()) {
 		case "L100":	// LOGIN SUCCEEDED
 			System.out.println("KAPPA KAPPA");
-			GUIEngine.mainFrame.DLogin.setVisible(false);
+			MainFrame.DLogin.setVisible(false);
 			GUIEngine.mainFrame.setVisible(true);
 			break;
 		case "L400":	// LOGIN FAILED

@@ -14,11 +14,7 @@ import chat.ChatRoom;
 @SuppressWarnings("unchecked")
 public class PanelLeftFriends extends AbstractPanelList implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	private MainFrame mainFrame;
 	
-	public PanelLeftFriends(MainFrame mainFrame) {
-		this.mainFrame = mainFrame;
-	}
 	@Override
 	public void setVariables() {
 		model = new DefaultListModel<ChatRoom>();		
@@ -53,7 +49,7 @@ public class PanelLeftFriends extends AbstractPanelList implements MouseListener
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2 && e.getSource() == list) {
 			ChatRoom selectedChatRoom = (ChatRoom) list.getSelectedValue();
-			MainFrame.chatPanel.addTab(selectedChatRoom);
+			MainFrame.rightPanel.addTab(selectedChatRoom);
 		}
 	}
 
@@ -70,7 +66,7 @@ public class PanelLeftFriends extends AbstractPanelList implements MouseListener
 		if (e.getSource() == list){
 			if (e.getButton() == MouseEvent.BUTTON3){
 				int x = list.getSelectedIndex();
-				new UserInformation(list.getModel().getElementAt(x).toString(), "left",mainFrame);
+				new UserInformation(list.getModel().getElementAt(x).toString(), "left");
 			}
 		}
 	}

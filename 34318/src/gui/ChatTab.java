@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,8 +17,6 @@ import chat.ChatRoom;
 
 public class ChatTab extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	private MainFrame parent;
-	private PanelRight panelRight;
 	
 	private ChatRoom chatRoom;
 	
@@ -40,15 +37,13 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JPanel usersInChatRight, JPUsersTop;
 	
 	
-	public ChatTab(MainFrame parent, PanelRight panelRight, ChatRoom chatRoom) {
-		this.panelRight = panelRight;
+	public ChatTab(ChatRoom chatRoom) {
 		this.chatRoom = chatRoom;
-		this.parent = parent;
 		setLayout(new BorderLayout());
 		configureChatArea(chatRoom.toString());
 		setUsersInChat();
 		add(top,BorderLayout.CENTER);
-		add(new ChatArea(this),BorderLayout.SOUTH);
+		add(new ChatArea(), BorderLayout.SOUTH);
 		validate();
 	}
 	
@@ -123,26 +118,27 @@ public class ChatTab extends JPanel implements MouseListener {
 		top.add(ChatScrollPane, BorderLayout.CENTER);
 	}
 	
-	private void makeFriendFrame(){
-		friends = new JFrame();
-		friends.setPreferredSize(GeneralProperties.friendsPanelSize);
-		friends.setTitle("Add friend");
-		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
-		friends.add(new Friends(parent,friends), BorderLayout.CENTER);
-		friends.setVisible(true);
-		friends.pack();
-		friends.setLocationRelativeTo(null);
-	}
+//	private void makeFriendFrame(){
+//		friends = new JFrame();
+//		friends.setPreferredSize(GeneralProperties.friendsPanelSize);
+//		friends.setTitle("Add friend");
+//		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
+//		friends.add(new Friends(parent,friends), BorderLayout.CENTER);
+//		friends.setVisible(true);
+//		friends.pack();
+//		friends.setLocationRelativeTo(null);
+//	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == icon){
-			panelRight.removeTab(chatRoom);
+			MainFrame.rightPanel.setSelectedComponent(this);
+			MainFrame.rightPanel.removeTab(chatRoom.getChatID());
 			String[] params = {chatRoom.getChatID()};
 			MainFrame.client.sendMessage("G103", params);
 		}
 		if(e.getSource() == JLAddUsers){
-			makeFriendFrame();
+			//makeFriendFrame();
 		}
 		
 	}

@@ -29,10 +29,8 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 	private JButton JBSend;
 	private JTextPane JTText;
 	private JScrollPane scrollPane;
-	private ChatTab parent;
 	
-	public ChatArea(ChatTab parent){
-		this.parent = parent;
+	public ChatArea() {
 		setDefaultProperties();
 		setComponents();
 		makeBottomPanel();
@@ -84,7 +82,7 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 	
 	private void sendText(String message){
 		JTText.setText(null);
-		ChatRoom room = ((ChatTab)MainFrame.chatPanel.getSelectedComponent()).getChatRoom();
+		ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
 		String targetChatID = room.getChatID();
 		String[] params = {targetChatID, message};
 		MainFrame.client.sendMessage("S100", params);

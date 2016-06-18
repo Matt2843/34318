@@ -11,8 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-import chat.ChatRoom;
-
 public class Friends extends AbstractPanelList implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private MainFrame mainFrame;

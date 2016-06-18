@@ -15,18 +15,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class UserInformation extends JFrame implements MouseListener{
+public class UserInformation extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private String username, panelSide;
 	private Point location;
-	private JPanel JPAddFriend,JPBlockUser,JPSendMessage, userInfo;
-	private MainFrame mainFrame;
+	private JPanel JPAddFriend, JPBlockUser, JPSendMessage, userInfo;
 	
 	
-	public UserInformation(String username, String panelSide, MainFrame mainFrame) {
+	public UserInformation(String username, String panelSide) {
 		this.username = username;
 		this.panelSide = panelSide;
-		this.mainFrame = mainFrame;
 		setDefaultProperties();
 		setComponents();
 		this.pack();
@@ -91,12 +89,12 @@ public class UserInformation extends JFrame implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JPAddFriend){
 			dispose();
-			DialogMessage DMessage = new DialogMessage(username+" added as friend",mainFrame);
+			DialogMessage DMessage = new DialogMessage(username+" added as friend");
 			DMessage.setAlwaysOnTop(true);
 		}
 		if (e.getSource() == JPBlockUser){
 			dispose();
-			DialogMessage DMessage = new DialogMessage(username +" has been blocked",mainFrame);
+			DialogMessage DMessage = new DialogMessage(username +" has been blocked");
 			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){

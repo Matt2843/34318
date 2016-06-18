@@ -23,11 +23,9 @@ public class PanelLeft extends JPanel implements MouseListener{
 	private JTabbedPane tabbedPanel;
 	public static ArrayList<String> publicChats = new ArrayList<String>();
 	private ArrayList<String> privateChats = new ArrayList<String>();
-	private MainFrame parent;
 	
 	
-	public PanelLeft(MainFrame parent){
-		this.parent = parent;
+	public PanelLeft() {
 		setDefaultProperties();
 		setComponents();
 		tabbedPanel.addTab("Public",MainFrame.IPublic,JPPublic);
@@ -36,7 +34,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 		this.validate();
 	}
 	
-	private void setDefaultProperties(){
+	private void setDefaultProperties() {
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.white);
 		this.setPreferredSize(GeneralProperties.panelLeftSize);
@@ -48,8 +46,8 @@ public class PanelLeft extends JPanel implements MouseListener{
 		PLPublicChats = new PanelLeftPublicChats();
 		makePublicChat();
 		JPFriends = new JPanel(new BorderLayout());
-		JPFriends.add(new PanelLeftFriends(parent),BorderLayout.CENTER);
-		JPFriends.add(new Logout(parent),BorderLayout.SOUTH);
+		JPFriends.add(new PanelLeftFriends(),BorderLayout.CENTER);
+		JPFriends.add(new Logout(),BorderLayout.SOUTH);
 		tabbedPanel = new JTabbedPane();
 		tabbedPanel.setBackground(Color.white);
 	}
@@ -66,7 +64,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 		addChat.setBackground(Color.white);
 		JPanel bottom = new JPanel(new GridLayout(2,1));
 		bottom.add(addChat);
-		bottom.add(new Logout(parent));
+		bottom.add(new Logout());
 		JPPublic.add(bottom,BorderLayout.SOUTH);
 	}
 	
@@ -78,7 +76,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == addChat){
-			new NewPublicChat(parent);
+			new NewPublicChat();
 		}		
 	}
 

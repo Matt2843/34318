@@ -29,7 +29,7 @@ import client.UserInfo;
 
 public class DialogLogin extends JDialog implements ActionListener, MouseListener, WindowListener {
 	private static final long serialVersionUID = 1L;
-	private MainFrame parent;
+	
 	private GridBagConstraints c = new GridBagConstraints();
 	private JPanel panel = new JPanel(new GridBagLayout());
 	private JPanel JPLogin,JPButtonsLogin, JPNewUser;
@@ -46,11 +46,8 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private JPasswordField NewPassword, RepeatPassword;
 	private JButton JBCreate, JBNewCancel;
 	private JLabel wait;
-    
-    private DialogMessage DMessage;
 	
-	public DialogLogin(MainFrame parent){
-		this.parent = parent;
+	public DialogLogin() {
 		setDefaultProperties();
 		setJComponents();
 		setJPLogin();
@@ -224,38 +221,12 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 			UserInfo info = new UserInfo(newUsername, newPassword);
 			MainFrame.client.sendMessage("L101", null, info);
 		}
-//			MainFrame.stall(this,"L101","L401");
-//			if(MainFrame.client.getStatus().equals("L101")){
-//				DMessage = new DialogMessage("Creation Successfull",parent);
-//				this.setVisible(false);
-//				parent.setVisible(true);
-//			}
-//			else{
-//
-//				DMessage = new DialogMessage("User already exists",parent);
-//				DMessage.setAlwaysOnTop(true);
-//			}
-			
-		
-//		else{
-//			DMessage = new DialogMessage("Passwords doesn't match", parent);
-//			DMessage.setAlwaysOnTop(true);
-//		}
 	
-}
+	}
 	
 	public void login(){
 		String loginInfo[] = getLoginInfo();
-		MainFrame.client.sendMessage("L100", loginInfo);	
-//		MainFrame.stall(this,"L400","L100");
-//		if(MainFrame.client.getStatus().equals("L100")){
-//			this.setVisible(false);
-//			parent.setVisible(true);
-//		}
-//		else{
-//			DMessage = new DialogMessage("Wrong login",parent);
-//			DMessage.setAlwaysOnTop(true);
-//		}
+		MainFrame.client.sendMessage("L100", loginInfo);
 	}
 	
 	@Override
