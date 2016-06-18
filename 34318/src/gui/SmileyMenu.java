@@ -17,6 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import utility.Utilities;
+
 public class SmileyMenu extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	public static ImageIcon[] Smileys = new ImageIcon[16];
@@ -55,22 +57,22 @@ public class SmileyMenu extends JFrame implements MouseListener {
 	
 	public void createImageIcons(){
 		try {
-			Smileys[0] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s1.png")), 20, 20);
-			Smileys[1] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s2.png")), 20, 20);
-			Smileys[2] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s3.png")), 20, 20);
-			Smileys[3] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s4.png")), 20, 20);
-			Smileys[4] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s5.png")), 20, 20);
-			Smileys[5] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s6.png")), 20, 20);
-			Smileys[6] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s7.png")), 20, 20);
-			Smileys[7] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s8.png")), 20, 20);
-			Smileys[8] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s9.png")), 20, 20);
-			Smileys[9] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s10.png")), 20, 20);
-			Smileys[10] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s11.png")), 20, 20);
-			Smileys[11] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s12.png")), 20, 20);
-			Smileys[12] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s13.png")), 20, 20);
-			Smileys[13] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s14.png")), 20, 20);
-			Smileys[14] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s15.png")), 20, 20);
-			Smileys[15] = GeneralProperties.createResizedImageIcon(ImageIO.read(new File("pictures/s16.png")), 20, 20);
+			Smileys[0] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s1.png")), 20, 20);
+			Smileys[1] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s2.png")), 20, 20);
+			Smileys[2] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s3.png")), 20, 20);
+			Smileys[3] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s4.png")), 20, 20);
+			Smileys[4] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s5.png")), 20, 20);
+			Smileys[5] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s6.png")), 20, 20);
+			Smileys[6] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s7.png")), 20, 20);
+			Smileys[7] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s8.png")), 20, 20);
+			Smileys[8] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s9.png")), 20, 20);
+			Smileys[9] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s10.png")), 20, 20);
+			Smileys[10] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s11.png")), 20, 20);
+			Smileys[11] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s12.png")), 20, 20);
+			Smileys[12] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s13.png")), 20, 20);
+			Smileys[13] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s14.png")), 20, 20);
+			Smileys[14] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s15.png")), 20, 20);
+			Smileys[15] = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/s16.png")), 20, 20);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

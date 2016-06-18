@@ -24,6 +24,8 @@ public class MainFrame extends JFrame implements WindowListener {
 	public JPanel JPRight;
 	
 	public MainFrame(){	
+		GeneralProperties.initializeIcons();
+		
 	    setDefaultProperties();
 	    addElements(); 
 	    
@@ -34,7 +36,7 @@ public class MainFrame extends JFrame implements WindowListener {
 	    pack();
 		setLocationRelativeTo(null);
 	}
-	
+
 	private void startClient(String ip, int port) {
 		client = new Client(ip, port);
 		client.start();
