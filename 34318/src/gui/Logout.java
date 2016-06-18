@@ -15,7 +15,7 @@ public class Logout extends JPanel implements MouseListener{
 		setLayout(new BorderLayout());
 		setPreferredSize(GeneralProperties.panelLeftaddChat);
 		add(new JLabel(GeneralProperties.ILogout),BorderLayout.WEST);
-		add(new JLabel(" Log out"), BorderLayout.CENTER);
+		add(new JLabel("   Log out"), BorderLayout.CENTER);
 		setBackground(Color.white);
 		addMouseListener(this);
 	}

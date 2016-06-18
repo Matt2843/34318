@@ -9,6 +9,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+import chat.ChatRoom;
+
 @SuppressWarnings("unchecked")
 public class PanelRightUsersInChat extends AbstractPanelList implements MouseListener{
 	private static final long serialVersionUID = 1L;
@@ -53,6 +55,10 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 		if (e.getButton() == MouseEvent.BUTTON3) {
 			int x = list.getSelectedIndex();
 			new UserInformation(list.getModel().getElementAt(x).toString(), "right");
+		}
+		if (e.getClickCount() == 2 && e.getSource() == list) {
+			ChatRoom selectedChatRoom = (ChatRoom) list.getSelectedValue();
+			MainFrame.rightPanel.addTab(selectedChatRoom);
 		}
 	}
 

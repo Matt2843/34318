@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -118,16 +119,16 @@ public class ChatTab extends JPanel implements MouseListener {
 		top.add(ChatScrollPane, BorderLayout.CENTER);
 	}
 	
-//	private void makeFriendFrame(){
-//		friends = new JFrame();
-//		friends.setPreferredSize(GeneralProperties.friendsPanelSize);
-//		friends.setTitle("Add friend");
-//		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
-//		friends.add(new Friends(parent,friends), BorderLayout.CENTER);
-//		friends.setVisible(true);
-//		friends.pack();
-//		friends.setLocationRelativeTo(null);
-//	}
+	private void makeFriendFrame(){
+		friends = new JFrame();
+		friends.setPreferredSize(GeneralProperties.friendsPanelSize);
+		friends.setTitle("Add friend");
+		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
+		friends.add(new Friends(), BorderLayout.CENTER);
+		friends.setVisible(true);
+		friends.pack();
+		friends.setLocationRelativeTo(null);
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -138,7 +139,8 @@ public class ChatTab extends JPanel implements MouseListener {
 			MainFrame.client.sendMessage("G103", params);
 		}
 		if(e.getSource() == JLAddUsers){
-			//makeFriendFrame();
+			makeFriendFrame();
+			System.out.println("test");
 		}
 		
 	}

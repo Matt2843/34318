@@ -45,9 +45,12 @@ public class PanelLeft extends JPanel implements MouseListener{
 	public void setComponents(){
 		PLPublicChats = new PanelLeftPublicChats();
 		makePublicChat();
+		JPanel bottom = new JPanel(new GridLayout(2,1));
+		bottom.add(new Profile());
+		bottom.add(new Logout());
 		JPFriends = new JPanel(new BorderLayout());
 		JPFriends.add(new PanelLeftFriends(),BorderLayout.CENTER);
-		JPFriends.add(new Logout(),BorderLayout.SOUTH);
+		JPFriends.add(bottom,BorderLayout.SOUTH);
 		tabbedPanel = new JTabbedPane();
 		tabbedPanel.setBackground(Color.white);
 	}
@@ -58,7 +61,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 		addChat = new JPanel(new BorderLayout());
 		addChat.setPreferredSize(GeneralProperties.panelLeftaddChat);
 		addChat.add(new JLabel(GeneralProperties.IAdd),BorderLayout.WEST);
-		addChat.add(new JLabel(" Add public chat"),BorderLayout.CENTER);
+		addChat.add(new JLabel("   Add public chat"),BorderLayout.CENTER);
 		addChat.setFont(new Font("SansSerif", Font.BOLD, 14));
 		addChat.addMouseListener(this);
 		addChat.setBackground(Color.white);
