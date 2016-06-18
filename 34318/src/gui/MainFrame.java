@@ -89,6 +89,10 @@ public class MainFrame extends JFrame implements GeneralProperties, WindowListen
 	
 	public static void beforeClosing() {
 		if(client.isRunning()) {
+			for(int i = 0; i < PanelRight.chatTabs.size(); i++) {
+				String[] params = {PanelRight.chatTabs.get(i).getChatRoom().getChatID()};
+				MainFrame.client.sendMessage("G103", params);
+			}
 			client.sendMessage("X999", null);
 		}
 //		try {

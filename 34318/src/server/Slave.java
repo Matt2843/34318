@@ -167,6 +167,7 @@ public class Slave extends Thread {
 	private void broadcastObjectToPublicRoom(String chatID, String cmd, Object o) {
 		setParams(1, chatID);
 		for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
+			System.out.println(value);
 			Server.db.getActiveUsers().get(value).sendMessage(cmd, params, o);
 		}
 	}
