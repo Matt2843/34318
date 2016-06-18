@@ -11,6 +11,7 @@ public class ChatRoom implements Serializable {
 	private String chatHistory = "";
 	
 	private ArrayList<String> chatUsers;
+	private ArrayList<String> blockedUsers;
 	private ArrayList<String> chatModerators;
 	private ArrayList<String> chatAdmins;
 	
@@ -20,6 +21,19 @@ public class ChatRoom implements Serializable {
 		chatUsers = new ArrayList<String>();
 		chatModerators = new ArrayList<String>();
 		chatAdmins = new ArrayList<String>();
+		blockedUsers = new ArrayList<String>();
+	}
+	
+	public void blockUser(String user) {
+		if(blockedUsers.contains(user)) {
+			blockedUsers.remove(user);
+		}
+	}
+	
+	public void unblockUser(String user) {
+		if(!blockedUsers.contains(user)) {
+			blockedUsers.add(user);
+		}
 	}
 	
 	public void addUser(String user) {

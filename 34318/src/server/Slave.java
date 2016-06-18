@@ -13,7 +13,7 @@ public class Slave extends Thread {
 	private boolean updateUser = true;
 	
 	private ArrayList<String> onlineUsers;
-	private String username, password;
+	private String username, password, targetUser, targetChat;
 	private UserInfo userinformation;
 	
 	private String[] params;
@@ -38,10 +38,7 @@ public class Slave extends Thread {
 			startUpdateUserThread();
 			break;
 		case "L101": // Create User
-			// Notify client if username already exists in database.
-			userinformation = (UserInfo) message.getObject(); // Test if
-																// conversion is
-																// good.
+			userinformation = (UserInfo) message.getObject(); 
 			username = userinformation.getUsername();
 			if (!Server.db.getRegisteredUsers().containsKey(username)) {
 				Server.db.registerNewUser(username, userinformation);
@@ -64,7 +61,7 @@ public class Slave extends Thread {
 				}
 			}
 			break;
-		case "L103": // Logout
+		case "L103": // Logout - TODO: IMPLEMENT
 			if (master.isLoggedIn()) {
 				master.setLoggedIn(false);
 			}
@@ -88,28 +85,40 @@ public class Slave extends Thread {
 			chatID = message.getParams()[0];
 			String msg = message.getParams()[1];		
 			broadcastToPublicRoom(chatID, msg);
-			
-//			setParams(3, master.getUsername(), msg, chatID);
-//			for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
-//				Server.db.getActiveUsers().get(value).sendMessage("S100", params);
-//			}
-			
-//			for(int i = 0; i < Server.db.getPublicRooms().get(chatID).getChatUsers().size(); i++) {
-//				String usr = Server.db.getPublicRooms().get(chatID).getChatUsers().get(i);
-//				System.out.println(usr);
-//				setParams(3, master.getUsername(), msg, chatID);
-//				Server.db.getActiveUsers().get(usr).sendMessage("S100", params);
-//			}
 			break;
 		case "S101": // Private Message
 			break;
-		case "V100": // Add Friend
+			
+		case "V100": // Friend Request
+			targetUser = message.getParams()[0];
+			if(Server.db.getRegisteredUsers().containsKey(targetUser)) {
+				Server.db.getRegisteredUsers().get(targetUser).addFriendRequest(master.getUsername());
+				master.sendMessage("V100", null);
+			} else {
+				setParams(1, "User does not exist in database.");
+				master.sendMessage("V400", params);
+			}
 			break;
 		case "V101": // Accept Friend
+			targetUser = message.getParams()[0];
+			if(Server.db.getRegisteredUsers().containsKey(targetUser)) {
+				Server.db.getRegisteredUsers().get(targetUser).addFriend(master.getUsername());
+				Server.db.getRegisteredUsers().get(master.getUsername()).addFriend(targetUser);
+				master.sendMessage("V101", null);
+			} else {
+				setParams(1, "User does not exist in database.");
+				master.sendMessage("V401", params);
+			}
 			break;
 		case "V102": // Delete Friend
+			targetUser = message.getParams()[0];
+			Server.db.getRegisteredUsers().get(master.getUsername()).removeFriend(targetUser);
+			Server.db.getRegisteredUsers().get(targetUser).removeFriend(master.getUsername());
+			master.sendMessage("V102", null);
 			break;
 		case "V103": // Block Person
+			targetUser = message.getParams()[0];
+			Server.db.getRegisteredUsers().get(master.getUsername()).blockUser(targetUser);
 			break;
 		case "V104": // Get Friends
 			break;
@@ -125,6 +134,19 @@ public class Slave extends Thread {
 		case "G101": // Join Private Group
 			break;
 		case "G102": // Remove Person from Chat
+			targetUser = message.getParams()[0];
+			targetChat = message.getParams()[1];
+			if(Server.db.getPublicRooms().containsKey(targetChat)) { // HANDLE PUBLIC ROOM SITUATION
+				if(Server.db.getPublicRooms().get(targetChat).getChatAdmins().contains(master.getUsername()) || 
+				   Server.db.getPublicRooms().get(targetChat).getChatModerators().contains(master.getUsername())) {
+					// Kick and ban person here  -
+				}
+			} else if (Server.db.getPrivateRooms().containsKey(targetChat)) { // HANDLE PRIVE ROOM SITUATION
+				// TODO: Implement kick person from private room.
+			} else {
+				setParams(1, "Chat does not exist in database.");
+				master.sendMessage("G402", params);
+			}
 			break;
 		case "G103": // Left Public Chat
 			chatID = message.getParams()[0];

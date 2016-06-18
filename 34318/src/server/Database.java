@@ -18,6 +18,7 @@ public class Database {
 	private HashMap<String, UserInfo> registeredUsers;							 		 // K: Username		V: Userinformation
 	private HashMap<String, Object> storedFiles;									 	 // K: FileID		V: File
 	private HashMap<String, ChatRoom> publicRooms;								 		 // K: ChatID		V: ChatRoom
+	private HashMap<String, ChatRoom> privateRooms;										 // K: ChatID		V: ChatRoom
 
 	public Database() {
 		String path = "data/registeredUsers.db";
@@ -25,6 +26,8 @@ public class Database {
 			registeredUsers = new File(path).exists() ? (HashMap<String, UserInfo>) readFileToObject(path) : new HashMap<String, UserInfo>();
 			path = "data/publicRooms.db";
 			publicRooms = new File(path).exists() ? (HashMap<String, ChatRoom>) readFileToObject(path) : new HashMap<String, ChatRoom>();
+			path = "data/privateRooms.db";
+			privateRooms = new File(path).exists() ? (HashMap<String, ChatRoom>) readFileToObject(path) : new HashMap<String, ChatRoom>();
 			path = "data/storedFiles.db";
 			storedFiles = new File(path).exists() ? (HashMap<String, Object>) readFileToObject(path) : new HashMap<String, Object>();
 		} catch (ClassNotFoundException | IOException e) {
@@ -90,6 +93,7 @@ public class Database {
 		try {
 			saveObjectToFile("data/registeredUsers.db", registeredUsers);
 			saveObjectToFile("data/publicRooms.db", publicRooms);
+			saveObjectToFile("data/privateRooms.db", privateRooms);
 			saveObjectToFile("data/storedFiles.db", storedFiles);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -141,6 +145,10 @@ public class Database {
 
 	public HashMap<String, Connection> getActiveUsers() {
 		return activeUsers;
+	}
+
+	public HashMap<String, ChatRoom> getPrivateRooms() {
+		return privateRooms;
 	}
 
 }
