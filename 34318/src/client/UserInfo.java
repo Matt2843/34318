@@ -76,4 +76,9 @@ public class UserInfo implements Serializable {
 	public ArrayList<String> getFriendRequests() {
 		return friendRequests;
 	}	
+	
+	@Override
+	public String toString() {
+		return username + " p: " + password;
+	}
 }

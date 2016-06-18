@@ -217,9 +217,10 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	private void createNewUser(){
 		
 		if(NewPassword.getText().equals(RepeatPassword.getText())){
-			String[] userInfo = getLoginInfo();
-			String encryptedPassword = Utilities.encryptString(userInfo[1]);
-			UserInfo info = new UserInfo(userInfo[0], encryptedPassword);
+			String newUsername = JTNewUsername.getText();
+			String newPassword = NewPassword.getText();
+			String encryptedPassword = Utilities.encryptString(newPassword);
+			UserInfo info = new UserInfo(newUsername, encryptedPassword);
 			MainFrame.client.sendMessage("L101", null, info);
 		}
 	

@@ -41,6 +41,7 @@ public class Slave extends Thread {
 			userinformation = (UserInfo) message.getObject(); 
 			username = userinformation.getUsername();
 			if (!Server.db.getRegisteredUsers().containsKey(username)) {
+				System.out.println(userinformation);
 				Server.db.registerNewUser(username, userinformation);
 				Server.setServerStatus("User " + username + " added to database.");
 				master.sendMessage("L101", null);
