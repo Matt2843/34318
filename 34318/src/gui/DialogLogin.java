@@ -246,8 +246,7 @@ public class DialogLogin extends JDialog implements ActionListener, MouseListene
 	
 	public void login(){
 		String loginInfo[] = getLoginInfo();
-		MainFrame.client.sendMessage("L100", loginInfo);		
-		setVisible(false);
+		MainFrame.client.sendMessage("L100", loginInfo);	
 //		MainFrame.stall(this,"L400","L100");
 //		if(MainFrame.client.getStatus().equals("L100")){
 //			this.setVisible(false);

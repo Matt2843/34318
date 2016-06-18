@@ -24,7 +24,7 @@ public class MainFrame extends JFrame implements GeneralProperties, WindowListen
 	private static final long serialVersionUID = 1L;
 	public static Client client;
 	
-	private DialogLogin DLogin;
+	public static DialogLogin DLogin;
 	public JPanel JPLeft, JPRight;
 	public static ImageIcon IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock,IAddFriend, ISendMessage, ILogout;
 	public static PanelRight chatPanel;
