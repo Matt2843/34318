@@ -38,7 +38,6 @@ public class PanelRight extends JTabbedPane {
 			chatTabs.remove(chatID);
 		}
 		removeTabAt(getSelectedIndex());
-		System.out.println("everything " + chatTabs.size() + " " + chatTabs.toString());
 	}
 	
 	public void addTab(ChatRoom chatRoom){
@@ -54,7 +53,6 @@ public class PanelRight extends JTabbedPane {
 		chatTabs.put(chatRoom.getChatID(), newTab);
 		setSelectedComponent(newTab);
 		setTabComponentAt(getSelectedIndex(), newTab.getTabContent());
-		System.out.println("nothing " + chatTabs.size() + " " + chatTabs.toString());
 	}
 
 }
