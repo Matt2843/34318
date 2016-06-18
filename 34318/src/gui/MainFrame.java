@@ -28,7 +28,8 @@ public class MainFrame extends JFrame implements WindowListener {
 	    addElements(); 
 	    
 	    startDialogLogin();
-	    startClient("90.184.124.62", 1234);
+	    startClient("localhost",1234);
+//	    startClient("90.184.124.62", 1234);
 	    
 	    pack();
 		setLocationRelativeTo(null);
