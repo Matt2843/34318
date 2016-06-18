@@ -32,7 +32,7 @@ public class MainFrame extends JFrame implements GeneralProperties, WindowListen
 	public static JDialog loading;
 	
 	public MainFrame(){
-		client = new Client("localhost", 1234);
+		client = new Client("90.184.124.62", 1234);
 		client.start();
 		DLogin = new DialogLogin(this);
 		DLogin.setAlwaysOnTop(true);
