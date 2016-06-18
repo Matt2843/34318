@@ -30,7 +30,8 @@ public class Slave extends Thread {
 			if(Server.db.authenticateUser(username, password)) {
 				master.setUsername(username);
 				Server.db.addNewConnection(username, master);
-				master.sendMessage("L100", null);
+				userinformation = Server.db.getRegisteredUsers().get(username);
+				master.sendMessage("L100", null, userinformation);
 			} else {
 				setParams(1, "Wrong credentials");
 				master.sendMessage("L400", params);

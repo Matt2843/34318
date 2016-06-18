@@ -1,6 +1,5 @@
 package client;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -19,6 +18,7 @@ public class Client extends Thread {
 	private Socket connection;
 	private boolean running = false;
 	
+	private UserInfo profile;
 	private ClientSlave slave;
 	
 	public Client(String host, int port) {
@@ -40,7 +40,7 @@ public class Client extends Thread {
 	}
 
 	private void setupSlave() {
-		slave = new ClientSlave(this);
+		slave = new ClientSlave();
 		slave.start();
 	}
 
@@ -111,6 +111,14 @@ public class Client extends Thread {
 
 	public boolean isRunning() {
 		return running;
+	}
+
+	public UserInfo getProfile() {
+		return profile;
+	}
+
+	public void setProfile(UserInfo profile) {
+		this.profile = profile;
 	}
 
 }

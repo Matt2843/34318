@@ -8,17 +8,12 @@ import utility.Message;
 
 public class ClientSlave extends Thread {
 	
-	private Client master;
 	private String chatID = null;
-	
-	public ClientSlave(Client master) {
-		this.master = master;
-	}
 	
 	public void translate(Message message) {
 		switch(message.getCommand()) {
 		case "L100":	// LOGIN SUCCEEDED
-			System.out.println("KAPPA KAPPA");
+			MainFrame.client.setProfile((UserInfo) message.getObject());
 			MainFrame.DLogin.setVisible(false);
 			GUIEngine.mainFrame.setVisible(true);
 			break;
