@@ -100,7 +100,6 @@ public class Message extends JDialog implements MouseListener{
 		} else{
 			dispose();
 			GUIEngine.mainFrame.enable();
-			GUIEngine.mainFrame.setAlwaysOnTop(true);;
 		}
 	}
 
