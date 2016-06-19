@@ -92,7 +92,7 @@ public class Message extends JDialog implements MouseListener{
 			dispose();
 			MainFrame.client.sendMessage("L103",null);
 			GUIEngine.mainFrame.setVisible(false);
-			MainFrame.DLogin.setVisible(true);
+			new Login();
 		} else{
 			dispose();
 		}
