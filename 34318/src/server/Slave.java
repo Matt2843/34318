@@ -68,15 +68,9 @@ public class Slave extends Thread {
 			}
 			break;
 			
-		case "C100": // Create Private Chat
-			targetUser = message.getParams()[0];
-			chatID = Server.db.createNewPrivateChat();
-			setParams(1, chatID);
-			master.sendMessage("C100", params, Server.db.generatePrivateChatRoomsData());
+		case "C100": // Create Private Group
 			break;
-		case "C101": // Start Private Group
-			break;
-		case "C102": // Start Public Group
+		case "C101": // Start Public Group
 			if (Server.db.createNewPublicChat(message.getParams()[0])) {
 				master.sendMessage("C100", null, Server.db.generatePublicChatRoomsData());
 			} else {
@@ -135,10 +129,20 @@ public class Slave extends Thread {
 			onlineUsers = Server.db.generateOnlinePublicUsersData(chatID);
 			broadcastObjectToPublicRoom(chatID, "U103", onlineUsers);
 			break;
-		case "G101": // Join Private Group
+		case "G101": // Join Private Chat
 			
 			break;
 		case "G102": // Remove Person from Chat
+			break;
+		case "G103": // Left Public Chat
+			chatID = message.getParams()[0];
+			Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
+			
+			// Broadcast the event: User left chat.
+			onlineUsers = Server.db.generateOnlinePublicUsersData(chatID);
+			broadcastObjectToPublicRoom(chatID, "U103", onlineUsers);
+			break;
+		case "G104": // Remove Person from chat.
 			targetUser = message.getParams()[0];
 			targetChat = message.getParams()[1];
 			if(Server.db.getPublicRooms().containsKey(targetChat)) { // HANDLE PUBLIC ROOM SITUATION
@@ -152,14 +156,6 @@ public class Slave extends Thread {
 				setParams(1, "Chat does not exist in database.");
 				master.sendMessage("G402", params);
 			}
-			break;
-		case "G103": // Left Public Chat
-			chatID = message.getParams()[0];
-			Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
-			
-			// Broadcast the event: User left chat.
-			onlineUsers = Server.db.generateOnlinePublicUsersData(chatID);
-			broadcastObjectToPublicRoom(chatID, "U103", onlineUsers);
 			break;
 			
 		case "F100": // Upload File
