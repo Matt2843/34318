@@ -10,6 +10,7 @@ import utility.Message;
 public class ClientSlave extends Thread {
 	
 	private String chatID = null;
+	private String reason;
 	
 	public void translate(Message message) {
 		switch(message.getCommand()) {
@@ -38,6 +39,7 @@ public class ClientSlave extends Thread {
 		case "F101":
 			break;
 		case "F401":
+			reason = message.getParams()[0];
 			break;
 			
 		case "S100": // Received Message
