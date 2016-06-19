@@ -68,8 +68,8 @@ public class UserInformation extends JFrame implements MouseListener {
 		JPSendMessage.add(new JLabel(GeneralProperties.ISendMessage),BorderLayout.WEST);
 		JPSendMessage.add(new JLabel("  Send Message"),BorderLayout.CENTER);
 		JPSendMessage.addMouseListener(this);
-		for (int i = 0;i<GUIEngine.mainFrame.rightPanel.chatTabs.size();i++){
-			if (GUIEngine.mainFrame.rightPanel.chatTabs.get(i).toString().equals(GUIEngine.mainFrame.username)){
+		for (int i = 0;i<PanelRight.chatTabs.size();i++){
+			if (PanelRight.chatTabs.get(i).toString().equals(MainFrame.username)){
 				setPreferredSize(GeneralProperties.userInformationUser);
 				userInfo = new JPanel(new BorderLayout());
 				userInfo.setVisible(true);
