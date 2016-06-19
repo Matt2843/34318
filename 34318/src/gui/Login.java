@@ -23,6 +23,8 @@ import client.UserInfo;
 import utility.Utilities;
 
 public class Login extends JDialog implements ActionListener,MouseListener,WindowListener{
+
+	private static final long serialVersionUID = 1L;
 	private JPanel middle;
 	private JLabel status, newUser;
 	private JButton action,cancel;

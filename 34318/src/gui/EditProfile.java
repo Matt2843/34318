@@ -8,7 +8,6 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 public class EditProfile extends JFrame implements MouseListener{
 	private static final long serialVersionUID = 1L;

@@ -4,12 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import chat.ChatRoom;
 
 public class Profile extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;

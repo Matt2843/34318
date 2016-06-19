@@ -89,12 +89,12 @@ public class UserInformation extends JFrame implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JPAddFriend){
 			dispose();
-			DialogMessage DMessage = new DialogMessage(username+" added as friend");
+			Message DMessage = new Message(username+" added as friend");
 			DMessage.setAlwaysOnTop(true);
 		}
 		if (e.getSource() == JPBlockUser){
 			dispose();
-			DialogMessage DMessage = new DialogMessage(username +" has been blocked");
+			Message DMessage = new Message(username +" has been blocked");
 			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){

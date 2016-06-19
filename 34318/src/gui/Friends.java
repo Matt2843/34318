@@ -7,14 +7,14 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+@SuppressWarnings("unchecked")
 public class Friends extends AbstractPanelList implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	private boolean bool = true;
 
+	
 	
 	@Override
 	public void setVariables() {

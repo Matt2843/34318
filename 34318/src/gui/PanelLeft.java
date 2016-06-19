@@ -22,7 +22,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 	private JPanel  JPPublic,JPFriends, addChat;
 	private JTabbedPane tabbedPanel;
 	public static ArrayList<String> publicChats = new ArrayList<String>();
-	private ArrayList<String> privateChats = new ArrayList<String>();
+//	private ArrayList<String> privateChats = new ArrayList<String>();
 	
 	
 	public PanelLeft() {

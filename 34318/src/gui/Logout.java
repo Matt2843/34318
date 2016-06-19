@@ -21,7 +21,7 @@ public class Logout extends JPanel implements MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		new DialogMessage("Log out?");
+		new Message("Log out?");
 	}
 
 	@Override
