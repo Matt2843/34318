@@ -14,13 +14,14 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import client.UserInfo;
 import utility.Utilities;
 
-public class Login extends JDialog implements ActionListener,MouseListener{
+public class Login extends JFrame implements ActionListener,MouseListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel middle;
@@ -38,7 +39,7 @@ public class Login extends JDialog implements ActionListener,MouseListener{
 	}
 	
 	private void setDefaultProperties(){
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setLayout(new GridBagLayout());
 		getContentPane().setBackground(Color.white);

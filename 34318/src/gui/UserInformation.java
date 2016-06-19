@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import chat.ChatRoom;
+import utility.Utilities;
 
 public class UserInformation extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
@@ -93,9 +94,9 @@ public class UserInformation extends JFrame implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JPAddFriend){
+			String[] params = Utilities.setParams(1, username);
 			dispose();
-			String ID = "";
-			MainFrame.client.sendMessage("V100",null,ID);
+			MainFrame.client.sendMessage("V100",params);
 			//Stall indtil det er sket?
 			Message DMessage = new Message(username+" added as friend");
 			DMessage.setAlwaysOnTop(true);
