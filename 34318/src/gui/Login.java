@@ -86,7 +86,7 @@ public class Login extends JDialog implements ActionListener,MouseListener,Windo
 		buttons.add(cancel);
 		middle = new JPanel(new GridLayout(6,1,0,5));
 		middle.setBackground(Color.white);
-		middle.setPreferredSize(new Dimension(350,250));
+		middle.setPreferredSize(new Dimension(300,250));
 		middle.add(status);
 		middle.add(username);
 		middle.add(password);
@@ -102,6 +102,8 @@ public class Login extends JDialog implements ActionListener,MouseListener,Windo
 		String encryptedPassword = Utilities.encryptString(userInfo[1]);
 		userInfo[1] = encryptedPassword;
 		MainFrame.client.sendMessage("L100", userInfo);
+		
+		//Find ud af hvordan jeg staller/ragerer på forkert login??
 	}
 	
 	private void createNewUser(){

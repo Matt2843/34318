@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 public class EditProfile extends JFrame implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel friendRequests,requestTop,profile;
+	private JLabel addFriends;
 	
 	public EditProfile() {
 		setProperties();
@@ -39,7 +40,7 @@ public class EditProfile extends JFrame implements MouseListener{
 	}
 	
 	private void makeTopPanel(){
-		JLabel addFriends = new JLabel(GeneralProperties.IAddFriend);
+		addFriends = new JLabel(GeneralProperties.IAddFriend);
 		requestTop = new JPanel(new BorderLayout());
 		requestTop.setBackground(Color.white);
 		requestTop.setVisible(true);
@@ -81,5 +82,4 @@ public class EditProfile extends JFrame implements MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

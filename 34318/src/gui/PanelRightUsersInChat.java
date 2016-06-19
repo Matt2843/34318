@@ -53,11 +53,13 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON3) {
-			int x = list.getSelectedIndex();
+			int x = list.getSelectedIndex();	
 			new UserInformation(list.getModel().getElementAt(x).toString(), "right");
 		}
 		if (e.getClickCount() == 2 && e.getSource() == list) {
-			ChatRoom selectedChatRoom = (ChatRoom) list.getSelectedValue();
+			//Hvordan får jeg fat i ID?
+			String ID ="";
+			ChatRoom selectedChatRoom = new ChatRoom(list.getSelectedValue().toString(),ID);
 			MainFrame.rightPanel.addTab(selectedChatRoom);
 		}
 	}

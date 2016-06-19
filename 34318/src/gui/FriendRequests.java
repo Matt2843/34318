@@ -15,7 +15,7 @@ import chat.ChatRoom;
 
 public class FriendRequests extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;
-	private JPanel list,choice;
+	private JPanel list;
 	private JScrollPane scrollPane;
 	
 	public FriendRequests() {
@@ -32,16 +32,19 @@ public class FriendRequests extends JPanel implements MouseListener{
 		list = new JPanel(new GridLayout(30,1));
 		scrollPane = new JScrollPane(list);
 		list.addMouseListener(this);
-		choice = new JPanel(new GridLayout(1,2));
-		choice.add(new JLabel(GeneralProperties.IReject));
-		choice.add(new JLabel(GeneralProperties.IAccept));
 	}
 
 	public void addItem(Object o) {
 		ChatRoom copy = (ChatRoom) o;
+		JLabel reject = new JLabel(GeneralProperties.IReject); reject.addMouseListener(this);
+		JLabel accept = new JLabel(GeneralProperties.IAccept); accept.addMouseListener(this);
+		JPanel choice = new JPanel(new GridLayout(1,2));
+		choice.add(reject);
+		choice.add(accept);
 		JPanel listItem = new JPanel(new BorderLayout());
 		listItem.add(new JLabel(copy.toString()),BorderLayout.WEST); listItem.add(new JLabel(),BorderLayout.CENTER);
 		listItem.add(choice,BorderLayout.EAST);	
+		
 	}
 
 	public void setList(Object o) {
