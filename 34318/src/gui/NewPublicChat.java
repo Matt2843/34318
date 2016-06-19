@@ -96,7 +96,6 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 //			}
 			dispose();
 			GUIEngine.mainFrame.enable();
-			GUIEngine.mainFrame.setAlwaysOnTop(true);;
 		}
 		else{
 			new Message("Enter new name");
