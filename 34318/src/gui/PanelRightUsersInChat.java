@@ -10,6 +10,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import chat.ChatRoom;
+import utility.Utilities;
 
 @SuppressWarnings("unchecked")
 public class PanelRightUsersInChat extends AbstractPanelList implements MouseListener{
@@ -57,6 +58,13 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 			new UserInformation(list.getModel().getElementAt(x).toString(), "right");
 		}
 		if (e.getClickCount() == 2 && e.getSource() == list) {
+			int index = list.getSelectedIndex();
+			String room =  list.getModel().getElementAt(index).toString();
+			boolean exists = MainFrame.rightPanel.chatExists(room);
+			if(!exists){
+				String[] params = Utilities.setParams(1, room);
+				MainFrame.client.sendMessage("G101", params);	
+			}
 			//Hvordan får jeg fat i ID?
 //			String ID ="";
 //			ChatRoom selectedChatRoom = (ChatRoom) message.getObject();

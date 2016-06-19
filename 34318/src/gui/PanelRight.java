@@ -41,18 +41,24 @@ public class PanelRight extends JTabbedPane {
 	}
 	
 	public void addTab(ChatRoom chatRoom){
+		if (!chatExists(chatRoom.toString())){
+			ChatTab newTab = new ChatTab(chatRoom);
+			addTab(null, newTab);
+			chatTabs.put(chatRoom.getChatID(), newTab);
+			setSelectedComponent(newTab);
+			setTabComponentAt(getSelectedIndex(), newTab.getTabContent());
+		}	
+	}
+	
+	public boolean chatExists(String chatRoom){
 		for(ChatTab value : chatTabs.values()) {
 			if(value.getChatRoom().toString().equals(chatRoom.toString())) {
 				value.setOpen(true);
 				setSelectedComponent(value);
-				return;
+				return true;
 			}
 		}
-		ChatTab newTab = new ChatTab(chatRoom);
-		addTab(null, newTab);
-		chatTabs.put(chatRoom.getChatID(), newTab);
-		setSelectedComponent(newTab);
-		setTabComponentAt(getSelectedIndex(), newTab.getTabContent());
+		return false;
 	}
 
 }

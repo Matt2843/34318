@@ -2,8 +2,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +40,7 @@ public class Login extends JDialog implements ActionListener,MouseListener{
 	private void setDefaultProperties(){
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setLayout(new FlowLayout());
+		setLayout(new GridBagLayout());
 		getContentPane().setBackground(Color.white);
 		setPreferredSize(new Dimension(500,350));
 		setIconImage(new ImageIcon("pictures/blank.png").getImage());

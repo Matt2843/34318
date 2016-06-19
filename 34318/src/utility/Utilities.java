@@ -63,5 +63,13 @@ public final class Utilities {
 		}
 		return stringBuffer.toString();
 	}
+	
+	public static String[] setParams(int length, String... p) {
+		String[] params = new String[length];
+		for (int i = 0; i < length; i++) {
+			params[i] = p[i];
+		}
+		return params;
+	}
 }
 
