@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -29,11 +31,10 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 	public NewPublicChat() {
 		GUIEngine.mainFrame.disable();
 		setDefaultProperties();
-		makeComponents();
-		
+		makeComponents();		
 		add(content);
-		this.pack();
-		this.setLocationRelativeTo(null);
+		pack();
+		setLocationRelativeTo(null);
 	}
 	
 	private void setDefaultProperties() {
@@ -94,8 +95,8 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 //			if (MainFrame.client.getStatus().equals("C100")){
 //				MainFrame.chatPanel.addTab(name);
 //			}
-			dispose();
 			GUIEngine.mainFrame.enable();
+            dispose();
 		}
 		else{
 			new Message("Enter new name");

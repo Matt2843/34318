@@ -98,8 +98,8 @@ public class Message extends JDialog implements MouseListener{
 			GUIEngine.mainFrame.setVisible(false);
 			new Login();
 		} else{
-			dispose();
 			GUIEngine.mainFrame.enable();
+			dispose();
 		}
 	}
 
