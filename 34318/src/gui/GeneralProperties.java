@@ -16,13 +16,14 @@ public final class GeneralProperties {
 	public final static Dimension frameSize = new Dimension((screenSize.width / 5) * 4, (screenSize.height / 4) * 3);
 	public final static Dimension panelLeftSize = new Dimension((frameSize.width / 4), (frameSize.height));
 	public final static Dimension panelLeftaddChat = new Dimension(panelLeftSize.width, 30);
-	public final static Dimension addPublicChat = new Dimension(300, 120);
+	public final static Dimension addPublicChat = new Dimension((frameSize.width/3),frameSize.height/3);
 	public final static Dimension panelRightSize = new Dimension((frameSize.width / 3) * 2, (frameSize.height));
 	public final static Dimension panelRightBottomSize = new Dimension(panelRightSize.width, panelRightSize.height / 4);
 	public final static Dimension panelUsersSize = new Dimension(panelRightSize.width / 4, panelRightSize.height / 4 * 3);
 	public final static Dimension friendsPanelSize = new Dimension(panelRightSize.width / 3, panelRightSize.height / 4 * 3);
 	public final static Dimension userInformationRightTabSize = new Dimension(130, 80);
 	public final static Dimension userInformationLeftTabSize = new Dimension(130, 60);
+	public final static Dimension userInformationUser = new Dimension(130, 30);
 	public final static Dimension smileyTabSize = new Dimension(100, 100);
 	public final static Dimension editProfileSize = new Dimension((screenSize.width / 4) * 2, (screenSize.height / 4) * 2);
 	public final static Dimension friendRequestsSize = new Dimension(editProfileSize.width / 3, editProfileSize.height);

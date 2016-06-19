@@ -3,12 +3,14 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +21,8 @@ import javax.swing.SwingConstants;
 
 public class NewPublicChat extends JFrame implements ActionListener, MouseListener{
 	private static final long serialVersionUID = 1L;
-	private JButton JBCreate;
+	private JPanel content;
+	private JButton JBCreate,JBCancel;
 	private JTextField JTName;
 	private JLabel JLName;
 	
@@ -27,36 +30,60 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 		GUIEngine.mainFrame.disable();
 		setDefaultProperties();
 		makeComponents();
+		
+		add(content);
 		this.pack();
 		this.setLocationRelativeTo(null);
+	}
+	
+	private void setDefaultProperties() {
+//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//		setTitle("Add new public chat");
+//		setIconImage(new ImageIcon("pictures/public.png").getImage());
+		setUndecorated(true);
+		getContentPane().setBackground(Color.white);
+		getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
+		setLayout(new GridBagLayout());
+		setPreferredSize(GeneralProperties.addPublicChat);
+		
+		setAlwaysOnTop(true);
+		setVisible(true);
+		
 	}
 
 	private void makeComponents() {
 		JLName = new JLabel("Enter new chat name",SwingConstants.CENTER);
 		JLName.setFont(new Font("SansSerif", Font.BOLD, 18));
+		
 		JTName = new JTextField();
 		JTName.addActionListener(this);
+		
 		JBCreate = new JButton("Create");
 		JBCreate.setBackground(Color.white);
 		JBCreate.addMouseListener(this);
+		
+		JBCancel = new JButton("Cancel");
+		JBCancel.setBackground(Color.white);
+		JBCancel.addMouseListener(this);
+		
 		JPanel middle = new JPanel(new GridLayout(2,1));
 		middle.setBackground(Color.white);;
 		middle.add(JLName);
 		middle.add(JTName);
-		this.add(middle,BorderLayout.CENTER);
-		this.add(JBCreate, BorderLayout.SOUTH);
+		
+		JPanel buttons = new JPanel(new GridLayout(1,2));
+		buttons.add(JBCreate);
+		buttons.add(JBCancel);
+		
+
+		content = new JPanel(new GridLayout(3,1,0,5));
+		content.setBackground(Color.white);
+		content.add(JLName);
+		content.add(JTName);
+		content.add(buttons);
 	}
 
-	private void setDefaultProperties() {
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setLayout(new BorderLayout());
-		this.setPreferredSize(GeneralProperties.addPublicChat);
-		this.setTitle("Add new public chat");
-		this.setIconImage(new ImageIcon("pictures/public.png").getImage());
-		this.setAlwaysOnTop(true);
-		this.setVisible(true);
-		
-	}
+	
 	
 	private void makeNewChat(){
 		String name = JTName.getText();
@@ -80,7 +107,12 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JBCreate){
 			makeNewChat();
-		}		
+		}
+		if(e.getSource() == JBCancel){
+			dispose();
+			GUIEngine.mainFrame.enable();
+			GUIEngine.mainFrame.setAlwaysOnTop(true);
+		}
 	}
 
 	@Override

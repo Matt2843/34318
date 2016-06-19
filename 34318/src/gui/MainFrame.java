@@ -21,6 +21,8 @@ public class MainFrame extends JFrame implements WindowListener {
 	public static PanelLeft leftPanel;
 	public static PanelRight rightPanel;
 	
+	public static String username;
+	
 	public JPanel JPRight;
 	
 	public MainFrame(){	
@@ -71,7 +73,9 @@ public class MainFrame extends JFrame implements WindowListener {
 	}
 	
 	
-	
+	public void setUsername(String name){
+		username = name;
+	}
 	
 	
 	public static void beforeClosing() {

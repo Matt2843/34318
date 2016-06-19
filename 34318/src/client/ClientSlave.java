@@ -20,6 +20,7 @@ public class ClientSlave extends Thread {
 			UserInfo profile = (UserInfo) message.getObject();
 			MainFrame.client.setProfile(profile);
 			Profile.setUsername(profile.getUsername());
+			GUIEngine.mainFrame.setUsername(profile.getUsername());
 			MainFrame.DLogin.setVisible(false);
 			GUIEngine.mainFrame.setVisible(true);
 			break;
