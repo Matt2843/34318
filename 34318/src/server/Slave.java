@@ -92,6 +92,9 @@ public class Slave extends Thread {
 			if(Server.db.getRegisteredUsers().containsKey(targetUser)) {
 				Server.db.getRegisteredUsers().get(targetUser).addFriendRequest(master.getUsername());
 				master.sendMessage("V100", null);
+				if(Server.db.getActiveUsers().containsKey(targetUser)) {
+					Server.db.getActiveUsers().get(targetUser).sendMessage("U104", null, Server.db.getRegisteredUsers().get(targetUser));
+				} 
 			} else {
 				setParams(1, "User does not exist in database.");
 				master.sendMessage("V400", params);
