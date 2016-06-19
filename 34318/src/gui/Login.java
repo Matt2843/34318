@@ -38,7 +38,7 @@ public class Login extends JDialog implements ActionListener,MouseListener{
 	}
 	
 	private void setDefaultProperties(){
-		setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLayout(new FlowLayout());
 		getContentPane().setBackground(Color.white);
