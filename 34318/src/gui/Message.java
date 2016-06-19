@@ -35,6 +35,7 @@ public class Message extends JDialog implements MouseListener{
 	
 	private void setDefaultProperties(){
 		setUndecorated(true);
+		setAlwaysOnTop(true);
 		getContentPane().setBackground(Color.white);
 		getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
 		setLayout(new GridBagLayout());
@@ -91,10 +92,13 @@ public class Message extends JDialog implements MouseListener{
 		if (e.getSource() == yes){
 			dispose();
 			MainFrame.client.sendMessage("L103",null);
+			GUIEngine.mainFrame.enable();
 			GUIEngine.mainFrame.setVisible(false);
 			new Login();
 		} else{
 			dispose();
+			GUIEngine.mainFrame.enable();
+			GUIEngine.mainFrame.setAlwaysOnTop(true);;
 		}
 	}
 

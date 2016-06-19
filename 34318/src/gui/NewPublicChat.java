@@ -24,6 +24,7 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 	private JLabel JLName;
 	
 	public NewPublicChat() {
+		GUIEngine.mainFrame.disable();
 		setDefaultProperties();
 		makeComponents();
 		this.pack();
@@ -66,7 +67,9 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 //			if (MainFrame.client.getStatus().equals("C100")){
 //				MainFrame.chatPanel.addTab(name);
 //			}
-			dispose();		
+			dispose();
+			GUIEngine.mainFrame.enable();
+			GUIEngine.mainFrame.setAlwaysOnTop(true);;
 		}
 		else{
 			new Message("Enter new name");

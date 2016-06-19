@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class EditProfile extends JFrame implements MouseListener{
+public class EditProfile extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel friendRequests,requestTop,profile;
 	private JLabel addFriends;
@@ -17,18 +17,11 @@ public class EditProfile extends JFrame implements MouseListener{
 	public EditProfile() {
 		setProperties();
 		makeFriendRequestPanel();
-		makeProfilePanel();
-		add(new FriendRequests(),BorderLayout.WEST);	
-		add(profile,BorderLayout.CENTER);
-		pack();
-		setLocationRelativeTo(null);;
+		add(new FriendRequests(),BorderLayout.CENTER);	
 	}
 	
 	private void setProperties(){
 		setLayout(new BorderLayout());
-		setPreferredSize(GeneralProperties.editProfileSize);
-		setTitle("Edit Profile");
-		setIconImage(GeneralProperties.IEdit.getImage());
 		setVisible(true);
 	}
 	
@@ -46,11 +39,6 @@ public class EditProfile extends JFrame implements MouseListener{
 		requestTop.setVisible(true);
 		requestTop.add(addFriends,BorderLayout.WEST);
 		requestTop.add(new JLabel("  Friend requests"),BorderLayout.CENTER);
-	}
-	
-	private void makeProfilePanel(){
-		profile = new JPanel();
-		profile.setBackground(Color.white);
 	}
 
 	@Override

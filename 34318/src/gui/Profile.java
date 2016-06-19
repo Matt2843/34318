@@ -13,11 +13,10 @@ public class Profile extends JPanel implements MouseListener{
 	private static JLabel username;
 	
 	public Profile() {
-		username = new JLabel("");
+		username = new JLabel("");	
 		setLayout(new BorderLayout());
-		setPreferredSize(GeneralProperties.panelLeftaddChat);
-		add(new JLabel(GeneralProperties.IEdit),BorderLayout.WEST);
-		add(username,BorderLayout.CENTER);
+		add(username,BorderLayout.NORTH);
+		add(new EditProfile(),BorderLayout.CENTER);
 		setBackground(Color.white);
 		addMouseListener(this);
 	}

@@ -14,7 +14,7 @@ public final class GeneralProperties {
 
 	public final static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public final static Dimension frameSize = new Dimension((screenSize.width / 5) * 4, (screenSize.height / 4) * 3);
-	public final static Dimension panelLeftSize = new Dimension((frameSize.width / 5), (frameSize.height));
+	public final static Dimension panelLeftSize = new Dimension((frameSize.width / 4), (frameSize.height));
 	public final static Dimension panelLeftaddChat = new Dimension(panelLeftSize.width, 30);
 	public final static Dimension addPublicChat = new Dimension(300, 120);
 	public final static Dimension panelRightSize = new Dimension((frameSize.width / 3) * 2, (frameSize.height));
@@ -27,13 +27,14 @@ public final class GeneralProperties {
 	public final static Dimension editProfileSize = new Dimension((screenSize.width / 4) * 2, (screenSize.height / 4) * 2);
 	public final static Dimension friendRequestsSize = new Dimension(editProfileSize.width / 3, editProfileSize.height);
 	
-	public  static ImageIcon 	IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock, 
+	public  static ImageIcon 	IPublic, IPrivate,IProfile, IClose, ISmiley, IFile, IAdd, IBlock, 
 								IAddFriend, ISendMessage, ILogout,IEdit,IAccept,IReject;
 	
 	public final static void initializeIcons() {
 		try {
 			IPublic = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/public.png")), 20, 20);
 			IPrivate = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/private.png")), 20, 20);
+			IProfile = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/private.png")), 16, 16);
 			IClose = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/close.png")), 20, 20);
 			ISmiley = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/smiley.png")), 15, 15);
 			IFile = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/file.png")), 20, 20);

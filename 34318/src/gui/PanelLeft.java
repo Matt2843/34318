@@ -19,7 +19,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 	
 	public static PanelLeftPublicChats PLPublicChats;
 	
-	private JPanel  JPPublic,JPFriends, addChat;
+	private JPanel  JPPublic,JPFriends,JPProfile, addChat;
 	private JTabbedPane tabbedPanel;
 	public static ArrayList<String> publicChats = new ArrayList<String>();
 //	private ArrayList<String> privateChats = new ArrayList<String>();
@@ -30,6 +30,7 @@ public class PanelLeft extends JPanel implements MouseListener{
 		setComponents();
 		tabbedPanel.addTab("Public",GeneralProperties.IPublic,JPPublic);
 		tabbedPanel.addTab("Friends", GeneralProperties.IPrivate, JPFriends);
+		tabbedPanel.addTab("Profile", GeneralProperties.IProfile,JPProfile);
 		this.add(tabbedPanel, BorderLayout.CENTER);
 		this.validate();
 	}
@@ -45,12 +46,8 @@ public class PanelLeft extends JPanel implements MouseListener{
 	public void setComponents(){
 		PLPublicChats = new PanelLeftPublicChats();
 		makePublicChat();
-		JPanel bottom = new JPanel(new GridLayout(2,1));
-		bottom.add(new Profile());
-		bottom.add(new Logout());
-		JPFriends = new JPanel(new BorderLayout());
-		JPFriends.add(new PanelLeftFriends(),BorderLayout.CENTER);
-		JPFriends.add(bottom,BorderLayout.SOUTH);
+		makePrivateChat();
+		makeProfile();
 		tabbedPanel = new JTabbedPane();
 		tabbedPanel.setBackground(Color.white);
 	}
@@ -70,6 +67,19 @@ public class PanelLeft extends JPanel implements MouseListener{
 		bottom.add(new Logout());
 		JPPublic.add(bottom,BorderLayout.SOUTH);
 	}
+	
+	private void makePrivateChat(){
+		JPFriends = new JPanel(new BorderLayout());
+		JPFriends.add(new PanelLeftFriends(),BorderLayout.CENTER);
+		JPFriends.add(new Logout(),BorderLayout.SOUTH);
+	}
+	
+	private void makeProfile(){
+		JPProfile = new JPanel(new BorderLayout());
+		JPProfile.add(new Profile(),BorderLayout.CENTER);
+		JPProfile.add(new Logout(),BorderLayout.SOUTH);
+	}
+	
 	
 	public void updatePublicChats(ArrayList<ChatRoom> publicChats){
 		PLPublicChats.setList(publicChats);
