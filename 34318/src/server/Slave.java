@@ -72,10 +72,10 @@ public class Slave extends Thread {
 			break;
 		case "C101": // Start Public Group
 			if (Server.db.createNewPublicChat(message.getParams()[0])) {
-				master.sendMessage("C100", null, Server.db.generatePublicChatRoomsData());
+				master.sendMessage("C101", null, Server.db.generatePublicChatRoomsData());
 			} else {
 				setParams(1, "Roomname taken");
-				master.sendMessage("C400", params);
+				master.sendMessage("C401", params);
 			}
 			break;
 			
