@@ -58,9 +58,14 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 		}
 		if (e.getClickCount() == 2 && e.getSource() == list) {
 			//Hvordan får jeg fat i ID?
-			String ID ="";
-			ChatRoom selectedChatRoom = new ChatRoom(list.getSelectedValue().toString(),ID);
-			MainFrame.rightPanel.addTab(selectedChatRoom);
+//			String ID ="";
+//			ChatRoom selectedChatRoom = (ChatRoom) message.getObject();
+//			MainFrame.rightPanel.addTab(selectedChatRoom);
+//			ChatRoom selectedChatRoom = new ChatRoom(list.getSelectedValue().toString(),ID);
+//			MainFrame.rightPanel.addTab(selectedChatRoom);
+//			
+//			// Send message to server as the only thing. Params: username
+//			MainFrame.client.sendMessage("", params);
 		}
 	}
 
