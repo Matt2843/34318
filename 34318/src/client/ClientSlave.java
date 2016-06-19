@@ -108,7 +108,9 @@ public class ClientSlave extends Thread {
 			chatID = message.getParams()[0];
 			PanelRight.chatTabs.get(chatID).getOnlineUsers().setList(message.getObject());
 			break;
-		case "U104": // Friend requests update
+		case "U104": // Profile update
+			MainFrame.client.setProfile((UserInfo) message.getObject());
+			// MainFrame.client.getProfile().getFriendRequests() - access friend requests
 			break;
 		
 		default:
