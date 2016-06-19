@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 
 import chat.ChatRoom;
 
+@SuppressWarnings("unchecked")
 public class FriendRequests extends AbstractPanelList implements MouseListener{	
 	private static final long serialVersionUID = 1L;
 

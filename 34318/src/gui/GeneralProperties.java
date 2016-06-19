@@ -28,6 +28,7 @@ public final class GeneralProperties {
 	public final static Dimension editProfileSize = new Dimension((screenSize.width / 4) * 2, (screenSize.height / 4) * 2);
 	public final static Dimension friendRequestsSize = new Dimension(editProfileSize.width / 3, editProfileSize.height);
 	
+	
 	public  static ImageIcon 	IPublic, IPrivate,IProfile, IClose, ISmiley, IFile, IAdd, IBlock, 
 								IAddFriend, ISendMessage, ILogout,IEdit,IAccept,IReject;
 	

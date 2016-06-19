@@ -3,8 +3,9 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -14,7 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class Profile extends JPanel implements MouseListener{
+import utility.Utilities;
+
+public class Profile extends JPanel implements MouseListener,ActionListener{
 	private static final long serialVersionUID = 1L;
 	private static JLabel JLUsername,edit, friendRequests;
 	private JPanel panel = new JPanel(new GridLayout(7,1,0,5)), top, bottom;
@@ -49,6 +52,7 @@ public class Profile extends JPanel implements MouseListener{
 		repeatPassword = new HintTextField("Repeat new password");
 		repeatPassword.makePasswordField();
 		repeatPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+		repeatPassword.addActionListener(this);
 		
 		save = new JButton("Save");
 		save.setBackground(Color.white);
@@ -67,7 +71,6 @@ public class Profile extends JPanel implements MouseListener{
 		top.add(panel);
 		
 		friendRequests = new JLabel(" Friend Reqests", SwingConstants.CENTER);
-//		friendRequests.setBorder(BorderFactory.createLineBorder(Color.black));
 		friendRequests.setBackground(Color.white);
 		
 		bottom = new JPanel(new BorderLayout());
@@ -78,15 +81,22 @@ public class Profile extends JPanel implements MouseListener{
 	
 	public static void setUsername(String s) {
 	    JLUsername.setText(" "+s);
-	    JLUsername.setFont(new Font("SanSerif",Font.BOLD,14));
+	}
+	
+	private void saveChanges(){
+		if(newPassword.getText().equals(repeatPassword.getText())){
+			String[] params = Utilities.setParams(3, username.getText(),password.getText(),newPassword.getText());
+			MainFrame.client.sendMessage("L102", params);
+		} else{
+			new Message("Passwords doesn't match");
+		}
 	}
 	
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		new FriendRequests();
-//		ArrayList<ChatRoom> test = new ArrayList<ChatRoom>();
-//		test.add(new ChatRoom("her","iD"));
-//		FriendRequests.setList(test);
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == save){
+			saveChanges();		
+		}
 	}
 
 	@Override
@@ -103,6 +113,14 @@ public class Profile extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource()== repeatPassword){
+			saveChanges();
+		}
+		
 	}
 
 }

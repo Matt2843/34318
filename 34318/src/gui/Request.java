@@ -54,11 +54,13 @@ public class Request extends JFrame implements MouseListener {
 	private void setComponents(){
 		accept = new JPanel(new BorderLayout());
 		accept.addMouseListener(this);
+		accept.setBackground(Color.white);
 		accept.add(new JLabel(GeneralProperties.IAccept), BorderLayout.WEST);
 		accept.add(new JLabel("  Accept"),BorderLayout.CENTER);
 		
 		reject = new JPanel(new BorderLayout());
 		reject.addMouseListener(this);
+		reject.setBackground(Color.white);
 		reject.add(new JLabel(GeneralProperties.IReject), BorderLayout.WEST);
 		reject.add(new JLabel("  Reject"),BorderLayout.CENTER);
 		
@@ -69,32 +71,22 @@ public class Request extends JFrame implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
