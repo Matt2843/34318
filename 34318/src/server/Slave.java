@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import chat.ChatRoom;
 import client.UserInfo;
 import utility.Message;
-import utility.Utilities;
 
 public class Slave extends Thread {
 	private Connection master;
@@ -13,7 +12,7 @@ public class Slave extends Thread {
 	private boolean updateUser = true;
 	
 	private ArrayList<String> onlineUsers;
-	private String username, password, targetUser, targetChat;
+	private String username, password, chatID, targetUser, targetChat;
 	private UserInfo userinformation;
 	
 	private String[] params;
@@ -68,15 +67,18 @@ public class Slave extends Thread {
 				master.setLoggedIn(false);
 			}
 			break;
-		case "C100": // Invite Private Chat
+			
+		case "C100": // Create Private Chat
+			targetUser = message.getParams()[0];
+			chatID = Server.db.createNewPrivateChat();
+			setParams(1, chatID);
+			master.sendMessage("C100", params, Server.db.generatePrivateChatRoomsData());
 			break;
 		case "C101": // Start Private Group
 			break;
 		case "C102": // Start Public Group
-			String chatID = Utilities.generateID(5);
-			if (Server.db.addNewPublicChat(message.getParams()[0], chatID)) {
-				ArrayList<ChatRoom> data = Server.db.generatePublicChatRoomsData();
-				master.sendMessage("C100", null, data);
+			if (Server.db.createNewPublicChat(message.getParams()[0])) {
+				master.sendMessage("C100", null, Server.db.generatePublicChatRoomsData());
 			} else {
 				setParams(1, "Roomname taken");
 				master.sendMessage("C400", params);
@@ -134,6 +136,7 @@ public class Slave extends Thread {
 			broadcastObjectToPublicRoom(chatID, "U103", onlineUsers);
 			break;
 		case "G101": // Join Private Group
+			
 			break;
 		case "G102": // Remove Person from Chat
 			targetUser = message.getParams()[0];

@@ -77,15 +77,20 @@ public class ClientSlave extends Thread {
 		case "G402":
 			break;
 			
-		case "C100": // Public Chat Creation Succeeded.
-			PanelLeft.PLPublicChats.setList(message.getObject());
+		case "C100":
 			break;
-		case "C400": // Public Chat Creation Failed.
+		case "C400":
 			break;
-		case "C101":
+		case "C101": // Private Chat Creation
+			chatID = message.getParams()[0];
 			break;
 		case "C401":
 			break;	
+		case "C102": // Public Chat Creation Succeeded.
+			PanelLeft.PLPublicChats.setList(message.getObject());
+			break;
+		case "C402": // Public Chat Creation Failed.
+			break;
 			
 		case "U100": // Public Chats list update.
 			PanelLeft.PLPublicChats.setList(message.getObject());

@@ -6,18 +6,26 @@ import java.util.ArrayList;
 public class UserInfo implements Serializable {
 	private static final long serialVersionUID = 3863758677993591803L;
 	
-	private ArrayList<String> friends;
-	private ArrayList<String> savedRooms;
-	private ArrayList<String> blocked;
-	private ArrayList<String> friendRequests;
-	
 	private String username;
 	private String password;
 	
+	private ArrayList<String> friends;
+	private ArrayList<String> blocked;
+	private ArrayList<String> friendRequests;
+	private ArrayList<String> savedRooms;
+	
 	public UserInfo() {
+		initializeData();
 	}
 	public UserInfo(String username, String password) {
 		this.password = password; this.username = username;
+		initializeData();
+	}
+	private void initializeData() {
+		friends = new ArrayList<String>();
+		blocked = new ArrayList<String>();
+		friendRequests = new ArrayList<String>();
+		savedRooms = new ArrayList<String>();
 	}
 	public ArrayList<String> getFriends() {
 		return friends;

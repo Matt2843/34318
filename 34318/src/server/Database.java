@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import chat.ChatRoom;
 import client.UserInfo;
+import utility.Utilities;
 
 @SuppressWarnings("unchecked")
 public class Database {
@@ -55,18 +56,38 @@ public class Database {
 			activeUsers.put(username, connection);
 		}
 	}
+	
+	public String createNewPrivateChat() {
+		String chatID = Utilities.generateID(8);
+		while(privateRooms.containsKey(chatID)) {
+			chatID = Utilities.generateID(8);
+		}
+		ChatRoom newPrivateRoom = new ChatRoom(chatID);
+		privateRooms.put(chatID, newPrivateRoom);
+		return chatID;
+	}
 
-	public boolean addNewPublicChat(String name, String chatID){
-		if(!publicRooms.containsKey(chatID)) {
-			for(ChatRoom value : publicRooms.values()) {
-				if(value.getChatName().equals(name)) {
-					return false;
-				}
+	public boolean createNewPublicChat(String name){
+		for(ChatRoom value : publicRooms.values()) {
+			if(value.getChatName().equals(name)) {
+				return false;
 			}
-			ChatRoom newPublicRoom = new ChatRoom(name, chatID);
-			publicRooms.put(chatID, newPublicRoom);
-			return true;
-		} else return false;
+		}
+		String chatID = Utilities.generateID(8);
+		while(publicRooms.containsKey(chatID)) {
+			chatID = Utilities.generateID(8);
+		}
+		ChatRoom newPublicRoom = new ChatRoom(name, chatID);
+		publicRooms.put(chatID, newPublicRoom);
+		return true;
+	}
+	
+	public ArrayList<ChatRoom> generatePrivateChatRoomsData() {
+		ArrayList<ChatRoom> result = new ArrayList<ChatRoom>();
+		for(ChatRoom value : privateRooms.values()) {
+			result.add(value);
+		}
+		return result;
 	}
 	
 	public ArrayList<ChatRoom> generatePublicChatRoomsData() {

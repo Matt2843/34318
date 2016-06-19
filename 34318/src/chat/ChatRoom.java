@@ -15,6 +15,14 @@ public class ChatRoom implements Serializable {
 	private ArrayList<String> chatModerators;
 	private ArrayList<String> chatAdmins;
 	
+	public ChatRoom(String chatID) {
+		this.chatID = chatID;
+		chatUsers = new ArrayList<String>();
+		chatModerators = new ArrayList<String>();
+		chatAdmins = new ArrayList<String>();
+		blockedUsers = new ArrayList<String>();
+	}
+	
 	public ChatRoom(String chatName, String chatID){
 		this.chatName = chatName;
 		this.chatID = chatID;
