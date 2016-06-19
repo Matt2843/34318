@@ -2,15 +2,13 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -22,7 +20,7 @@ import javax.swing.JPanel;
 import client.UserInfo;
 import utility.Utilities;
 
-public class Login extends JDialog implements ActionListener,MouseListener,WindowListener{
+public class Login extends JDialog implements ActionListener,MouseListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel middle;
@@ -40,12 +38,13 @@ public class Login extends JDialog implements ActionListener,MouseListener,Windo
 	}
 	
 	private void setDefaultProperties(){
-		addWindowListener(this);
-		setLayout(new GridBagLayout());
+		setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+		setResizable(false);
+		setLayout(new FlowLayout());
 		getContentPane().setBackground(Color.white);
 		setPreferredSize(new Dimension(500,350));
 		setIconImage(new ImageIcon("pictures/blank.png").getImage());
-		this.setVisible(true);
+		setVisible(true);
 	}
 	
 	private void setComponents(){
@@ -172,36 +171,6 @@ public class Login extends JDialog implements ActionListener,MouseListener,Windo
 	public void mouseReleased(MouseEvent arg0) {
 	}
 
-	@Override
-	public void windowActivated(WindowEvent arg0) {
-	}
-
-	@Override
-	public void windowClosed(WindowEvent e) {
-		MainFrame.beforeClosing();
-		System.exit(0);
-	}
-
-	@Override
-	public void windowClosing(WindowEvent arg0) {
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent arg0) {
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent arg0) {
-	}
-
-	@Override
-	public void windowIconified(WindowEvent arg0) {
-	}
-
-	@Override
-	public void windowOpened(WindowEvent arg0) {
-	}
-	
 //	public static void main(String[] args) {
 //		new Login();
 //	}

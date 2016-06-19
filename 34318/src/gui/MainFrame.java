@@ -61,6 +61,7 @@ public class MainFrame extends JFrame implements WindowListener {
 	}
 
 	private void setDefaultProperties(){
+		setResizable(false);
 		getContentPane().setBackground(Color.white);
 		setTitle("Chat project");
 		setIconImage(new ImageIcon("pictures/chat.png").getImage());
