@@ -11,9 +11,9 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 @SuppressWarnings("unchecked")
-public class Friends extends AbstractPanelList implements MouseListener {
+public class Friends extends AbstractPanelList implements MouseListener{
 	private static final long serialVersionUID = 1L;
-
+	
 	
 	
 	@Override

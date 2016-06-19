@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -11,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,12 +17,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+@SuppressWarnings("deprecation")
 public class NewPublicChat extends JFrame implements ActionListener, MouseListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel content;
 	private JButton JBCreate,JBCancel;
 	private JTextField JTName;
 	private JLabel JLName;
+	
 	
 	public NewPublicChat() {
 		GUIEngine.mainFrame.disable();

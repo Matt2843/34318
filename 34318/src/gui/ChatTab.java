@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,6 +18,7 @@ import javax.swing.text.BadLocationException;
 
 import chat.ChatRoom;
 
+@SuppressWarnings("deprecation")
 public class ChatTab extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	
@@ -120,7 +123,17 @@ public class ChatTab extends JPanel implements MouseListener {
 	}
 	
 	private void makeFriendFrame(){
+		GUIEngine.mainFrame.disable();
 		friends = new JFrame();
+		friends.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                GUIEngine.mainFrame.enable();
+                e.getWindow().dispose();
+            }
+        });
 		friends.setPreferredSize(GeneralProperties.friendsPanelSize);
 		friends.setTitle("Add friend");
 		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
@@ -140,7 +153,6 @@ public class ChatTab extends JPanel implements MouseListener {
 		}
 		if(e.getSource() == JLAddUsers){
 			makeFriendFrame();
-			System.out.println("test");
 		}
 		
 	}

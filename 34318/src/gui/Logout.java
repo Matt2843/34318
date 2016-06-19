@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+@SuppressWarnings("deprecation")
 public class Logout extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	
@@ -19,6 +20,7 @@ public class Logout extends JPanel implements MouseListener{
 		setBackground(Color.white);
 		addMouseListener(this);
 	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		GUIEngine.mainFrame.disable();
@@ -27,26 +29,17 @@ public class Logout extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
-
 }

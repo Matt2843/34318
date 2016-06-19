@@ -9,7 +9,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-import chat.ChatRoom;
 import utility.Utilities;
 
 @SuppressWarnings("unchecked")
@@ -47,8 +46,16 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO - DOUBLE CLICK, DIRECT MESSAGE AT PERSON.
-		// TODO - RIGHT-CLICK, OPEN ACTION LIST.
+	}
+	
+	public void addPrivateChat(){
+		int index = list.getSelectedIndex();
+		String room =  list.getModel().getElementAt(index).toString();
+		boolean exists = MainFrame.rightPanel.chatExists(room);
+		if(!exists){
+			String[] params = Utilities.setParams(1, room);
+			MainFrame.client.sendMessage("G101", params);	
+		}
 	}
 
 	@Override
@@ -58,71 +65,20 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 			new UserInformation(list.getModel().getElementAt(x).toString(), "right");
 		}
 		if (e.getClickCount() == 2 && e.getSource() == list) {
-			int index = list.getSelectedIndex();
-			String room =  list.getModel().getElementAt(index).toString();
-			boolean exists = MainFrame.rightPanel.chatExists(room);
-			if(!exists){
-				String[] params = Utilities.setParams(1, room);
-				MainFrame.client.sendMessage("G101", params);	
-			}
-			//Hvordan får jeg fat i ID?
-//			String ID ="";
-//			ChatRoom selectedChatRoom = (ChatRoom) message.getObject();
-//			MainFrame.rightPanel.addTab(selectedChatRoom);
-//			ChatRoom selectedChatRoom = new ChatRoom(list.getSelectedValue().toString(),ID);
-//			MainFrame.rightPanel.addTab(selectedChatRoom);
-//			
-//			// Send message to server as the only thing. Params: username
-//			MainFrame.client.sendMessage("", params);
+			addPrivateChat();
 		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
-
-//	@Override
-//	public void mouseClicked(MouseEvent e) {	
-//		if (e.getClickCount() == 2 && e.getSource() == list) {
-//			ChatRoom selectedChatRoom = (ChatRoom) list.getSelectedValue();
-//			MainFrame.chatPanel.addTab(selectedChatRoom);
-//		}
-//	}
-//
-//	@Override
-//	public void mouseEntered(MouseEvent e) {
-//	}
-//
-//	@Override
-//	public void mouseExited(MouseEvent e) {
-//	}
-//
-//	@Override
-//	public void mousePressed(MouseEvent e) {
-//		if(e.getButton() == MouseEvent.BUTTON3){
-//			int x = list.getSelectedIndex();
-//			new UserInformation(list.getModel().getElementAt(x).toString(),"right",mainFrame);		
-//		}
-//	}
-//
-//	@Override
-//	public void mouseReleased(MouseEvent e) {
-//	}
-
-
 
 }

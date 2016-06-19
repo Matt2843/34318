@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+@SuppressWarnings("deprecation")
 public class Message extends JDialog implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	private String message;
@@ -87,6 +88,7 @@ public class Message extends JDialog implements MouseListener{
 		}
 	}
 
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == yes){
@@ -117,9 +119,4 @@ public class Message extends JDialog implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 	}
-	
-//	public static void main(String[] args){
-//		new Message("Log out?");
-//	}
-
 }

@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import chat.ChatRoom;
 import utility.Utilities;
 
 public class UserInformation extends JFrame implements MouseListener {
@@ -23,7 +22,6 @@ public class UserInformation extends JFrame implements MouseListener {
 	private String username, panelSide;
 	private Point location;
 	private JPanel JPAddFriend, JPBlockUser, JPSendMessage, userInfo;
-	private ChatRoom chatRoom;
 	
 	
 	public UserInformation(String username, String panelSide) {;
@@ -54,8 +52,6 @@ public class UserInformation extends JFrame implements MouseListener {
 	}
 	
 	private void setComponents(){
-		// Find ud af hvordan jeg får userID!!
-		chatRoom = new ChatRoom(username, "userID");
 		JPAddFriend = new JPanel(new BorderLayout());
 		JPAddFriend.add(new JLabel(GeneralProperties.IAddFriend),BorderLayout.WEST);
 		JPAddFriend.add(new JLabel("  Add Friend"),BorderLayout.CENTER);
@@ -68,15 +64,15 @@ public class UserInformation extends JFrame implements MouseListener {
 		JPSendMessage.add(new JLabel(GeneralProperties.ISendMessage),BorderLayout.WEST);
 		JPSendMessage.add(new JLabel("  Send Message"),BorderLayout.CENTER);
 		JPSendMessage.addMouseListener(this);
-		for (int i = 0;i<PanelRight.chatTabs.size();i++){
-			if (PanelRight.chatTabs.get(i).toString().equals(MainFrame.username)){
-				setPreferredSize(GeneralProperties.userInformationUser);
-				userInfo = new JPanel(new BorderLayout());
-				userInfo.setVisible(true);
-				userInfo.add(JPSendMessage, BorderLayout.CENTER);
-				break;
-			}
-		}
+//		for (int i = 0;i<PanelRight.chatTabs.size();i++){
+//			if (PanelRight.chatTabs.get(i).toString().equals(MainFrame.username)){
+//				setPreferredSize(GeneralProperties.userInformationUser);
+//				userInfo = new JPanel(new BorderLayout());
+//				userInfo.setVisible(true);
+//				userInfo.add(JPSendMessage, BorderLayout.CENTER);
+//				break;
+//			}
+//		}
 		if (panelSide.equals("left")){
 			setPreferredSize(GeneralProperties.userInformationLeftTabSize);
 			userInfo  = new JPanel(new GridLayout(2,1));
@@ -119,10 +115,15 @@ public class UserInformation extends JFrame implements MouseListener {
 			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){
-			MainFrame.rightPanel.addTab(chatRoom);
+			boolean exists = MainFrame.rightPanel.chatExists(username);
+			if(!exists){
+				String[] params = Utilities.setParams(1, username);
+				MainFrame.client.sendMessage("G101", params);	
+			}
 			dispose();
 		}
 	}
+	
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
