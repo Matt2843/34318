@@ -35,7 +35,7 @@ public final class GeneralProperties {
 		try {
 			IPublic = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/public.png")), 20, 20);
 			IPrivate = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/private.png")), 20, 20);
-			IProfile = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/private.png")), 16, 16);
+			IProfile = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/profile.png")), 16, 16);
 			IClose = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/close.png")), 20, 20);
 			ISmiley = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/smiley.png")), 15, 15);
 			IFile = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/file.png")), 20, 20);

@@ -29,8 +29,8 @@ public class UserInformation extends JFrame implements MouseListener {
 		this.panelSide = panelSide;
 		setDefaultProperties();
 		setComponents();
-		this.pack();
-		this.setLocation(location);
+		pack();
+		setLocation(location);
 	}
 	
 	private void setDefaultProperties(){
@@ -45,9 +45,10 @@ public class UserInformation extends JFrame implements MouseListener {
 			public void focusGained(FocusEvent arg0) {
 			}
 		});
-		this.setUndecorated(true);
-		this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
-		this.setVisible(true);
+		setUndecorated(true);
+		setAlwaysOnTop(true);
+		getRootPane().setBorder(BorderFactory.createLineBorder(Color.black));
+		setVisible(true);
 		
 	}
 	

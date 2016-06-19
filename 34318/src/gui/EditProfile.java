@@ -10,12 +10,9 @@ import javax.swing.JPanel;
 
 public class EditProfile extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;
-	private JPanel friendRequests,requestTop;
-	private JLabel addFriends;
 	
 	public EditProfile() {
 		setProperties();
-		makeFriendRequestPanel();
 		add(new FriendRequests(),BorderLayout.CENTER);	
 	}
 	
@@ -24,21 +21,7 @@ public class EditProfile extends JPanel implements MouseListener{
 		setVisible(true);
 	}
 	
-	private void makeFriendRequestPanel(){
-		makeTopPanel();
-		friendRequests = new JPanel(new BorderLayout());
-		friendRequests.add(requestTop,BorderLayout.NORTH);
-		friendRequests.add(new FriendRequests(), BorderLayout.CENTER);
-	}
-	
-	private void makeTopPanel(){
-		addFriends = new JLabel(GeneralProperties.IAddFriend);
-		requestTop = new JPanel(new BorderLayout());
-		requestTop.setBackground(Color.white);
-		requestTop.setVisible(true);
-		requestTop.add(addFriends,BorderLayout.WEST);
-		requestTop.add(new JLabel("  Friend requests"),BorderLayout.CENTER);
-	}
+
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
