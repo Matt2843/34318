@@ -39,12 +39,15 @@ public class Profile extends JPanel implements MouseListener{
 		username.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		password = new HintTextField("Password");
+		password.makePasswordField();
 		password.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		newPassword = new HintTextField("New password");
+		newPassword.makePasswordField();
 		newPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		repeatPassword = new HintTextField("Repeat new password");
+		repeatPassword.makePasswordField();
 		repeatPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		save = new JButton("Save");

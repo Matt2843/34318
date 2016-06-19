@@ -20,7 +20,6 @@ class HintTextField extends JPasswordField implements FocusListener {
 		this.showingHint = true;
 		super.addFocusListener(this);
 		setEchoChar((char) 0);
-		setCaretColor(Color.blue);
 	}
 
 	@Override
