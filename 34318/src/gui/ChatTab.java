@@ -83,6 +83,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	private void setUsersInChat() {
 		makeTopPanel();	
+		usersInChatRight = new JPanel( new BorderLayout());
 		onlineUsers = new PanelRightUsersInChat();
 		onlineUsers.setPreferredSize(GeneralProperties.panelUsersSize);
 		onlineUsers.setBackground(Color.white);
@@ -95,7 +96,6 @@ public class ChatTab extends JPanel implements MouseListener {
 	private void makeTopPanel(){
 		JLAddUsers = new JLabel(GeneralProperties.IAdd);
 		JLAddUsers.addMouseListener(this);
-		usersInChatRight = new JPanel( new BorderLayout());;
 		JPUsersTop = new JPanel(new BorderLayout());
 		JLabel JLUsers = new JLabel("Users");
 		JLUsers.setFont(new Font("SansSerif", Font.BOLD, 14));

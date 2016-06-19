@@ -16,7 +16,7 @@ public class MainFrame extends JFrame implements WindowListener {
 	private static final long serialVersionUID = 1L;
 	
 	public static Client client;
-	public static DialogLogin DLogin;
+	public static Login DLogin;
 	
 	public static PanelLeft leftPanel;
 	public static PanelRight rightPanel;
@@ -44,7 +44,7 @@ public class MainFrame extends JFrame implements WindowListener {
 	}
 
 	private void startDialogLogin() {
-		DLogin = new DialogLogin();
+		DLogin = new Login();
 		DLogin.setAlwaysOnTop(true);
 	    DLogin.setVisible(true);
 	}

@@ -4,6 +4,7 @@ import gui.GUIEngine;
 import gui.MainFrame;
 import gui.PanelLeft;
 import gui.PanelRight;
+import gui.Profile;
 import utility.Message;
 
 public class ClientSlave extends Thread {
@@ -15,7 +16,7 @@ public class ClientSlave extends Thread {
 		case "L100":	// LOGIN SUCCEEDED
 			UserInfo profile = (UserInfo) message.getObject();
 			MainFrame.client.setProfile(profile);
-			//Profile.setUserName(profile.getUsername());
+			Profile.setUsername(profile.getUsername());
 			MainFrame.DLogin.setVisible(false);
 			GUIEngine.mainFrame.setVisible(true);
 			break;

@@ -24,9 +24,11 @@ public final class GeneralProperties {
 	public final static Dimension userInformationRightTabSize = new Dimension(130, 80);
 	public final static Dimension userInformationLeftTabSize = new Dimension(130, 60);
 	public final static Dimension smileyTabSize = new Dimension(100, 100);
+	public final static Dimension editProfileSize = new Dimension((screenSize.width / 4) * 2, (screenSize.height / 4) * 2);
+	public final static Dimension friendRequestsSize = new Dimension(editProfileSize.width / 3, editProfileSize.height);
 	
 	public  static ImageIcon 	IPublic, IPrivate, IClose, ISmiley, IFile, IAdd, IBlock, 
-								IAddFriend, ISendMessage, ILogout,IEdit;
+								IAddFriend, ISendMessage, ILogout,IEdit,IAccept,IReject;
 	
 	public final static void initializeIcons() {
 		try {
@@ -41,6 +43,8 @@ public final class GeneralProperties {
 			ISendMessage = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/sendMessage.png")), 12, 12);
 			ILogout = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/logout.png")), 12, 12);
 			IEdit = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/edit.png")), 12, 12);
+			IAccept = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/accept.png")), 12, 12);
+			IReject = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/reject.png")), 12, 12);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

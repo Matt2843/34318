@@ -28,7 +28,7 @@ class HintTextField extends JPasswordField implements FocusListener {
 		if(isPasswordField) {
 			setEchoChar('\u25AA');
 		}
-		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+		setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.blue));
 		//setBorder(BorderFactory.createLineBorder(Style.highlight));
 		if (this.getText().isEmpty()) {
 			super.setText("");
