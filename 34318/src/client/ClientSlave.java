@@ -1,5 +1,6 @@
 package client;
 
+import chat.ChatRoom;
 import gui.GUIEngine;
 import gui.MainFrame;
 import gui.PanelLeft;
@@ -10,7 +11,8 @@ import utility.Message;
 public class ClientSlave extends Thread {
 	
 	private String chatID = null;
-	private String reason;
+	private String reason = null;
+	private String targetUser = null;
 	
 	public void translate(Message message) {
 		switch(message.getCommand()) {
@@ -43,8 +45,8 @@ public class ClientSlave extends Thread {
 			break;
 			
 		case "S100": // Received Message
-			String usr = message.getParams()[0];
-			String msg = usr + ": " +message.getParams()[1];
+			targetUser = message.getParams()[0];
+			String msg = targetUser + ": " +message.getParams()[1];
 			chatID = message.getParams()[2];
 			PanelRight.chatTabs.get(chatID).appendToTextArea(msg);
 			break;
@@ -68,7 +70,13 @@ public class ClientSlave extends Thread {
 			break;
 		case "G400":
 			break;
-		case "G101":
+		case "G101": // Joining private chat
+			targetUser = message.getParams()[0];
+			chatID = message.getParams()[1];
+			System.out.println(targetUser + " id: " + chatID);
+			MainFrame.client.getProfile().addPersonalChat(targetUser, chatID);
+			ChatRoom newPrivateChat = new ChatRoom(targetUser, chatID);
+			MainFrame.rightPanel.addTab(newPrivateChat);
 			break;
 		case "G401":
 			break;

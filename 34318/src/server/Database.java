@@ -82,13 +82,20 @@ public class Database {
 		return true;
 	}
 	
-	public ArrayList<ChatRoom> generatePrivateChatRoomsData() {
-		ArrayList<ChatRoom> result = new ArrayList<ChatRoom>();
-		for(ChatRoom value : privateRooms.values()) {
-			result.add(value);
-		}
-		return result;
-	}
+//	public ArrayList<String> generateUsersInPrivateRoomData(String chatID) {
+//		if(privateRooms.containsKey(chatID)) {
+//			return privateRooms.get(chatID).getChatUsers();
+//		}
+//		return null;
+//	}
+	
+//	public ArrayList<ChatRoom> generatePrivateChatRoomsData() {
+//		ArrayList<ChatRoom> result = new ArrayList<ChatRoom>();
+//		for(ChatRoom value : privateRooms.values()) {
+//			result.add(value);
+//		}
+//		return result;
+//	}
 	
 	public ArrayList<ChatRoom> generatePublicChatRoomsData() {
 		ArrayList<ChatRoom> result = new ArrayList<ChatRoom>();
@@ -98,10 +105,16 @@ public class Database {
 		return result;
 	}
 	
-	public ArrayList<String> generateOnlinePublicUsersData(String chatID) {
+	public ArrayList<String> generateOnlineUsersData(String chatID) {
 		ArrayList<String> result = new ArrayList<String>();
-		for(int i = 0; i < publicRooms.get(chatID).getChatUsers().size(); i++) {
-			result.add(publicRooms.get(chatID).getChatUsers().get(i));
+		if(publicRooms.containsKey(chatID)) { // Public situation
+			for(int i = 0; i < publicRooms.get(chatID).getChatUsers().size(); i++) {
+				result.add(publicRooms.get(chatID).getChatUsers().get(i));
+			}
+		} else if(privateRooms.containsKey(chatID)) { // Private situation
+			for(int i = 0; i < privateRooms.get(chatID).getChatUsers().size(); i++) {
+				result.add(privateRooms.get(chatID).getChatUsers().get(i));
+			}
 		}
 		return result;
 	}

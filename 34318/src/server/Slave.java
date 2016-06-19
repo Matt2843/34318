@@ -82,7 +82,7 @@ public class Slave extends Thread {
 		case "S100": // Broadcast Message
 			chatID = message.getParams()[0];
 			String msg = message.getParams()[1];		
-			broadcastToPublicRoom(chatID, msg);
+			broadcastToRoom(chatID, msg);
 			break;
 		case "S101": // Private Message
 			break;
@@ -126,21 +126,42 @@ public class Slave extends Thread {
 			Server.db.getPublicRooms().get(chatID).addUser(master.getUsername());
 			
 			// Broadcast the event: User joined chat.
-			onlineUsers = Server.db.generateOnlinePublicUsersData(chatID);
-			broadcastObjectToPublicRoom(chatID, "U103", onlineUsers);
+			onlineUsers = Server.db.generateOnlineUsersData(chatID);
+			broadcastObjectToRoom(chatID, "U103", onlineUsers);
 			break;
 		case "G101": // Join Private Chat
+			targetUser = message.getParams()[0];
 			
+			if(Server.db.getRegisteredUsers().get(targetUser).getSavedPersonalChats().containsKey(master.getUsername())) {
+				chatID = Server.db.getRegisteredUsers().get(targetUser).getSavedPersonalChats().get(master.getUsername());
+			} else {
+				chatID = Server.db.createNewPrivateChat();
+			}
+			
+			// Add users to chat
+			Server.db.getPrivateRooms().get(chatID).addUser(master.getUsername());	
+			Server.db.getPrivateRooms().get(chatID).addUser(targetUser);
+			
+			// Generate Success message
+			setParams(2, targetUser, chatID);
+			master.sendMessage("G101", params);
+			
+			// Annoy target user
+			setParams(2, master.getUsername(), chatID);
+			Server.db.getActiveUsers().get(targetUser).sendMessage("G101", params);
+			
+			// Broadcast the event: User joined chat. MAYBE
+			broadcastObjectToRoom(chatID, "U103", Server.db.generateOnlineUsersData(chatID));
 			break;
-		case "G102": // Remove Person from Chat
+		case "G102": // Join Private Group
 			break;
 		case "G103": // Left Public Chat
 			chatID = message.getParams()[0];
 			Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
 			
 			// Broadcast the event: User left chat.
-			onlineUsers = Server.db.generateOnlinePublicUsersData(chatID);
-			broadcastObjectToPublicRoom(chatID, "U103", onlineUsers);
+			onlineUsers = Server.db.generateOnlineUsersData(chatID);
+			broadcastObjectToRoom(chatID, "U103", onlineUsers);
 			break;
 		case "G104": // Remove Person from chat.
 			targetUser = message.getParams()[0];
@@ -172,7 +193,7 @@ public class Slave extends Thread {
 			break;
 		case "U103": // Get online users data
 			chatID = message.getParams()[0];
-			master.sendMessage("U103", null, Server.db.generateOnlinePublicUsersData(chatID));
+			master.sendMessage("U103", null, Server.db.generateOnlineUsersData(chatID));
 			break;
 			
 		default:
@@ -180,18 +201,31 @@ public class Slave extends Thread {
 		}
 	}
 	
-	private void broadcastToPublicRoom(String chatID, String msg) {
+	private void broadcastToRoom(String chatID, String msg) {
 		setParams(3, master.getUsername(), msg, chatID);
-		for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
-			Server.db.getActiveUsers().get(value).sendMessage("S100", params);
+		if(Server.db.getPublicRooms().containsKey(chatID)) { // Handle the public rooms broadcast
+			for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
+				Server.db.getActiveUsers().get(value).sendMessage("S100", params);
+			}
+		} else if (Server.db.getPrivateRooms().containsKey(chatID)) { // Handle the private rooms broadcast
+			for(String value : Server.db.getPrivateRooms().get(chatID).getChatUsers()) {
+				Server.db.getActiveUsers().get(value).sendMessage("S100", params);
+			}
 		}
 	}
 	
-	private void broadcastObjectToPublicRoom(String chatID, String cmd, Object o) {
+	private void broadcastObjectToRoom(String chatID, String cmd, Object o) {
 		setParams(1, chatID);
-		for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
-			Server.db.getActiveUsers().get(value).sendMessage(cmd, params, o);
+		if(Server.db.getPublicRooms().containsKey(chatID)) {
+			for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
+				Server.db.getActiveUsers().get(value).sendMessage(cmd, params, o);
+			}
+		} else if(Server.db.getPrivateRooms().containsKey(chatID)) {
+			for(String value : Server.db.getPrivateRooms().get(chatID).getChatUsers()) {
+				Server.db.getActiveUsers().get(value).sendMessage(cmd, params, o);
+			}
 		}
+		
 	}
 	
 	private void setParams(int length, String... p) {

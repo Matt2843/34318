@@ -2,6 +2,7 @@ package client;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserInfo implements Serializable {
 	private static final long serialVersionUID = 3863758677993591803L;
@@ -12,7 +13,9 @@ public class UserInfo implements Serializable {
 	private ArrayList<String> friends;
 	private ArrayList<String> blocked;
 	private ArrayList<String> friendRequests;
-	private ArrayList<String> savedRooms;
+	
+	private HashMap<String, String> savedPersonalChats; // K: Username V: ChatID
+	private HashMap<String, String> savedGroupChats; // K: Username V: ChatID
 	
 	public UserInfo() {
 		initializeData();
@@ -25,16 +28,34 @@ public class UserInfo implements Serializable {
 		friends = new ArrayList<String>();
 		blocked = new ArrayList<String>();
 		friendRequests = new ArrayList<String>();
-		savedRooms = new ArrayList<String>();
+		savedPersonalChats = new HashMap<String, String>();
+		savedGroupChats = new HashMap<String, String>();
+	}
+	public void addPersonalChat(String name, String chatID) {
+		if(!savedPersonalChats.containsKey(name)) {
+			savedPersonalChats.put(name, chatID);
+		}
+	}
+	public void removePersonalChat(String name) {
+		if(savedPersonalChats.containsKey(name)) {
+			savedPersonalChats.remove(name);
+		}
+	}
+	public void addGroupChat(String name, String chatID) {
+		if(!savedGroupChats.containsKey(name)) {
+			savedGroupChats.put(name, chatID);
+		}
+	}
+	public void removeGroupChat(String name) {
+		if(savedGroupChats.containsKey(name)) {
+			savedGroupChats.remove(name);
+		}
 	}
 	public ArrayList<String> getFriends() {
 		return friends;
 	}
 	public void friends(String alias) {
 		friends.add(alias);
-	}
-	public ArrayList<String> getSavedRooms() {
-		return savedRooms;
 	}
 	public String getUsername() {
 		return username;
@@ -84,9 +105,14 @@ public class UserInfo implements Serializable {
 	public ArrayList<String> getFriendRequests() {
 		return friendRequests;
 	}	
-	
 	@Override
 	public String toString() {
 		return username + " p: " + password;
+	}
+	public HashMap<String, String> getSavedPersonalChats() {
+		return savedPersonalChats;
+	}
+	public HashMap<String, String> getSavedGroupChats() {
+		return savedGroupChats;
 	}
 }
