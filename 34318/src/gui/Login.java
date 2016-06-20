@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import client.UserInfo;
+
+import java.util.regex.*;
+
 import utility.Utilities;
 
 public class Login extends JFrame implements ActionListener,MouseListener{
@@ -106,18 +109,29 @@ public class Login extends JFrame implements ActionListener,MouseListener{
 	}
 	
 	private void createNewUser(){
-		if(password.getText().equals(repeatPassword.getText())){
-			String newUsername = username.getText();
-			String newPassword = repeatPassword.getText();
-			String encryptedPassword = Utilities.encryptString(newPassword);
-			UserInfo info = new UserInfo(newUsername, encryptedPassword);
-			MainFrame.client.sendMessage("L101", null, info);
-			login();
-		}
-		else{
-//			message("Passwords doesn't match")
+		String match = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,15}$";
+		if (username.getText().length()<10 && username.getText().length()>0){
+			if (password.getText().matches(match)){
+				if(password.getText().equals(repeatPassword.getText())){
+					String newUsername = username.getText();
+					String newPassword = repeatPassword.getText();
+					String encryptedPassword = Utilities.encryptString(newPassword);
+					UserInfo info = new UserInfo(newUsername, encryptedPassword);
+					MainFrame.client.sendMessage("L101", null, info);
+					login();
+				}
+				else{
+					new Message("Passwords doesn't match");
+				}
+			}else{
+				new Message("Invalid pasword");
+			}
+			
+		}else{
+			new Message("Username must be between 0-9 characters");
 		}
 	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
