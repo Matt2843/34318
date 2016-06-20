@@ -14,6 +14,7 @@ import chat.ChatRoom;
 @SuppressWarnings("unchecked")
 public class PanelLeftPublicChats extends AbstractPanelList implements MouseListener {
 	private static final long serialVersionUID = 1L;
+	private ArrayList<ChatRoom> chats = new ArrayList<ChatRoom>();
 
 	@Override
 	public void setVariables() {
@@ -33,9 +34,14 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 	public void setList(Object o) {
 		model.removeAllElements();
 		ArrayList<ChatRoom> copy = (ArrayList<ChatRoom>) o;
+		chats = copy;
 		for (int i =0; i< copy.size();i++){
 			addItem(copy.get(i));
 		}
+	}
+	
+	public ArrayList<ChatRoom> getList(){
+		return chats;
 	}
 
 	@Override

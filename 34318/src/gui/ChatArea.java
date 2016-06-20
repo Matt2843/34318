@@ -101,6 +101,9 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 		if (e.getSource() == JLSmiley){
 			new SmileyMenu(this);
 		}
+		if (e.getSource()==JLFile){
+			MainFrame.client.sendMessage("F100", null);
+		}
 	}
 
 	@Override
