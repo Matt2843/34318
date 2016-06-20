@@ -32,7 +32,7 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
 		makeComponents();		
 		add(content);
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(GUIEngine.mainFrame);
 	}
 	
 	private void setDefaultProperties() {
