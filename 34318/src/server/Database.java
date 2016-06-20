@@ -82,21 +82,6 @@ public class Database {
 		return true;
 	}
 	
-//	public ArrayList<String> generateUsersInPrivateRoomData(String chatID) {
-//		if(privateRooms.containsKey(chatID)) {
-//			return privateRooms.get(chatID).getChatUsers();
-//		}
-//		return null;
-//	}
-	
-//	public ArrayList<ChatRoom> generatePrivateChatRoomsData() {
-//		ArrayList<ChatRoom> result = new ArrayList<ChatRoom>();
-//		for(ChatRoom value : privateRooms.values()) {
-//			result.add(value);
-//		}
-//		return result;
-//	}
-	
 	public ArrayList<ChatRoom> generatePublicChatRoomsData() {
 		ArrayList<ChatRoom> result = new ArrayList<ChatRoom>();
 		for(ChatRoom value : publicRooms.values()) {

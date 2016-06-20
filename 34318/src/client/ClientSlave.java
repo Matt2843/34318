@@ -1,5 +1,7 @@
 package client;
 
+import java.util.ArrayList;
+
 import chat.ChatRoom;
 import gui.GUIEngine;
 import gui.MainFrame;
@@ -11,14 +13,17 @@ import utility.Message;
 
 public class ClientSlave extends Thread {
 	
-	private String chatID = null;
-	private String reason = null;
-	private String targetUser = null;
+	private String chatID;
+	private String reason;
+	private String targetUser;
+	
+	private UserInfo profile;
+	private ArrayList<String> friendRequests;
 	
 	public void translate(Message message) {
 		switch(message.getCommand()) {
 		case "L100":	// LOGIN SUCCEEDED
-			UserInfo profile = (UserInfo) message.getObject();
+			profile = (UserInfo) message.getObject();
 			MainFrame.client.setProfile(profile);
 			Profile.setUsername(profile.getUsername());
 			GUIEngine.mainFrame.setUsername(profile.getUsername());
@@ -103,7 +108,7 @@ public class ClientSlave extends Thread {
 			break;
 			
 		case "U100": // Public Chats list update.
-			if(!GUIEngine.mainFrame.leftPanel.isSearching()){
+			if(!MainFrame.leftPanel.isSearching()){
 				PanelLeft.PLPublicChats.setList(message.getObject());
 			}
 			
@@ -118,7 +123,7 @@ public class ClientSlave extends Thread {
 			break;
 		case "U104": // Profile update
 			MainFrame.client.setProfile((UserInfo) message.getObject());
-			// MainFrame.client.getProfile().getFriendRequests() - access friend requests
+			MainFrame.leftPanel.profileUpdatedNotification();
 			break;
 			
 		case "KAPPA":

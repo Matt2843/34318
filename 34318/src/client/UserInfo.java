@@ -82,36 +82,39 @@ public class UserInfo implements Serializable {
 			blocked.add(user);
 		}
 	}
-	public void removeFriend(String username) {
-		if(friends.contains(username)) {
-			friends.remove(username);
-		}
-	}
+	
 	public void addFriend(String username) {
 		if(!friends.contains(username)) {
 			friends.add(username);
 		}
 	}
-	public void removeFriendRequest(String requestingUser) {
-		if(friendRequests.contains(requestingUser)) {
-			friendRequests.remove(requestingUser);
+	
+	public void removeFriend(String username) {
+		if(friends.contains(username)) {
+			friends.remove(username);
 		}
 	}
+
 	public void addFriendRequest(String requestingUser) {
 		if(!friendRequests.contains(requestingUser)) {
 			friendRequests.add(requestingUser);
 		}
 	}
+	
+	public void removeFriendRequest(String requestingUser) {
+		if(friendRequests.contains(requestingUser)) {
+			friendRequests.remove(requestingUser);
+		}
+	}
+	
 	public ArrayList<String> getFriendRequests() {
 		return friendRequests;
 	}	
-	@Override
-	public String toString() {
-		return username + " p: " + password;
-	}
+
 	public HashMap<String, String> getSavedPersonalChats() {
 		return savedPersonalChats;
 	}
+	
 	public HashMap<String, String> getSavedGroupChats() {
 		return savedGroupChats;
 	}

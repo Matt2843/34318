@@ -1,6 +1,5 @@
 package server;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import chat.ChatRoom;
@@ -42,7 +41,6 @@ public class Slave extends Thread {
 			userinformation = (UserInfo) message.getObject(); 
 			username = userinformation.getUsername();
 			if (!Server.db.getRegisteredUsers().containsKey(username)) {
-				System.out.println(userinformation);
 				Server.db.registerNewUser(username, userinformation);
 				Server.setServerStatus("User " + username + " added to database.");
 				master.sendMessage("L101", null);
@@ -92,25 +90,31 @@ public class Slave extends Thread {
 			targetUser = message.getParams()[0];
 			if(Server.db.getRegisteredUsers().containsKey(targetUser)) {
 				Server.db.getRegisteredUsers().get(targetUser).addFriendRequest(master.getUsername());
-				master.sendMessage("V100", null);
+				
+				// Notify target user of the pending friend request if online.
 				if(Server.db.getActiveUsers().containsKey(targetUser)) {
+					System.out.println("SENDING FOLLOWING PROFILE CONTAINING FRIEND REQUESTS: " + Server.db.getRegisteredUsers().get(targetUser).getFriendRequests());
 					Server.db.getActiveUsers().get(targetUser).sendMessage("U104", null, Server.db.getRegisteredUsers().get(targetUser));
-				} 
+				}
 			} else {
-				setParams(1, "User does not exist in database.");
+				setParams(1, "User not found in database.");
 				master.sendMessage("V400", params);
 			}
 			break;
 		case "V101": // Accept Friend
-			targetUser = message.getParams()[0];
-			if(Server.db.getRegisteredUsers().containsKey(targetUser)) {
-				Server.db.getRegisteredUsers().get(targetUser).addFriend(master.getUsername());
-				Server.db.getRegisteredUsers().get(master.getUsername()).addFriend(targetUser);
-				master.sendMessage("V101", null);
-			} else {
-				setParams(1, "User does not exist in database.");
-				master.sendMessage("V401", params);
-			}
+//			targetUser = message.getParams()[0];
+//			Server.db.getRegisteredUsers().get(targetUser).addFriend(master.getUsername());
+//			Server.db.getRegisteredUsers().get(master.getUsername()).addFriend(targetUser);
+//			
+//			// Notify src user if online.
+//			if(master.isAlive()) {
+//				master.sendMessage("U104", null, Server.db.getRegisteredUsers().get(master.getUsername()));
+//			}
+//			
+//			// Notify target user if online.
+//			if(Server.db.getActiveUsers().containsKey(targetUser)) {
+//				Server.db.getActiveUsers().get(targetUser).sendMessage("U104", null, Server.db.getRegisteredUsers().get(targetUser));
+//			}	
 			break;
 		case "V102": // Delete Friend
 			targetUser = message.getParams()[0];

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -18,7 +17,7 @@ import javax.swing.JTextField;
 
 import chat.ChatRoom;
 
-public class PanelLeft extends JPanel implements MouseListener,KeyListener{
+public class PanelLeft extends JPanel implements MouseListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	
 	public static PanelLeftPublicChats PLPublicChats;
@@ -27,10 +26,9 @@ public class PanelLeft extends JPanel implements MouseListener,KeyListener{
 	private JTabbedPane tabbedPanel;
 	private JTextField search;
 	private JLabel close;
-//	public static ArrayList<String> publicChats = new ArrayList<String>();
+	
 	private ArrayList<ChatRoom> chats;
 	private boolean searching = false;
-//	private ArrayList<String> privateChats = new ArrayList<String>();
 	
 	
 	public PanelLeft() {
@@ -83,20 +81,20 @@ public class PanelLeft extends JPanel implements MouseListener,KeyListener{
 		JPanel bottom = new JPanel(new GridLayout(2,1));
 		bottom.add(addChat);
 		bottom.add(new Logout());
-		JPPublic.add(search,BorderLayout.NORTH);
-		JPPublic.add(bottom,BorderLayout.SOUTH);
+		JPPublic.add(search, BorderLayout.NORTH);
+		JPPublic.add(bottom, BorderLayout.SOUTH);
 	}
 	
 	private void makePrivateChat(){
 		JPFriends = new JPanel(new BorderLayout());
-		JPFriends.add(new PanelLeftFriends(),BorderLayout.CENTER);
-		JPFriends.add(new Logout(),BorderLayout.SOUTH);
+		JPFriends.add(new PanelLeftFriends(), BorderLayout.CENTER);
+		JPFriends.add(new Logout(), BorderLayout.SOUTH);
 	}
 	
 	private void makeProfile(){
 		JPProfile = new JPanel(new BorderLayout());
-		JPProfile.add(new Profile(),BorderLayout.CENTER);
-		JPProfile.add(new Logout(),BorderLayout.SOUTH);
+		JPProfile.add(new Profile(), BorderLayout.CENTER);
+		JPProfile.add(new Logout(), BorderLayout.SOUTH);
 	}
 		
 	private void Search(){
@@ -168,5 +166,10 @@ public class PanelLeft extends JPanel implements MouseListener,KeyListener{
 
 	public boolean isSearching() {
 		return searching;
+	}
+	
+	public void profileUpdatedNotification() {
+		tabbedPanel.setBackgroundAt(2, Color.magenta);
+		Profile.friendRequestList.setList(MainFrame.client.getProfile().getFriendRequests());
 	}
 }

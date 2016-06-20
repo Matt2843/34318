@@ -18,6 +18,8 @@ import javax.swing.SwingConstants;
 import utility.Utilities;
 
 public class Profile extends JPanel implements MouseListener,ActionListener{
+	public static FriendRequests friendRequestList;
+	
 	private static final long serialVersionUID = 1L;
 	private static JLabel JLUsername,edit, friendRequests;
 	private JPanel panel = new JPanel(new GridLayout(8,1,0,5)), top, bottom;
@@ -34,7 +36,7 @@ public class Profile extends JPanel implements MouseListener,ActionListener{
 	}
 	
 	private void setComponents(){
-edit = new JLabel("<HTML><U>Edit Profile</U></HTML>");
+		edit = new JLabel("<HTML><U>Edit Profile</U></HTML>");
 		
 		JLUsername = new JLabel("");
 		JLUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
@@ -79,7 +81,8 @@ edit = new JLabel("<HTML><U>Edit Profile</U></HTML>");
 		bottom = new JPanel(new BorderLayout());
 		bottom.setBackground(Color.white);
 		bottom.add(friendRequests,BorderLayout.NORTH);
-		bottom.add(new FriendRequests());
+		friendRequestList = new FriendRequests();
+		bottom.add(friendRequestList);
 	}
 	
 	public static void setUsername(String s) {

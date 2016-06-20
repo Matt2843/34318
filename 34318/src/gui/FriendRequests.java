@@ -15,13 +15,13 @@ import chat.ChatRoom;
 public class FriendRequests extends AbstractPanelList implements MouseListener{	
 	private static final long serialVersionUID = 1L;
 
-	public FriendRequests() {
-		super();
-		ArrayList<String> test = new ArrayList<String>();
-		test.add(("NyVen"));
-		test.add(("NyVen2"));
-		setList(test);
-	}
+//	public FriendRequests() {
+//		super();
+//		ArrayList<String> test = new ArrayList<String>();
+//		test.add(("NyVen"));
+//		test.add(("NyVen2"));
+//		setList(test);
+//	}
 	
 	@Override
 	public void setVariables() {

@@ -100,12 +100,12 @@ public class UserInformation extends JFrame implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == JPAddFriend){
-			dispose();
 			String[] params = Utilities.setParams(1, username);
 			MainFrame.client.sendMessage("V100",params);
 			//Stall indtil det er sket?
 			PopUp DMessage = new PopUp(username+" added as friend",this);
 			DMessage.setAlwaysOnTop(true);
+			dispose();
 		}
 		if (e.getSource() == JPBlockUser){
 			String[] params = Utilities.setParams(1, username);
