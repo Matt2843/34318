@@ -160,7 +160,11 @@ public class Slave extends Thread {
 			break;
 		case "G103": // Left Public Chat
 			chatID = message.getParams()[0];
-			Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
+			if(Server.db.getPublicRooms().containsKey(chatID)) {
+				Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
+			} else if(Server.db.getPrivateRooms().containsKey(chatID)) {
+				Server.db.getPrivateRooms().get(chatID).removeUser(master.getUsername());
+			}
 			
 			// Broadcast the event: User left chat.
 			onlineUsers = Server.db.generateOnlineUsersData(chatID);
