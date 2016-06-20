@@ -80,14 +80,10 @@ public class PanelLeft extends JPanel implements MouseListener,KeyListener{
 		close.addMouseListener(this);
 		close.setBackground(Color.white);
 		
-		JPanel searchPanel = new JPanel(new BorderLayout());
-		searchPanel.add(search,BorderLayout.CENTER);
-		searchPanel.add(close,BorderLayout.EAST);
-		
 		JPanel bottom = new JPanel(new GridLayout(2,1));
 		bottom.add(addChat);
 		bottom.add(new Logout());
-		JPPublic.add(searchPanel,BorderLayout.NORTH);
+		JPPublic.add(search,BorderLayout.NORTH);
 		JPPublic.add(bottom,BorderLayout.SOUTH);
 	}
 	
@@ -102,15 +98,10 @@ public class PanelLeft extends JPanel implements MouseListener,KeyListener{
 		JPProfile.add(new Profile(),BorderLayout.CENTER);
 		JPProfile.add(new Logout(),BorderLayout.SOUTH);
 	}
-	
-	
-//	public void updatePublicChats(ArrayList<ChatRoom> publicChats){
-//		PLPublicChats.setList(publicChats);
-//		this.chats = publicChats;
-//	}
-	
+		
 	private void Search(){
 		searching = true;
+		System.out.println("her");
 		chats = PLPublicChats.getList();
 		ArrayList<ChatRoom> chatSearch = new ArrayList<ChatRoom>();
 		String word = search.getText();		
@@ -156,24 +147,22 @@ public class PanelLeft extends JPanel implements MouseListener,KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getSource()==search){
-			if (search.getText().equals("")){
+			if (search.getText().isEmpty()){
 				searching = false;
+				System.out.println("er du her?");
 			}else{
 				Search();
+				PLPublicChats.setList(PLPublicChats.getList());
 			}
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public boolean isSearching() {
