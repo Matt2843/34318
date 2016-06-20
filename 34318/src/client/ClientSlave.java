@@ -1,8 +1,12 @@
 package client;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import chat.ChatRoom;
 import gui.GUIEngine;
-import gui.MainFrame;
 import gui.MainFrame;
 import gui.PanelLeft;
 import gui.PanelRight;
@@ -117,6 +121,23 @@ public class ClientSlave extends Thread {
 		case "U104": // Profile update
 			MainFrame.client.setProfile((UserInfo) message.getObject());
 			// MainFrame.client.getProfile().getFriendRequests() - access friend requests
+			break;
+			
+		case "KAPPA":
+			File f = (File) message.getObject();
+			if(!new File("downloads").exists()) {
+				File dir = new File("downloads");
+				dir.mkdir();
+			}
+					
+			try {
+				FileOutputStream fos = new FileOutputStream("downloads/data.jpg");
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				oos.writeObject(f);
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 		
 		default:
