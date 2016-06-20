@@ -124,20 +124,7 @@ public class ClientSlave extends Thread {
 			break;
 			
 		case "KAPPA":
-			File f = (File) message.getObject();
-			if(!new File("downloads").exists()) {
-				File dir = new File("downloads");
-				dir.mkdir();
-			}
-					
-			try {
-				FileOutputStream fos = new FileOutputStream("downloads/data.jpg");
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(f);
-				oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			
 			break;
 		
 		default:

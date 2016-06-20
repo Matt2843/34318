@@ -45,7 +45,7 @@
 //private void uploadFile(String path, String targetRoom){
 //	try {	
 //		File file = new File(path);
-//		
+//
 //		FileInputStream fileInputStream = new FileInputStream(file);
 //		byte [] buffer = new byte[10000]; //Størrelsen af bufferen
 //		Integer bytesRead = 0;
@@ -59,10 +59,10 @@
 //		output.close();
 //		System.exit(0);
 //	} catch (Exception e) {
-//		 e.printStackTrace();
+//		e.printStackTrace();
+//	}
 //}
-//}
-//}  
+//  
 //
 //private void downloadFile(String link){
 //	ByteArrayOutputStream byteArray = new ByteArrayOutputStream();

@@ -1,6 +1,6 @@
 package server;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import chat.ChatRoom;
@@ -188,8 +188,6 @@ public class Slave extends Thread {
 			break;
 			
 		case "F100": // Upload File
-			File f = new File("pictures/frog.jpg");
-			master.sendMessage("KAPPA", null, f);
 			break;
 		case "F101": // Download File
 			break;
