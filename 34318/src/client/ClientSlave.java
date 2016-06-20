@@ -3,8 +3,10 @@ package client;
 import chat.ChatRoom;
 import gui.GUIEngine;
 import gui.MainFrame;
+import gui.MainFrame;
 import gui.PanelLeft;
 import gui.PanelRight;
+import gui.PopUp;
 import gui.Profile;
 import utility.Message;
 
@@ -25,10 +27,12 @@ public class ClientSlave extends Thread {
 			GUIEngine.mainFrame.setVisible(true);
 			break;
 		case "L400":	// LOGIN FAILED
+			new PopUp("Wrong password",MainFrame.DLogin);
 			break;
 		case "L101": 
 			break;
 		case "L401":
+			new PopUp("Username already exist",MainFrame.DLogin);
 			break;
 		case "L102":
 			break;

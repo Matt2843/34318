@@ -18,9 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import client.UserInfo;
-
-import java.util.regex.*;
-
 import utility.Utilities;
 
 public class Login extends JFrame implements ActionListener,MouseListener{
@@ -121,14 +118,14 @@ public class Login extends JFrame implements ActionListener,MouseListener{
 					login();
 				}
 				else{
-					new Message("Passwords doesn't match");
+					new PopUp("Passwords doesn't match",this);
 				}
 			}else{
-				new Message("Invalid pasword");
+				new PopUp("Invalid pasword",this);
 			}
 			
 		}else{
-			new Message("Username must be between 0-9 characters");
+			new PopUp("Username must be between 0-9 characters",this);
 		}
 	}
 	

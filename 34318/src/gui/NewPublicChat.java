@@ -97,7 +97,7 @@ public class NewPublicChat extends JFrame implements ActionListener, MouseListen
             dispose();
 		}
 		else{
-			new Message("Enter new name");
+			new PopUp("Enter new name",this);
 		}
 	}
 

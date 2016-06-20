@@ -104,7 +104,7 @@ public class UserInformation extends JFrame implements MouseListener {
 			String[] params = Utilities.setParams(1, username);
 			MainFrame.client.sendMessage("V100",params);
 			//Stall indtil det er sket?
-			Message DMessage = new Message(username+" added as friend");
+			PopUp DMessage = new PopUp(username+" added as friend",this);
 			DMessage.setAlwaysOnTop(true);
 		}
 		if (e.getSource() == JPBlockUser){
@@ -112,7 +112,7 @@ public class UserInformation extends JFrame implements MouseListener {
 			MainFrame.client.sendMessage("V103",params);
 			dispose();
 			//Stall indtil det er sket?
-			Message DMessage = new Message(username +" has been blocked");
+			PopUp DMessage = new PopUp(username +" has been blocked",this);
 			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){

@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -17,21 +18,21 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 @SuppressWarnings("deprecation")
-public class Message extends JDialog implements MouseListener{
+public class PopUp extends JDialog implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	private String message;
 	private JPanel content,buttons,button;
 	private JLabel JLMessage;
 	private JButton action, yes, no;
 	
-	public Message(String message){
+	public PopUp(String message, Component component){		
 		this.message = message;
 		setDefaultProperties();
 		setComponents();
 		makeContent();
 		add(content);
 		pack();
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(component);
 	}
 	
 	private void setDefaultProperties(){

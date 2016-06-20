@@ -91,7 +91,7 @@ edit = new JLabel("<HTML><U>Edit Profile</U></HTML>");
 			String[] params = Utilities.setParams(3, username.getText(),password.getText(),newPassword.getText());
 			MainFrame.client.sendMessage("L102", params);
 		} else{
-			new Message("Passwords doesn't match");
+			new PopUp("Passwords doesn't match",this);
 		}
 	}
 	
