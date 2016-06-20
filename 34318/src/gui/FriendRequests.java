@@ -16,16 +16,17 @@ public class FriendRequests extends AbstractPanelList implements MouseListener{
 	private static final long serialVersionUID = 1L;
 
 	public FriendRequests() {
-		ArrayList<ChatRoom> test = new ArrayList<ChatRoom>();
-		test.add(new ChatRoom("NyVen"));
-		test.add(new ChatRoom("NyVen2"));
+		super();
+		ArrayList<String> test = new ArrayList<String>();
+		test.add(("NyVen"));
+		test.add(("NyVen2"));
 		setList(test);
 	}
 	
 	@Override
 	public void setVariables() {
-		model = new DefaultListModel<ChatRoom>();		
-		list = new JList<ChatRoom>(super.model);
+		model = new DefaultListModel<String>();		
+		list = new JList<String>(model);
 		scrollPane = new JScrollPane(list);
 		list.addMouseListener(this);
 	}
@@ -40,7 +41,7 @@ public class FriendRequests extends AbstractPanelList implements MouseListener{
 	@Override
 	public void setList(Object o) {
 		model.removeAllElements();
-		ArrayList<ChatRoom> copy = (ArrayList<ChatRoom>) o;
+		ArrayList<String> copy = (ArrayList<String>) o;
 		for (int i =0; i< copy.size();i++){
 			addItem(copy.get(i).toString());
 		}
@@ -61,15 +62,11 @@ public class FriendRequests extends AbstractPanelList implements MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
@@ -86,14 +83,8 @@ public class FriendRequests extends AbstractPanelList implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }
-
-
-
-
 
 //
 //import java.awt.BorderLayout;
@@ -118,7 +109,7 @@ public class FriendRequests extends AbstractPanelList implements MouseListener{
 //	
 //	public FriendRequests() {
 //		setDefaultProperties();
-////		setList(fr);
+//		setList(fr);
 //		JScrollPane scrollpane = new JScrollPane(frList);
 //		add(scrollpane,BorderLayout.CENTER);
 //		

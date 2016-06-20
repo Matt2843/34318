@@ -18,7 +18,7 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 	@Override
 	public void setVariables() {
 		model = new DefaultListModel<ChatRoom>();		
-		list = new JList<ChatRoom>(super.model);
+		list = new JList<ChatRoom>(model);
 		scrollPane = new JScrollPane(list);
 		list.addMouseListener(this);
 	}

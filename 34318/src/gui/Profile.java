@@ -20,8 +20,9 @@ import utility.Utilities;
 public class Profile extends JPanel implements MouseListener,ActionListener{
 	private static final long serialVersionUID = 1L;
 	private static JLabel JLUsername,edit, friendRequests;
-	private JPanel panel = new JPanel(new GridLayout(7,1,0,5)), top, bottom;
+	private JPanel panel = new JPanel(new GridLayout(8,1,0,5)), top, bottom;
 	private HintTextField username,password,newPassword, repeatPassword;
+	
 	private JButton save;
 	
 	public Profile() {
@@ -33,12 +34,12 @@ public class Profile extends JPanel implements MouseListener,ActionListener{
 	}
 	
 	private void setComponents(){
+edit = new JLabel("<HTML><U>Edit Profile</U></HTML>");
+		
 		JLUsername = new JLabel("");
-		JLUsername.setBorder((BorderFactory.createLineBorder(Color.black)));
+		JLUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
-		edit = new JLabel("<HTML><U>Edit Profile</U></HTML>");
-		
-		username = new HintTextField(JLUsername.getText());
+		username = new HintTextField(" New Username");
 		username.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 		
 		password = new HintTextField("Password");
@@ -59,11 +60,13 @@ public class Profile extends JPanel implements MouseListener,ActionListener{
 		save.addMouseListener(this);
 		
 		panel.add(edit);
+		panel.add(JLUsername);
 		panel.add(username);
 		panel.add(password);
 		panel.add(newPassword);
 		panel.add(repeatPassword);
 		panel.add(save);
+		panel.setPreferredSize(GeneralProperties.editProfileSize);
 		panel.setBackground(Color.white);
 		
 		top = new JPanel(new FlowLayout());

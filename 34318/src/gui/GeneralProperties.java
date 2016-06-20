@@ -25,7 +25,7 @@ public final class GeneralProperties {
 	public final static Dimension userInformationLeftTabSize = new Dimension(130, 60);
 	public final static Dimension userInformationUser = new Dimension(130, 30);
 	public final static Dimension smileyTabSize = new Dimension(100, 100);
-	public final static Dimension editProfileSize = new Dimension((screenSize.width / 4) * 2, (screenSize.height / 4) * 2);
+	public final static Dimension editProfileSize = new Dimension((panelLeftSize.width / 3) * 2, (panelLeftSize.height / 5*2));
 	public final static Dimension friendRequestsSize = new Dimension(editProfileSize.width / 3, editProfileSize.height);
 	
 	
