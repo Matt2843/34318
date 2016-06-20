@@ -1,10 +1,5 @@
 package client;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import chat.ChatRoom;
 import gui.GUIEngine;
 import gui.MainFrame;

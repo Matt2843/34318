@@ -146,23 +146,24 @@ public class PanelLeft extends JPanel implements MouseListener,KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 		if (e.getSource()==search){
 			if (search.getText().isEmpty()){
 				searching = false;
-				System.out.println("er du her?");
+				PLPublicChats.setList(chats);
 			}else{
 				Search();
-				PLPublicChats.setList(PLPublicChats.getList());
+				
 			}
 		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
+	public void keyTyped(KeyEvent e) {
+		
 	}
 
 	public boolean isSearching() {
