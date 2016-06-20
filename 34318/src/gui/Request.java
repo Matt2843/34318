@@ -71,7 +71,9 @@ public class Request extends JFrame implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == )
+		if (e.getSource() ==accept ){
+			
+		}
 	}
 
 	@Override
