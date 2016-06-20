@@ -5,9 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import javax.swing.JTextField;
 
 import chat.ChatRoom;
 
-public class PanelLeft extends JPanel implements MouseListener,ActionListener{
+public class PanelLeft extends JPanel implements MouseListener,KeyListener{
 	private static final long serialVersionUID = 1L;
 	
 	public static PanelLeftPublicChats PLPublicChats;
@@ -27,8 +26,10 @@ public class PanelLeft extends JPanel implements MouseListener,ActionListener{
 	private JPanel  JPPublic,JPFriends,JPProfile, addChat;
 	private JTabbedPane tabbedPanel;
 	private JTextField search;
+	private JLabel close;
 //	public static ArrayList<String> publicChats = new ArrayList<String>();
 	private ArrayList<ChatRoom> chats;
+	private boolean searching = false;
 //	private ArrayList<String> privateChats = new ArrayList<String>();
 	
 	
@@ -74,22 +75,19 @@ public class PanelLeft extends JPanel implements MouseListener,ActionListener{
 
 		search = new JTextField("Search");
 		search.addMouseListener(this);
-		search.addActionListener(this);
-		search.addFocusListener(new FocusListener(){
-			@Override
-		    public void focusLost( FocusEvent e ) {
-		          search.setText("Search");
-			}
-
-			@Override
-			public void focusGained(FocusEvent arg0) {
-			}
-		});
+		search.addKeyListener(this);
+		close = new JLabel(GeneralProperties.IClose);
+		close.addMouseListener(this);
+		close.setBackground(Color.white);
+		
+		JPanel searchPanel = new JPanel(new BorderLayout());
+		searchPanel.add(search,BorderLayout.CENTER);
+		searchPanel.add(close,BorderLayout.EAST);
 		
 		JPanel bottom = new JPanel(new GridLayout(2,1));
 		bottom.add(addChat);
 		bottom.add(new Logout());
-		JPPublic.add(search,BorderLayout.NORTH);
+		JPPublic.add(searchPanel,BorderLayout.NORTH);
 		JPPublic.add(bottom,BorderLayout.SOUTH);
 	}
 	
@@ -112,17 +110,15 @@ public class PanelLeft extends JPanel implements MouseListener,ActionListener{
 //	}
 	
 	private void Search(){
+		searching = true;
 		chats = PLPublicChats.getList();
-		System.out.println(chats);
 		ArrayList<ChatRoom> chatSearch = new ArrayList<ChatRoom>();
 		String word = search.getText();		
 		for (int i = 0; i<chats.size();i++){
 			if(chats.get(i).toString().contains(word)){
-				chatSearch.add(new ChatRoom(chats.get(i).toString()));
+				chatSearch.add(new ChatRoom(chats.get(i).toString(),chats.get(i).getChatID()));
 			} 
 		}
-		
-		System.out.println("her"+chatSearch.get(0).toString());
 		PLPublicChats.setList(chatSearch);
 	}
 	
@@ -134,37 +130,53 @@ public class PanelLeft extends JPanel implements MouseListener,ActionListener{
 		if(e.getSource()== search){
 			search.setText("");
 		}
+		if(e.getSource()== close){
+			search.setText("Search");
+			chats = PLPublicChats.getList();
+			PLPublicChats.setList(chats);
+		}
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getSource()==search){
+			if (search.getText().equals("")){
+				searching = false;
+			}else{
+				Search();
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource()==search){
-			Search();
-		}
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	public boolean isSearching() {
+		return searching;
 	}
 }

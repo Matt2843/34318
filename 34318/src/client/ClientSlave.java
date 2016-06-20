@@ -108,7 +108,10 @@ public class ClientSlave extends Thread {
 			break;
 			
 		case "U100": // Public Chats list update.
-			PanelLeft.PLPublicChats.setList(message.getObject());
+			if(!GUIEngine.mainFrame.leftPanel.isSearching()){
+				PanelLeft.PLPublicChats.setList(message.getObject());
+			}
+			
 			break;
 		case "U101":
 			break;
