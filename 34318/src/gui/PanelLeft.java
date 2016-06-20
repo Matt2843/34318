@@ -119,7 +119,7 @@ public class PanelLeft extends JPanel implements MouseListener,ActionListener{
 		for (int i = 0; i<chats.size();i++){
 			if(chats.get(i).toString().contains(word)){
 				chatSearch.add(new ChatRoom(chats.get(i).toString()));
-			}
+			} 
 		}
 		
 		System.out.println("her"+chatSearch.get(0).toString());
