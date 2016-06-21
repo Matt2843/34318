@@ -30,7 +30,7 @@ public final class GeneralProperties {
 	
 	
 	public  static ImageIcon 	IPublic, IPrivate,IProfile, IClose, ISmiley, IFile, IAdd, IBlock, 
-								IAddFriend, ISendMessage, ILogout,IEdit,IAccept,IReject;
+								IAddFriend, ISendMessage, ILogout,IEdit,IAccept,IReject,IDelete;
 	
 	public final static void initializeIcons() {
 		try {
@@ -48,6 +48,7 @@ public final class GeneralProperties {
 			IEdit = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/edit.png")), 12, 12);
 			IAccept = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/accept.png")), 12, 12);
 			IReject = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/reject.png")), 12, 12);
+			IDelete = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/delete.png")), 12, 12);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

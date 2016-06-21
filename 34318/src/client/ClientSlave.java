@@ -1,7 +1,5 @@
 package client;
 
-import java.util.ArrayList;
-
 import chat.ChatRoom;
 import gui.GUIEngine;
 import gui.MainFrame;
@@ -78,6 +76,7 @@ public class ClientSlave extends Thread {
 			targetUser = message.getParams()[0];
 			MainFrame.client.getProfile().removeFriend(targetUser);
 			MainFrame.leftPanel.profileUpdatedNotification(1);
+			new PopUp(targetUser +" has been deleted",GUIEngine.mainFrame);
 			break;
 		case "V402":
 			break;

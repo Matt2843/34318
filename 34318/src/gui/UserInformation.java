@@ -21,7 +21,7 @@ public class UserInformation extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private String username, panelSide;
 	private Point location;
-	private JPanel JPAddFriend, JPBlockUser, JPSendMessage, userInfo;
+	private JPanel JPAddFriend, JPBlockUser, JPSendMessage,JPDeleteUser, userInfo;
 	
 	
 	public UserInformation(String username, String panelSide) {;
@@ -57,10 +57,17 @@ public class UserInformation extends JFrame implements MouseListener {
 		JPAddFriend.add(new JLabel(GeneralProperties.IAddFriend),BorderLayout.WEST);
 		JPAddFriend.add(new JLabel("  Add Friend"),BorderLayout.CENTER);
 		JPAddFriend.addMouseListener(this);
+		
 		JPBlockUser = new JPanel(new BorderLayout());
 		JPBlockUser.add(new JLabel(GeneralProperties.IBlock),BorderLayout.WEST);
 		JPBlockUser.add(new JLabel("  Block User"), BorderLayout.CENTER);
 		JPBlockUser.addMouseListener(this);
+
+		JPDeleteUser = new JPanel(new BorderLayout());
+		JPDeleteUser.add(new JLabel(GeneralProperties.IDelete),BorderLayout.WEST);
+		JPDeleteUser.add(new JLabel("  Delete User"), BorderLayout.CENTER);
+		JPDeleteUser.addMouseListener(this);
+		
 		JPSendMessage = new JPanel(new BorderLayout());
 		JPSendMessage.add(new JLabel(GeneralProperties.ISendMessage),BorderLayout.WEST);
 		JPSendMessage.add(new JLabel("  Send Message"),BorderLayout.CENTER);
@@ -78,8 +85,8 @@ public class UserInformation extends JFrame implements MouseListener {
 			setPreferredSize(GeneralProperties.userInformationLeftTabSize);
 			userInfo  = new JPanel(new GridLayout(2,1));
 			userInfo.setVisible(true);
-			userInfo.add(JPBlockUser); 
 			userInfo.add(JPSendMessage);
+			userInfo.add(JPDeleteUser); 
 		} else {
 			setPreferredSize(GeneralProperties.userInformationRightTabSize);
 			userInfo  = new JPanel(new GridLayout(3,1));
@@ -114,8 +121,8 @@ public class UserInformation extends JFrame implements MouseListener {
 			String[] params = Utilities.setParams(1, MainFrame.client.getProfile().getUsername());
 			MainFrame.client.sendMessage("V102", params);
 			dispose();
-			PopUp DMessage = new PopUp(username +" has been blocked",this);
-			DMessage.setAlwaysOnTop(true);
+//			PopUp DMessage = new PopUp(username +" has been blocked",this);
+//			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){
 			boolean exists = MainFrame.rightPanel.chatExists(username);
@@ -124,6 +131,12 @@ public class UserInformation extends JFrame implements MouseListener {
 				MainFrame.client.sendMessage("G101", params);	
 			}
 			dispose();
+		}
+		if(e.getSource()== JPDeleteUser){
+			String targetUser = PanelLeft.friendsList.getSelectedValue().toString();
+			MainFrame.client.getProfile().removeFriend(targetUser);
+			String[] params = Utilities.setParams(1, MainFrame.client.getProfile().getUsername());
+			MainFrame.client.sendMessage("V102", params);
 		}
 	}
 	

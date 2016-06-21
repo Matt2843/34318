@@ -107,26 +107,31 @@ public class Login extends JFrame implements ActionListener,MouseListener{
 	
 	private void createNewUser(){
 		String match = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,15}$";
-		if (username.getText().length()<10 && username.getText().length()>0){
-			if (password.getText().matches(match)){
-				if(password.getText().equals(repeatPassword.getText())){
-					String newUsername = username.getText();
-					String newPassword = repeatPassword.getText();
-					String encryptedPassword = Utilities.encryptString(newPassword);
-					UserInfo info = new UserInfo(newUsername, encryptedPassword);
-					MainFrame.client.sendMessage("L101", null, info);
-					login();
+		if (username.getText().length()>0){
+			if (username.getText().length()<10 && username.getText().length()>0){
+				if (password.getText().matches(match)){
+					if(password.getText().equals(repeatPassword.getText())){
+						String newUsername = username.getText();
+						String newPassword = repeatPassword.getText();
+						String encryptedPassword = Utilities.encryptString(newPassword);
+						UserInfo info = new UserInfo(newUsername, encryptedPassword);
+						MainFrame.client.sendMessage("L101", null, info);
+						login();
+					}
+					else{
+						new PopUp("Passwords doesn't match",this);
+					}
+				}else{
+					new PopUp("Invalid pasword",this);
 				}
-				else{
-					new PopUp("Passwords doesn't match",this);
-				}
+				
 			}else{
-				new PopUp("Invalid pasword",this);
+				new PopUp("Username to long",this);
 			}
-			
 		}else{
-			new PopUp("Username must be between 0-9 characters",this);
+			new PopUp("Username to short",this);
 		}
+		
 	}
 	
 	
