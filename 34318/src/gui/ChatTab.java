@@ -7,13 +7,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -23,7 +23,7 @@ import chat.ChatRoom;
 @SuppressWarnings("deprecation")
 public class ChatTab extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
-	
+	private Friends friendList;
 	private ChatRoom chatRoom;
 	
 	private boolean open = false;
@@ -129,6 +129,8 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	private void makeFriendFrame(){
 		GUIEngine.mainFrame.disable();
+		friendList = new Friends();
+		friendList.setList(MainFrame.client.getProfile().getFriends());
 		friends = new JFrame();
 		friends.setAlwaysOnTop(true);
 		friends.addWindowListener(new WindowAdapter()
@@ -142,8 +144,8 @@ public class ChatTab extends JPanel implements MouseListener {
         });
 		friends.setPreferredSize(GeneralProperties.friendsPanelSize);
 		friends.setTitle("Add friend");
-		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
-		friends.add(new Friends(), BorderLayout.CENTER);
+		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());		
+		friends.add(friendList, BorderLayout.CENTER);
 		friends.setVisible(true);
 		friends.pack();
 		friends.setLocationRelativeTo(null);

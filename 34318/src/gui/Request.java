@@ -67,8 +67,8 @@ public class Request extends JFrame implements MouseListener {
 		reject.add(new JLabel("  Reject"),BorderLayout.CENTER);
 		
 		panel = new JPanel(new GridLayout(2,1));
-		panel.add(reject);
 		panel.add(accept);
+		panel.add(reject);
 	}
 
 	@Override
