@@ -179,11 +179,11 @@ public class PanelLeft extends JPanel implements MouseListener, KeyListener {
 	
 	public void profileUpdatedNotification(int which) {
 		if(which == 0) { // Friend Request Notification
-			tabbedPanel.setBackgroundAt(2, Color.magenta);
+			tabbedPanel.setBackgroundAt(2, Color.blue);
 			Profile.friendRequestList.setList(MainFrame.client.getProfile().getFriendRequests());
 		}
 		if(which == 1) { // Friend Added Notification
-			tabbedPanel.setBackgroundAt(1, Color.magenta);
+			tabbedPanel.setBackgroundAt(1, Color.blue);
 			friendsList.setList(MainFrame.client.getProfile().getFriends());
 		}
 	}
