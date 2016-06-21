@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import utility.Utilities;
+
 public class Request extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private Point location;
@@ -71,9 +73,18 @@ public class Request extends JFrame implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() ==accept ){
-			
+		if (e.getSource() == accept ){
+			String[] params = Utilities.setParams(2, username, "accept");
+			MainFrame.client.sendMessage("V101", params);
+			dispose();
 		}
+		
+		if (e.getSource() == reject){
+			String[] params = Utilities.setParams(1, username);
+			MainFrame.client.sendMessage("V101", params);
+			dispose();
+		}
+		Profile.friendRequestList.removeItem(username);
 	}
 
 	@Override

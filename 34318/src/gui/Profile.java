@@ -17,10 +17,11 @@ import javax.swing.SwingConstants;
 
 import utility.Utilities;
 
-public class Profile extends JPanel implements MouseListener,ActionListener{
+public class Profile extends JPanel implements MouseListener, ActionListener{
+	private static final long serialVersionUID = 1L;
+	
 	public static FriendRequests friendRequestList;
 	
-	private static final long serialVersionUID = 1L;
 	private static JLabel JLUsername,edit, friendRequests;
 	private JPanel panel = new JPanel(new GridLayout(8,1,0,5)), top, bottom;
 	private HintTextField username,password,newPassword, repeatPassword;

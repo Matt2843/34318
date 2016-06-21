@@ -20,10 +20,21 @@ public class UserInfo implements Serializable {
 	public UserInfo() {
 		initializeData();
 	}
+	public UserInfo(UserInfo userInfo) {
+		initializeData();
+		username = userInfo.getUsername();
+		password = userInfo.getPassword();
+		friends = userInfo.getFriends();
+		blocked = userInfo.getBlocked();
+		friendRequests = userInfo.getFriendRequests();
+		savedPersonalChats = userInfo.getSavedPersonalChats();
+		savedGroupChats = userInfo.getSavedGroupChats();
+	}
 	public UserInfo(String username, String password) {
 		this.password = password; this.username = username;
 		initializeData();
 	}
+
 	private void initializeData() {
 		friends = new ArrayList<String>();
 		blocked = new ArrayList<String>();

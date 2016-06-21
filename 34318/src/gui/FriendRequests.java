@@ -9,19 +9,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-import chat.ChatRoom;
-
 @SuppressWarnings("unchecked")
 public class FriendRequests extends AbstractPanelList implements MouseListener{	
 	private static final long serialVersionUID = 1L;
-
-//	public FriendRequests() {
-//		super();
-//		ArrayList<String> test = new ArrayList<String>();
-//		test.add(("NyVen"));
-//		test.add(("NyVen2"));
-//		setList(test);
-//	}
 	
 	@Override
 	public void setVariables() {
@@ -36,6 +26,11 @@ public class FriendRequests extends AbstractPanelList implements MouseListener{
 	public void addItem(Object o) {
 		String copy = (String) o;
 		model.addElement(copy);		
+	}
+	
+	public void removeItem(Object o) {
+		String copy = (String) o;
+		model.removeElement(copy);
 	}
 
 	@Override

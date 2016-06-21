@@ -89,12 +89,10 @@ public class Slave extends Thread {
 		case "V100": // Friend Request
 			targetUser = message.getParams()[0];
 			if(Server.db.getRegisteredUsers().containsKey(targetUser)) {
-				Server.db.getRegisteredUsers().get(targetUser).addFriendRequest(master.getUsername());
-				
 				// Notify target user of the pending friend request if online.
 				if(Server.db.getActiveUsers().containsKey(targetUser)) {
-					System.out.println("SENDING FOLLOWING PROFILE CONTAINING FRIEND REQUESTS: " + Server.db.getRegisteredUsers().get(targetUser).getFriendRequests());
-					Server.db.getActiveUsers().get(targetUser).sendMessage("U104", null, Server.db.getRegisteredUsers().get(targetUser));
+					setParams(1, master.getUsername());
+					Server.db.getActiveUsers().get(targetUser).sendMessage("U104", params);
 				}
 			} else {
 				setParams(1, "User not found in database.");
@@ -102,31 +100,30 @@ public class Slave extends Thread {
 			}
 			break;
 		case "V101": // Accept Friend
-//			targetUser = message.getParams()[0];
-//			Server.db.getRegisteredUsers().get(targetUser).addFriend(master.getUsername());
-//			Server.db.getRegisteredUsers().get(master.getUsername()).addFriend(targetUser);
-//			
-//			// Notify src user if online.
-//			if(master.isAlive()) {
-//				master.sendMessage("U104", null, Server.db.getRegisteredUsers().get(master.getUsername()));
-//			}
-//			
-//			// Notify target user if online.
-//			if(Server.db.getActiveUsers().containsKey(targetUser)) {
-//				Server.db.getActiveUsers().get(targetUser).sendMessage("U104", null, Server.db.getRegisteredUsers().get(targetUser));
-//			}	
-			break;
-		case "V102": // Delete Friend
 			targetUser = message.getParams()[0];
-			Server.db.getRegisteredUsers().get(master.getUsername()).removeFriend(targetUser);
-			Server.db.getRegisteredUsers().get(targetUser).removeFriend(master.getUsername());
-			master.sendMessage("V102", null);
+			String param2 = message.getParams()[1];
+			
+			// Notify src user if online.
+			if(master.isAlive() && param2.equals("accept")) {
+				setParams(1, targetUser);
+				master.sendMessage("U105", params);
+			}
+			
+			// Notify target user if online.
+			if(Server.db.getActiveUsers().containsKey(targetUser) && param2.equals("accept")) {
+				setParams(1, master.getUsername());
+				Server.db.getActiveUsers().get(targetUser).sendMessage("U105", params);
+			}	
 			break;
-		case "V103": // Block Person
+		case "V102": // Remove Friend
 			targetUser = message.getParams()[0];
-			Server.db.getRegisteredUsers().get(master.getUsername()).blockUser(targetUser);
-			break;
-		case "V104": // Get Friends
+			
+			if(Server.db.getActiveUsers().containsKey(targetUser)) {
+				setParams(1, master.getUsername());
+				Server.db.getActiveUsers().get(targetUser).sendMessage("V102", params);
+			} else {
+				Server.db.getRegisteredUsers().get(targetUser).removeFriend(master.getUsername());
+			}
 			break;
 			
 		case "G100": // Join Public Chat
@@ -138,6 +135,7 @@ public class Slave extends Thread {
 			broadcastObjectToRoom(chatID, "U103", onlineUsers);
 			break;
 		case "G101": // Join Private Chat
+			System.out.println(Server.db.getActiveUsers() + " <<<< ACTIVE USERS");
 			targetUser = message.getParams()[0];
 			
 			if(Server.db.getRegisteredUsers().get(targetUser).getSavedPersonalChats().containsKey(master.getUsername())) {
@@ -151,12 +149,17 @@ public class Slave extends Thread {
 			Server.db.getPrivateRooms().get(chatID).addUser(targetUser);
 			
 			// Generate Success message
-			setParams(2, targetUser, chatID);
-			master.sendMessage("G101", params);
+			if(master.isAlive()) {
+				setParams(2, targetUser, chatID);
+				master.sendMessage("G101", params);
+			}
+			
 			
 			// Annoy target user
-			setParams(2, master.getUsername(), chatID);
-			Server.db.getActiveUsers().get(targetUser).sendMessage("G101", params);
+			if(Server.db.getActiveUsers().containsKey(targetUser)) {
+				setParams(2, master.getUsername(), chatID);
+				Server.db.getActiveUsers().get(targetUser).sendMessage("G101", params);
+			}
 			
 			// Broadcast the event: User joined chat. MAYBE
 			broadcastObjectToRoom(chatID, "U103", Server.db.generateOnlineUsersData(chatID));
@@ -206,6 +209,12 @@ public class Slave extends Thread {
 		case "U103": // Get online users data
 			chatID = message.getParams()[0];
 			master.sendMessage("U103", null, Server.db.generateOnlineUsersData(chatID));
+			break;
+		case "U104": // Updated profile
+			userinformation = (UserInfo) message.getObject();
+			System.out.println("FRIEND REQUESTS ON USER: " + userinformation.getFriendRequests());
+			Server.db.getRegisteredUsers().remove(master.getUsername());
+			Server.db.getRegisteredUsers().put(master.getUsername(), userinformation);
 			break;
 			
 		default:

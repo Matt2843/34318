@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -21,6 +23,7 @@ public class PanelLeft extends JPanel implements MouseListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	
 	public static PanelLeftPublicChats PLPublicChats;
+	public static PanelLeftFriends friendsList;
 	
 	private JPanel  JPPublic,JPFriends,JPProfile, addChat;
 	private JTabbedPane tabbedPanel;
@@ -56,6 +59,7 @@ public class PanelLeft extends JPanel implements MouseListener, KeyListener {
 		makeProfile();
 		tabbedPanel = new JTabbedPane();
 		tabbedPanel.setBackground(Color.white);
+		tabbedPanel.addMouseListener(this);
 	}
 
 	private void makePublicChat(){
@@ -87,7 +91,8 @@ public class PanelLeft extends JPanel implements MouseListener, KeyListener {
 	
 	private void makePrivateChat(){
 		JPFriends = new JPanel(new BorderLayout());
-		JPFriends.add(new PanelLeftFriends(), BorderLayout.CENTER);
+		friendsList = new PanelLeftFriends();
+		JPFriends.add(friendsList, BorderLayout.CENTER);
 		JPFriends.add(new Logout(), BorderLayout.SOUTH);
 	}
 	
@@ -123,6 +128,10 @@ public class PanelLeft extends JPanel implements MouseListener, KeyListener {
 			search.setText("Search");
 			chats = PLPublicChats.getList();
 			PLPublicChats.setList(chats);
+		}
+		if(e.getSource() == tabbedPanel) {
+			System.out.println("YES MAN");
+			tabbedPanel.setBackgroundAt(tabbedPanel.getSelectedIndex(), Color.white);
 		}
 	}
 
@@ -168,8 +177,20 @@ public class PanelLeft extends JPanel implements MouseListener, KeyListener {
 		return searching;
 	}
 	
-	public void profileUpdatedNotification() {
-		tabbedPanel.setBackgroundAt(2, Color.magenta);
-		Profile.friendRequestList.setList(MainFrame.client.getProfile().getFriendRequests());
+	public void profileUpdatedNotification(int which) {
+		if(which == 0) { // Friend Request Notification
+			tabbedPanel.setBackgroundAt(2, Color.magenta);
+			Profile.friendRequestList.setList(MainFrame.client.getProfile().getFriendRequests());
+		}
+		if(which == 1) { // Friend Added Notification
+			tabbedPanel.setBackgroundAt(1, Color.magenta);
+			friendsList.setList(MainFrame.client.getProfile().getFriends());
+		}
 	}
+
+	public void setProfileProperties() {
+		Profile.friendRequestList.setList(MainFrame.client.getProfile().getFriendRequests());
+		friendsList.setList(MainFrame.client.getProfile().getFriends());
+	}
+	
 }

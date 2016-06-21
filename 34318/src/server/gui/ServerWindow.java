@@ -61,7 +61,6 @@ public class ServerWindow extends JFrame implements WindowListener {
 		setSize(new Dimension(w, h));
 		setPreferredSize(new Dimension(w, h));
 		addWindowListener(this);
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle(title);
 		setVisible(true);
 		contentPane = new JPanel(new BorderLayout());
@@ -75,13 +74,11 @@ public class ServerWindow extends JFrame implements WindowListener {
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowClosed(WindowEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 

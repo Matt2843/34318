@@ -103,15 +103,17 @@ public class UserInformation extends JFrame implements MouseListener {
 			String[] params = Utilities.setParams(1, username);
 			MainFrame.client.sendMessage("V100",params);
 			//Stall indtil det er sket?
-			PopUp DMessage = new PopUp(username+" added as friend",this);
+			PopUp DMessage = new PopUp("Send friend request to " + username, GUIEngine.mainFrame);
 			DMessage.setAlwaysOnTop(true);
 			dispose();
 		}
 		if (e.getSource() == JPBlockUser){
-			String[] params = Utilities.setParams(1, username);
-			MainFrame.client.sendMessage("V103",params);
+			String targetUser = PanelLeft.friendsList.getSelectedValue().toString();
+			MainFrame.client.getProfile().removeFriend(targetUser);
+			MainFrame.client.getProfile().blockUser(targetUser);
+			String[] params = Utilities.setParams(1, MainFrame.client.getProfile().getUsername());
+			MainFrame.client.sendMessage("V102", params);
 			dispose();
-			//Stall indtil det er sket?
 			PopUp DMessage = new PopUp(username +" has been blocked",this);
 			DMessage.setAlwaysOnTop(true);
 		}

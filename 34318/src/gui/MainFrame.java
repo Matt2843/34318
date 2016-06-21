@@ -84,6 +84,7 @@ public class MainFrame extends JFrame implements WindowListener {
 				String[] params = {chatID};
 				MainFrame.client.sendMessage("G103", params);
 			}
+			client.sendMessage("U104", null, client.getProfile());
 			client.sendMessage("X999", null);
 		}
 	}

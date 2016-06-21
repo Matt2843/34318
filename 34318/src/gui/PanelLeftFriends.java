@@ -9,7 +9,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-import chat.ChatRoom;
+import utility.Utilities;
 
 @SuppressWarnings("unchecked")
 public class PanelLeftFriends extends AbstractPanelList implements MouseListener {
@@ -17,23 +17,30 @@ public class PanelLeftFriends extends AbstractPanelList implements MouseListener
 	
 	@Override
 	public void setVariables() {
-		model = new DefaultListModel<ChatRoom>();		
-		list = new JList<ChatRoom>(super.model);
+		model = new DefaultListModel<String>();		
+		list = new JList<String>(super.model);
 		scrollPane = new JScrollPane(list);
 		list.addMouseListener(this);
 	}
 
+	public Object getSelectedValue() {
+		return list.getSelectedValue();
+	}
 	
 	@Override
 	public void addItem(Object o) {
 		String copy = (String) o;
 		model.addElement(copy);		
 	}
+	
+	public void removeItem(String s) {
+		model.removeElement(s);
+	}
 
 	@Override
 	public void setList(Object o) {
 		model.removeAllElements();
-		ArrayList<ChatRoom> copy = (ArrayList<ChatRoom>) o;
+		ArrayList<String> copy = (ArrayList<String>) o;
 		for (int i =0; i< copy.size();i++){
 			addItem(copy.get(i).toString());
 		}
@@ -48,8 +55,8 @@ public class PanelLeftFriends extends AbstractPanelList implements MouseListener
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2 && e.getSource() == list) {
-			ChatRoom selectedChatRoom = (ChatRoom) list.getSelectedValue();
-			MainFrame.rightPanel.addTab(selectedChatRoom);
+			String[] params = Utilities.setParams(1, list.getSelectedValue().toString());
+			MainFrame.client.sendMessage("G101", params);
 		}
 	}
 

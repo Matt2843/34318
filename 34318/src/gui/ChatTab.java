@@ -7,11 +7,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -34,7 +36,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JLabel icon, name;
 	private JPanel tabContent;
 	private JTextPane chatArea;
-	private JScrollPane ChatScrollPane;
+	private JScrollPane chatScrollPane;
 	
 	// The users-online list elements.
 	private JLabel JLAddUsers;
@@ -52,12 +54,15 @@ public class ChatTab extends JPanel implements MouseListener {
 	}
 	
 	public void appendToTextArea(String string) {
+		String timestamp = "[" + new Date().toString().substring(11, 16) + "] ";
+		String append = timestamp + string;
 		try {
-			chatArea.getDocument().insertString(chatArea.getDocument().getLength(), string  + "\n", null);
+			chatArea.getDocument().insertString(chatArea.getDocument().getLength(), append  + "\n", null);
 			replaceWithSmileys(chatArea.getDocument().toString());
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
+		chatArea.setCaretPosition(chatArea.getDocument().getLength());
 	}
 	
 	private void replaceWithSmileys(String string){
@@ -113,13 +118,13 @@ public class ChatTab extends JPanel implements MouseListener {
 		icon = new JLabel(GeneralProperties.IClose);
 		chatArea = new JTextPane();
 		chatArea.setEditable(false);
-		ChatScrollPane = new JScrollPane(chatArea);
+		chatScrollPane = new JScrollPane(chatArea);
 		icon.addMouseListener(this);
 		tabContent = new JPanel(new BorderLayout());
 		tabContent.setOpaque(false);
 		tabContent.add(name, BorderLayout.WEST);
 		tabContent.add(icon,BorderLayout.EAST);
-		top.add(ChatScrollPane, BorderLayout.CENTER);
+		top.add(chatScrollPane, BorderLayout.CENTER);
 	}
 	
 	private void makeFriendFrame(){

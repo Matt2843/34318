@@ -18,13 +18,13 @@ public class ClientSlave extends Thread {
 	private String targetUser;
 	
 	private UserInfo profile;
-	private ArrayList<String> friendRequests;
 	
 	public void translate(Message message) {
 		switch(message.getCommand()) {
 		case "L100":	// LOGIN SUCCEEDED
 			profile = (UserInfo) message.getObject();
 			MainFrame.client.setProfile(profile);
+			MainFrame.leftPanel.setProfileProperties();
 			Profile.setUsername(profile.getUsername());
 			GUIEngine.mainFrame.setUsername(profile.getUsername());
 			MainFrame.DLogin.setVisible(false);
@@ -54,8 +54,11 @@ public class ClientSlave extends Thread {
 			break;
 			
 		case "S100": // Received Message
-			targetUser = message.getParams()[0];
-			String msg = targetUser + ":   " +message.getParams()[1];
+			targetUser = message.getParams()[0] + " :";
+			while(targetUser.length() <= 10) {
+				targetUser += " "; 
+			}
+			String msg = targetUser + message.getParams()[1];
 			chatID = message.getParams()[2];
 			PanelRight.chatTabs.get(chatID).appendToTextArea(msg);
 			break;
@@ -71,7 +74,10 @@ public class ClientSlave extends Thread {
 			break;
 		case "V401":
 			break;
-		case "V102":
+		case "V102": // User removed you from friends list.
+			targetUser = message.getParams()[0];
+			MainFrame.client.getProfile().removeFriend(targetUser);
+			MainFrame.leftPanel.profileUpdatedNotification(1);
 			break;
 		case "V402":
 			break;
@@ -121,13 +127,13 @@ public class ClientSlave extends Thread {
 			chatID = message.getParams()[0];
 			PanelRight.chatTabs.get(chatID).getOnlineUsers().setList(message.getObject());
 			break;
-		case "U104": // Profile update
-			MainFrame.client.setProfile((UserInfo) message.getObject());
-			MainFrame.leftPanel.profileUpdatedNotification();
+		case "U104": // Friend Request Received
+			MainFrame.client.getProfile().addFriendRequest(message.getParams()[0]);
+			MainFrame.leftPanel.profileUpdatedNotification(0);
 			break;
-			
-		case "KAPPA":
-			
+		case "U105": // Friend added.
+			MainFrame.client.getProfile().addFriend(message.getParams()[0]);
+			MainFrame.leftPanel.profileUpdatedNotification(1);
 			break;
 		
 		default:

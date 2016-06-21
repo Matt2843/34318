@@ -14,8 +14,6 @@ import javax.swing.JScrollPane;
 public class Friends extends AbstractPanelList implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	
-	
-	
 	@Override
 	public void setVariables() {
 		model = new DefaultListModel<String>(); 
@@ -24,7 +22,6 @@ public class Friends extends AbstractPanelList implements MouseListener{
 		scrollPane = new JScrollPane(list);
 		scrollPane.setBackground(Color.WHITE);
 	}
-
 
 	@Override
 	public void addItem(Object o) {
