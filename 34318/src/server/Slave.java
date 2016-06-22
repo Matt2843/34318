@@ -198,7 +198,7 @@ public class Slave extends Thread {
 						Server.db.getActiveUsers().get(targetUser).sendMessage("G102", params);
 					}
 				}
-				broadcastObjectToRoom(newChat, "U103", Server.db.generateOnlineUsersData(targetChat));
+				broadcastObjectToRoom(newChat, "U103", Server.db.generateOnlineUsersData(newChat));
 			}
 			
 			break;
@@ -275,11 +275,15 @@ public class Slave extends Thread {
 		setParams(1, chatID);
 		if(Server.db.getPublicRooms().containsKey(chatID)) {
 			for(String value : Server.db.getPublicRooms().get(chatID).getChatUsers()) {
-				Server.db.getActiveUsers().get(value).sendMessage(cmd, params, o);
+				if(Server.db.getActiveUsers().containsKey(value)) {
+					Server.db.getActiveUsers().get(value).sendMessage(cmd, params, o);
+				}
 			}
 		} else if(Server.db.getPrivateRooms().containsKey(chatID)) {
 			for(String value : Server.db.getPrivateRooms().get(chatID).getChatUsers()) {
-				Server.db.getActiveUsers().get(value).sendMessage(cmd, params, o);
+				if(Server.db.getActiveUsers().containsKey(value)) {
+					Server.db.getActiveUsers().get(value).sendMessage(cmd, params, o);
+				}
 			}
 		}
 		
