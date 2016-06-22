@@ -2,26 +2,31 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import chat.ChatRoom;
-
 @SuppressWarnings("unchecked")
-public class Friends extends AbstractPanelList implements MouseListener{
+public class Friends extends AbstractPanelList{
 	private static final long serialVersionUID = 1L;
-
+	
+	public String[] getList(){
+		List users = list.getSelectedValuesList();
+		String[] selectedUsers = new String[users.size()];
+		for (int i = 0;i<selectedUsers.length;i++){
+			selectedUsers[i] = users.get(i).toString();
+		}
+		return selectedUsers;
+	}
+	
 	@Override
 	public void setVariables() {
 		model = new DefaultListModel<String>(); 
 		list = new JList<String>(model);
-		list.addMouseListener(this);
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		scrollPane = new JScrollPane(list);
 		scrollPane.setBackground(Color.WHITE);
@@ -47,36 +52,12 @@ public class Friends extends AbstractPanelList implements MouseListener{
 		add(scrollPane,BorderLayout.CENTER);
 		validate();
 	}
-
+	
 	@Override
-	public void mouseClicked(MouseEvent e) {			
+	public void emptyList() {
 	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-//		if (e.getSource() == list){
-//			if (e.getClickCount() == 2) {				
-//				ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
-//				String targetChatID = room.getChatID();
-//				String[] params = {targetChatID, list.getModel().getElementAt(list.getSelectedIndex()).toString()};
-//				MainFrame.client.sendMessage("G102",params);
-//			}
-//		}		
-	}
 }
-
 
 //private void addPerson(){
 //	String name = list.getSelectedValue().toString();

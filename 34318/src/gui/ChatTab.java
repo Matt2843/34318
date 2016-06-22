@@ -114,7 +114,9 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 		JLabel JLUsers = new JLabel("Users");
 		JLUsers.setFont(new Font("SansSerif", Font.BOLD, 14));
 		JPUsersTop.add(JLUsers,BorderLayout.WEST); JPUsersTop.add(new JLabel(),BorderLayout.CENTER);
-		JPUsersTop.add(JLAddUsers,BorderLayout.EAST);
+		if (chatRoom.getChatID().substring(0, 2).equals("PR")){
+			JPUsersTop.add(JLAddUsers,BorderLayout.EAST);
+		}		
 		JPUsersTop.setBackground(Color.WHITE);
 	}
 
@@ -175,8 +177,16 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	private void sendGroupChat(){	
 		ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
 		String targetChatID = room.getChatID();
-		String[] params = {targetChatID,chatName.getText(), friendList.list.getModel().getElementAt(friendList.list.getSelectedIndex()).toString()};
+		String[] list = friendList.getList();
+		String[] params = new String[list.length+2];
+		params[0] = targetChatID;
+		params[1] = chatName.getText();
+		for (int i = 0; i<list.length;i++){
+			params[i+2] = list[i];
+		}
 		MainFrame.client.sendMessage("G102",params);
+		GUIEngine.mainFrame.enable();
+		friends.dispose();
 	}
 	
 	@Override

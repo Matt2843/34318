@@ -47,6 +47,15 @@ public class FriendRequests extends AbstractPanelList implements MouseListener{
 		add(scrollPane,BorderLayout.CENTER);
 		validate();
 	}
+	
+	@Override
+	public void emptyList() {
+		if(list.getModel().getSize()>0&& !list.isSelectionEmpty()){
+			String username = list.getSelectedValue().toString();
+			new Request(username);
+		}	
+		
+	}
 
 
 	@Override
@@ -68,10 +77,7 @@ public class FriendRequests extends AbstractPanelList implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (e.getSource()== list){
-			if(list.getModel().getSize()>0){
-				String username = list.getSelectedValue().toString();
-				new Request(username);
-			}			
+			emptyList();		
 		}
 	}
 
@@ -79,6 +85,9 @@ public class FriendRequests extends AbstractPanelList implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
+
+
+	
 }
 
 //

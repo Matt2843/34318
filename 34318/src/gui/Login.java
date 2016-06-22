@@ -166,8 +166,9 @@ public class Login extends JFrame implements ActionListener,MouseListener{
 			action.setText("Login");
 			newUser.setVisible(true);
 		}
-		if(e.getSource() == cancel && action.getText().equals("Login")){
-//			System.exit(0);
+		if(e.getSource() == cancel && !newUser.isVisible()){
+			System.out.println("HEr er du");
+			System.exit(0);
 		}
 	}
 

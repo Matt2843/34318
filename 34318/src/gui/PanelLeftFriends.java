@@ -51,6 +51,15 @@ public class PanelLeftFriends extends AbstractPanelList implements MouseListener
 		add(scrollPane,BorderLayout.CENTER);
 		validate();
 	}
+	
+	@Override
+	public void emptyList() {
+		if(list.getModel().getSize()>0&& !list.isSelectionEmpty()){
+			int x = list.getSelectedIndex();
+			new UserInformation(list.getModel().getElementAt(x).toString(), "left");
+		}	
+		
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -72,8 +81,7 @@ public class PanelLeftFriends extends AbstractPanelList implements MouseListener
 	public void mousePressed(MouseEvent e) {
 		if (e.getSource() == list){
 			if (e.getButton() == MouseEvent.BUTTON3){
-				int x = list.getSelectedIndex();
-				new UserInformation(list.getModel().getElementAt(x).toString(), "left");
+				emptyList();
 			}
 		}
 	}

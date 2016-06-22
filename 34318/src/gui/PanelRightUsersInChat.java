@@ -45,6 +45,10 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 	}
 	
 	@Override
+	public void emptyList() {
+	}
+	
+	@Override
 	public void mouseClicked(MouseEvent e) {
 	}
 	
@@ -60,7 +64,7 @@ public class PanelRightUsersInChat extends AbstractPanelList implements MouseLis
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON3) {
+		if (e.getButton() == MouseEvent.BUTTON3 && !list.isSelectionEmpty()) {
 			int x = list.getSelectedIndex();	
 			new UserInformation(list.getModel().getElementAt(x).toString(), "right");
 		}

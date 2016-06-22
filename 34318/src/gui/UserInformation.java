@@ -109,8 +109,7 @@ public class UserInformation extends JFrame implements MouseListener {
 		if (e.getSource() == JPAddFriend){
 			String[] params = Utilities.setParams(1, username);
 			MainFrame.client.sendMessage("V100",params);
-			//Stall indtil det er sket?
-			PopUp DMessage = new PopUp("Send friend request to " + username, GUIEngine.mainFrame);
+			PopUp DMessage = new PopUp("Friendrequest sent to " + username, GUIEngine.mainFrame);
 			DMessage.setAlwaysOnTop(true);
 			dispose();
 		}
@@ -121,8 +120,8 @@ public class UserInformation extends JFrame implements MouseListener {
 			String[] params = Utilities.setParams(1, MainFrame.client.getProfile().getUsername());
 			MainFrame.client.sendMessage("V102", params);
 			dispose();
-//			PopUp DMessage = new PopUp(username +" has been blocked",this);
-//			DMessage.setAlwaysOnTop(true);
+			PopUp DMessage = new PopUp(username +" has been blocked",this);
+			DMessage.setAlwaysOnTop(true);
 		}
 		if(e.getSource() == JPSendMessage){
 			boolean exists = MainFrame.rightPanel.chatExists(username);

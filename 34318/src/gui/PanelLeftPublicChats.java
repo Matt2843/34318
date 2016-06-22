@@ -49,6 +49,10 @@ public class PanelLeftPublicChats extends AbstractPanelList implements MouseList
 		add(scrollPane,BorderLayout.CENTER);
 		validate();
 	}
+	
+	@Override
+	public void emptyList() {
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

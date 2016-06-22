@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -130,7 +128,6 @@ public class PanelLeft extends JPanel implements MouseListener, KeyListener {
 			PLPublicChats.setList(chats);
 		}
 		if(e.getSource() == tabbedPanel) {
-			System.out.println("YES MAN");
 			tabbedPanel.setBackgroundAt(tabbedPanel.getSelectedIndex(), Color.white);
 		}
 	}
