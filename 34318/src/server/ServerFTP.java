@@ -33,7 +33,7 @@ public class ServerFTP extends Thread {
 		Object o = ois.readObject();
 
 		if (o instanceof String) {
-			fos = new FileOutputStream(new File("C:/Users/chris/Desktop/hash2.zip"));
+			fos = new FileOutputStream(new File("C:/Users/Matt/Desktop/kappa.zip"));
 		} else {
 			throwException("Something is wrong");
 		}

@@ -8,18 +8,27 @@ public class Message implements Serializable {
 	
 	private final String COMMAND;
 	private final String[] PARAMS;
-	private final Object OBJECT;
+	private final Object OBJECT, OBJECTTWO;
 	
 	public Message(String COMMAND, String[] PARAMS) {
 		this.COMMAND = COMMAND;
 		this.PARAMS = PARAMS;
 		this.OBJECT = null;
+		this.OBJECTTWO = null;
 	}
 	
 	public Message(String COMMAND, String[] PARAMS, Object OBJECT) {
 		this.COMMAND = COMMAND;
 		this.PARAMS = PARAMS;
 		this.OBJECT = OBJECT;
+		this.OBJECTTWO = null;
+	}
+	
+	public Message(String COMMAND, String[] PARAMS, Object OBJECT, Object OBJECTTWO) {
+		this.COMMAND = COMMAND;
+		this.PARAMS = PARAMS;
+		this.OBJECT = OBJECT;
+		this.OBJECTTWO = OBJECTTWO;
 	}
 	
 	@Override
@@ -43,6 +52,10 @@ public class Message implements Serializable {
 
 	public Object getObject() {
 		return OBJECT;
+	}
+
+	public Object getObjectTwo() {
+		return OBJECTTWO;
 	}
 	
 }

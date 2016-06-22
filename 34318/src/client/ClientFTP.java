@@ -11,7 +11,7 @@ import server.Server;
  
 public class ClientFTP {
     public static void main(String[] args) throws Exception { 
-        File file = new File("C:/Users/chris/Desktop/hash.zip");
+        File file = new File("C:/Users/Matt/Desktop/Scripts/flaskScript.zip");
         Socket socket = new Socket("localhost", 1234);
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());

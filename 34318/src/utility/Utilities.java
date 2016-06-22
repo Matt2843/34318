@@ -12,14 +12,17 @@ public final class Utilities {
 	
 	public static final int PUBLIC_CHAT = 0;
 	public static final int PRIVATE_CHAT = 1;
+	public static final int FILE = 2;
 
-	public static String generateID(int length, int type){
+	public static String generateID(int length, int type){ // [:2] = PU, public chat. [:2] = PR, private chat. [:2] = FI, file.
 		String keys = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		String result = "";
 		if(type == PUBLIC_CHAT) {
 			result += "PU";
 		} else if (type == PRIVATE_CHAT) {
 			result += "PR";
+		} else if(type == FILE) {
+			result += "FI";
 		}
 		Random rand = new Random();
 		for (int i = 0; i<length; i++){

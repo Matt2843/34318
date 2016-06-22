@@ -42,11 +42,11 @@ public class Connection extends Thread {
 			configureStreams();
 			greetUser();
 			do {
+				System.out.println("BLOCKING CONNECTION");
 				message = (Message) input.readObject();
 				System.out.println("FROM CLIENT: " + message.toString());
 				slave.translate(message);
-				if(message.getCommand().equals("X999")) break;
-			} while(true);
+			} while(!message.getCommand().equals("X999"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -92,6 +92,37 @@ public class Connection extends Thread {
 		}
 	}
 	
+	public void sendMessage(String command, String[] params, Object object, Object objecttwo) {
+		Message m = new Message(command, params, object, objecttwo);
+		try {
+			if(!client.isClosed()) {
+				output.writeObject(m);
+			} else {
+				System.out.println("SOCKET IS DEAD");
+			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void receiveFile() {
+		System.out.println("RECEIVING FILE");
+		try {
+			FileOutputStream fos = new FileOutputStream(new File("C:/Users/Matt/Desktop/Kappa.zip"));
+			byte [] buffer = new byte[100];
+			Integer bytesRead = 0;
+			do {
+				bytesRead = (Integer) ((Message)input.readObject()).getObject();
+				buffer = (byte[]) ((Message)input.readObject()).getObjectTwo();
+				fos.write(buffer, 0, bytesRead);
+			} while(bytesRead == 100);
+			System.out.println("FILE DONE ");
+			fos.close();
+		} catch(IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void sendFile(String path, String targetRoom) throws IOException {
 		File file = new File(path);
 		FileInputStream fis = new FileInputStream(file);
@@ -108,7 +139,7 @@ public class Connection extends Thread {
 		//fis.close();
 	}
 	
-	private void saveFile(String path) throws Exception {
+	public void saveFile(String path) throws Exception {
 		FileOutputStream fos = null;
 		byte [] buffer = new byte[20000];
 		// 1. Read file name.
@@ -173,6 +204,10 @@ public class Connection extends Thread {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public Socket getClient() {
+		return client;
 	}
 
 }

@@ -1,6 +1,12 @@
 package server;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import chat.ChatRoom;
 import client.UserInfo;
@@ -11,8 +17,10 @@ public class Slave extends Thread {
 	private Thread updateThread;
 	private boolean updateUser = true;
 	
+	private FileOutputStream fos = null;
+	
 	private ArrayList<String> onlineUsers;
-	private String username, password, targetUser, targetChat, chatName;
+	private String username, password, targetUser, targetChat, chatName, fileID;
 	private UserInfo userinformation;
 	
 	private String[] params;
@@ -230,9 +238,69 @@ public class Slave extends Thread {
 			}
 			break;
 			
-		case "F100": // Upload File
+		case "F100": // Begin Uploading File
+			
+			targetChat = message.getParams()[0];
+			try {
+				fos = new FileOutputStream(new File("C:/Users/Matt/Desktop/Kappa.zip"));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 			break;
-		case "F101": // Download File
+		case "F101":
+			receiveFile(message.getObject(), message.getObjectTwo());
+			break;
+//		case "F101":
+//			Object receivedFile = message.getObject();
+//			try {
+//				FileOutputStream fos = new FileOutputStream(new File("C:/Users/Matt/Desktop/kappa.zip"));
+//				byte [] buffer = new byte[100];
+//				do {
+//					buffer = (byte[])receivedFile;
+//					fos.write(buffer, 0, bytesRead);
+//				} while (bytesRead == 100);
+//				fos.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			break;
+//			try {
+//				ObjectInputStream ois = new ObjectInputStream(master.getClient().getInputStream());
+//				FileOutputStream fos = null;
+//				final int BUFFER_SIZE = 20000;
+//				byte [] buffer = new byte[BUFFER_SIZE];
+//				// 1. Read file name.
+//				Object o = ois.readObject();
+//
+//				if (o instanceof String) {
+//					fos = new FileOutputStream(new File("C:/Users/Matt/Desktop/kappa.zip"));
+//				} else {
+//					System.out.println("Something is wrong");
+//				}
+//				// 2. Read file to the end.
+//				Integer bytesRead = 0;
+//				do {
+//					o = ois.readObject();
+//					if (!(o instanceof Integer)) {
+//						System.out.println("Something is wrong");
+//					}
+//					bytesRead = (Integer)o;
+//					o = ois.readObject();
+//					if (!(o instanceof byte[])) {
+//						System.out.println("Something is wrong");
+//					}
+//					buffer = (byte[])o;
+//					// 3. Write data to output file.
+//					fos.write(buffer, 0, bytesRead);
+//				} while (bytesRead == BUFFER_SIZE);
+//				fos.close();
+//				ois.close();
+//			} catch(IOException | ClassNotFoundException ioe) {
+//				ioe.printStackTrace();
+//			}
+
+			
+		case "F102": // Download File
 			break;
 			
 		case "U100": // Get PublicRooms data
@@ -258,6 +326,40 @@ public class Slave extends Thread {
 		}
 	}
 	
+	private void receiveFile(Object object, Object objectTwo) {
+		Integer bytesRead = (Integer) object;
+		byte[] buffer = (byte[]) objectTwo;
+		try {
+			fos.write(buffer, 0, bytesRead);
+			if(bytesRead < 100) {
+				System.out.println("File Stream Done!");
+				fos.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void sendFile(String path, String targetRoom) {
+		System.out.println(path);
+		File file = new File(path);
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(file);
+			byte [] buffer = new byte[100]; //Størrelsen af bufferen
+			Integer bytesRead = 0;
+			String[] params = {targetRoom};
+			master.sendMessage("F100", params);
+			while ((bytesRead = fis.read(buffer)) > 0) {
+				master.sendMessage("F101", null, bytesRead, Arrays.copyOf(buffer, buffer.length));
+			}
+			fis.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void broadcastToRoom(String chatID, String msg) {
 		setParams(3, master.getUsername(), msg, chatID);
 		if(Server.db.getPublicRooms().containsKey(chatID)) { // Handle the public rooms broadcast

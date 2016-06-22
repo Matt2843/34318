@@ -101,54 +101,70 @@ public class Client extends Thread {
 		}
 	}
 	
-	public void sendFile(String path, String targetRoom) throws IOException {
-		File file = new File(path);
-		FileInputStream fis = new FileInputStream(file);
-		
-		byte [] buffer = new byte[20000]; //Størrelsen af bufferen
-		Integer bytesRead = 0;
-		
-		while ((bytesRead = fis.read(buffer)) > 0) {
-			output.writeObject(bytesRead);
-			output.writeObject(Arrays.copyOf(buffer, buffer.length));
-			//output.flush();
-		}
-		
-		fis.close();
-	}
-	
-	private void saveFile(String path) throws Exception {
-		FileOutputStream fos = null;
-		byte [] buffer = new byte[20000];
-		// 1. Read file name.
-		Object o = input.readObject();
+	public void sendMessage(String command, String[] params, Object object, Object objecttwo) {
+		Message m = new Message(command, params, object, objecttwo);
 		try {
-		if (o instanceof String) {
-			fos = new FileOutputStream(new File("C:/Users/chris/Desktop/hash2.zip"));
-		} 
-		}catch(IOException e) {
+			if(!connection.isClosed()) {
+				output.writeObject(m);
+			} else {
+				System.out.println("SOCKET IS DEAD");
+			}
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		// 2. Read file to the end.
-		Integer bytesRead = 0;
-		do {
-			o = input.readObject();
-			if (!(o instanceof Integer)) {
-				System.out.println("Something is wrong");
-			}
-			bytesRead = (Integer)o;
-			o = input.readObject();
-			if (!(o instanceof byte[])) {
-				System.out.println("Something is wrong");
-			}
-			buffer = (byte[])o;
-			// 3. Write data to output file.
-			fos.write(buffer, 0, bytesRead);
-		} while (bytesRead == 20000);
-		fos.close();
-		//ois.close();
-		//oos.close();
 	}
+	
+	public void sendFile(String path, String targetRoom) {
+		System.out.println(path);
+		File file = new File(path);
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(file);
+			byte [] buffer = new byte[100]; //Størrelsen af bufferen
+			Integer bytesRead = 0;
+			String[] params = {targetRoom};
+			sendMessage("F100", params);
+			while ((bytesRead = fis.read(buffer)) > 0) {
+				sendMessage("F101", null, bytesRead, Arrays.copyOf(buffer, buffer.length));
+			}
+			fis.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	private void saveFile(String path) throws Exception {
+//		FileOutputStream fos = null;
+//		byte [] buffer = new byte[20000];
+//		// 1. Read file name.
+//		Object o = input.readObject();
+//		try {
+//		if (o instanceof String) {
+//			fos = new FileOutputStream(new File("C:/Users/chris/Desktop/hash2.zip"));
+//		} 
+//		}catch(IOException e) {
+//			e.printStackTrace();
+//		}
+//		// 2. Read file to the end.
+//		Integer bytesRead = 0;
+//		do {
+//			o = input.readObject();
+//			if (!(o instanceof Integer)) {
+//				System.out.println("Something is wrong");
+//			}
+//			bytesRead = (Integer)o;
+//			o = input.readObject();
+//			if (!(o instanceof byte[])) {
+//				System.out.println("Something is wrong");
+//			}
+//			buffer = (byte[])o;
+//			// 3. Write data to output file.
+//			fos.write(buffer, 0, bytesRead);
+//		} while (bytesRead == 20000);
+//		fos.close();
+//		//ois.close();
+//		//oos.close();
+//	}
 
 	private void cleanUp() {
 		System.out.println("[CLIENT]Closing connection...");
