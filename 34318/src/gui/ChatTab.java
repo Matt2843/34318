@@ -61,7 +61,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	
 	public void appendToTextArea(String string) {
 		String timestamp = "[" + new Date().toString().substring(11, 16) + "] ";
-		String append = timestamp + string;
+		String append = timestamp + "    "+string;
 		try {
 			chatArea.getDocument().insertString(chatArea.getDocument().getLength(), append  + "\n", null);
 			replaceWithSmileys(chatArea.getDocument().toString());

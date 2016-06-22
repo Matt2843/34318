@@ -13,11 +13,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 
 import chat.ChatRoom;
@@ -27,7 +30,7 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 	private JPanel  Menu, JPPictures;
 	private JLabel JLSmiley, JLFile;
 	private JButton JBSend;
-	private JTextPane JTText;
+	private JEditorPane JTText;
 	private JScrollPane scrollPane;
 	private ChatRoom room;
 	
@@ -102,6 +105,19 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 	public void addSmiley(String smiley){
 		JTText.setText(JTText.getText()+ smiley);
 	}
+	
+	public void openFileWindow(){
+		 JFileChooser chooser = new JFileChooser();
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        "JPG & GIF Images", "jpg", "gif");
+		    chooser.setFileFilter(filter);
+		    int returnVal = chooser.showOpenDialog(GUIEngine.mainFrame);
+		    if(returnVal == JFileChooser.APPROVE_OPTION) {
+		       String path = chooser.getSelectedFile().getAbsolutePath();
+		       String[] params = {path,getChatID()};
+		       MainFrame.client.sendMessage("F100", params);
+		    }	
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -109,8 +125,7 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 			new SmileyMenu(this);
 		}
 		if (e.getSource()==JLFile){
-			String[] params = {"C:/Users/chris/Desktop/hash.zip",getChatID()};
-			MainFrame.client.sendMessage("F100", params);
+			openFileWindow();
 		}
 	}
 
