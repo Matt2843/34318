@@ -10,9 +10,18 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+import chat.ChatRoom;
+
 @SuppressWarnings("unchecked")
 public class Friends extends AbstractPanelList implements MouseListener{
 	private static final long serialVersionUID = 1L;
+	private PanelRightUsersInChat parent;
+	
+	public Friends(PanelRightUsersInChat parent){
+		this.parent = parent;
+	}
+	
+	
 	
 	@Override
 	public void setVariables() {
@@ -43,70 +52,7 @@ public class Friends extends AbstractPanelList implements MouseListener{
 		add(scrollPane,BorderLayout.CENTER);
 		validate();
 	}
-	
-//	private void addPerson(){
-//		String name = list.getSelectedValue().toString();
-//		String[] namea = {name};
-//		new Thread(new Runnable() {
-//			public void run() {
-//				MainFrame.client.sendMessage("G101", namea);
-//				MainFrame.stall(MainFrame.chatPanel,"G101","G400");
-//				if (MainFrame.client.getStatus().equals("G400")){
-//					new DialogMessage("Failed to add person",mainFrame);
-//				} 
-//				bool = false;
-//				frame.dispose();
-//				try {
-//					Thread.sleep(3000);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//				
-//			}
-//		}).start();
-//	
-//	}
-	
-	
-	
-//	public void setList(Object o) {
-//		model.removeAllElements();
-//		ArrayList<ChatRoom> copy = (ArrayList<ChatRoom>) o;
-//		for (int i =0; i< copy.size();i++){
-//			addUserToList(copy.get(i).toString());
-//		}
-//	}
-//	
-//	public void addUserToList(String user) {
-//		model.addElement(user);
-//	}
-//	
-//	
-//	private void addUser(){
-//		String name = friendList.getSelectedValue();
-//		String[] namea = {name};
-//		if(!name.equals("")){
-//			new Thread(new Runnable() {
-//				public void run() {
-//					MainFrame.client.sendMessage("G101", namea);
-//					MainFrame.stall(MainFrame.chatPanel,"G101","G400");
-//					if (MainFrame.client.getStatus().equals("G101")){
-//						dispose();
-//					} else{
-//						new DialogMessage("Failed to add person",parent);
-//					}
-//					try {
-//						Thread.sleep(3000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//					
-//				}
-//			}).start();
-//			
-//		}
-//	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {			
 	}
@@ -126,10 +72,77 @@ public class Friends extends AbstractPanelList implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == list){
-			if (e.getClickCount() == 2) {
-//				addPerson();
+			if (e.getClickCount() == 2) {				
+				ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
+				String targetChatID = room.getChatID();
+				String[] params = {targetChatID, list.getModel().getElementAt(list.getSelectedIndex()).toString()};
+				MainFrame.client.sendMessage("G102",params);
 			}
 		}		
 	}
-	
 }
+
+
+//private void addPerson(){
+//	String name = list.getSelectedValue().toString();
+//	String[] namea = {name};
+//	new Thread(new Runnable() {
+//		public void run() {
+//			MainFrame.client.sendMessage("G101", namea);
+//			MainFrame.stall(MainFrame.chatPanel,"G101","G400");
+//			if (MainFrame.client.getStatus().equals("G400")){
+//				new DialogMessage("Failed to add person",mainFrame);
+//			} 
+//			bool = false;
+//			frame.dispose();
+//			try {
+//				Thread.sleep(3000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			
+//		}
+//	}).start();
+//
+//}
+
+
+
+//public void setList(Object o) {
+//	model.removeAllElements();
+//	ArrayList<ChatRoom> copy = (ArrayList<ChatRoom>) o;
+//	for (int i =0; i< copy.size();i++){
+//		addUserToList(copy.get(i).toString());
+//	}
+//}
+//
+//public void addUserToList(String user) {
+//	model.addElement(user);
+//}
+//
+//
+//private void addUser(){
+//	String name = friendList.getSelectedValue();
+//	String[] namea = {name};
+//	if(!name.equals("")){
+//		new Thread(new Runnable() {
+//			public void run() {
+//				MainFrame.client.sendMessage("G101", namea);
+//				MainFrame.stall(MainFrame.chatPanel,"G101","G400");
+//				if (MainFrame.client.getStatus().equals("G101")){
+//					dispose();
+//				} else{
+//					new DialogMessage("Failed to add person",parent);
+//				}
+//				try {
+//					Thread.sleep(3000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//		}).start();
+//		
+//	}
+//}
+

@@ -129,7 +129,7 @@ public class ChatTab extends JPanel implements MouseListener {
 	
 	private void makeFriendFrame(){
 		GUIEngine.mainFrame.disable();
-		friendList = new Friends();
+		friendList = new Friends(onlineUsers);
 		friendList.setList(MainFrame.client.getProfile().getFriends());
 		friends = new JFrame();
 		friends.setAlwaysOnTop(true);
