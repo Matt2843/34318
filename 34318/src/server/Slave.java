@@ -179,9 +179,8 @@ public class Slave extends Thread {
 					if(Server.db.getActiveUsers().containsKey(targetUser)) {
 						// Invite target user to the chat room.
 						Server.db.getActiveUsers().get(targetUser).sendMessage("G102", params);
-						// Broadcast the event, user added to chat (update online users list).
-						broadcastObjectToRoom(targetChat, "U103", Server.db.generateOnlineUsersData(targetChat));
 					}
+					broadcastObjectToRoom(targetChat, "U103", Server.db.generateOnlineUsersData(targetChat));
 				}
 			} else { // Create a new chat room and invite everyone including host.
 				String newChat = Server.db.createNewPrivateChat();
@@ -197,10 +196,11 @@ public class Slave extends Thread {
 					Server.db.getPrivateRooms().get(newChat).addUser(targetUser);
 					if(Server.db.getActiveUsers().containsKey(targetUser)) {
 						Server.db.getActiveUsers().get(targetUser).sendMessage("G102", params);
-						broadcastObjectToRoom(targetChat, "U103", Server.db.generateOnlineUsersData(targetChat));
 					}
 				}
+				broadcastObjectToRoom(newChat, "U103", Server.db.generateOnlineUsersData(targetChat));
 			}
+			
 			break;
 		case "G103": // Left Public Chat
 			targetChat = message.getParams()[0];
