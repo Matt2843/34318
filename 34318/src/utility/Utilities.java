@@ -9,13 +9,20 @@ import javax.swing.ImageIcon;
 
 
 public final class Utilities {
+	
+	public static final int PUBLIC_CHAT = 0;
+	public static final int PRIVATE_CHAT = 1;
 
-
-	public static String generateID(int length){
+	public static String generateID(int length, int type){
 		String keys = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		String result = "";
+		if(type == PUBLIC_CHAT) {
+			result += "PU";
+		} else if (type == PRIVATE_CHAT) {
+			result += "PR";
+		}
 		Random rand = new Random();
-		for (int i = 0; i<length;i++){
+		for (int i = 0; i<length; i++){
 			result+=keys.charAt(rand.nextInt(keys.length()));
 		}
 		return result;

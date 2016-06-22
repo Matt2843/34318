@@ -58,9 +58,9 @@ public class Database {
 	}
 	
 	public String createNewPrivateChat() {
-		String chatID = Utilities.generateID(8);
+		String chatID = Utilities.generateID(8, Utilities.PRIVATE_CHAT);
 		while(privateRooms.containsKey(chatID)) {
-			chatID = Utilities.generateID(8);
+			chatID = Utilities.generateID(8, Utilities.PRIVATE_CHAT);
 		}
 		ChatRoom newPrivateRoom = new ChatRoom(chatID);
 		privateRooms.put(chatID, newPrivateRoom);
@@ -73,9 +73,9 @@ public class Database {
 				return false;
 			}
 		}
-		String chatID = Utilities.generateID(8);
+		String chatID = Utilities.generateID(8, Utilities.PUBLIC_CHAT);
 		while(publicRooms.containsKey(chatID)) {
-			chatID = Utilities.generateID(8);
+			chatID = Utilities.generateID(8, Utilities.PUBLIC_CHAT);
 		}
 		ChatRoom newPublicRoom = new ChatRoom(name, chatID);
 		publicRooms.put(chatID, newPublicRoom);
