@@ -51,7 +51,7 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 		Menu.setBackground(Color.white);
 		
 
-		JPPictures = new JPanel(new GridLayout(1,2));
+		JPPictures = new JPanel(new GridLayout(1,2,5,5));
 		JPPictures.setBackground(Color.WHITE);
 				
 		JLSmiley = new JLabel(GeneralProperties.ISmiley);
@@ -173,8 +173,6 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 

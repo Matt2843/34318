@@ -39,7 +39,7 @@ public final class GeneralProperties {
 			IProfile = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/profile.png")), 16, 16);
 			IClose = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/close.png")), 20, 20);
 			ISmiley = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/smiley.png")), 15, 15);
-			IFile = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/file.png")), 20, 20);
+			IFile = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/file.png")), 15, 15);
 			IAdd = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/add.png")), 12, 12);
 			IBlock = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/block.png")), 12, 12);
 			IAddFriend = Utilities.createResizedImageIcon(ImageIO.read(new File("pictures/addFriend.png")), 12, 12);
