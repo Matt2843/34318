@@ -12,7 +12,7 @@ public class Slave extends Thread {
 	private boolean updateUser = true;
 	
 	private ArrayList<String> onlineUsers;
-	private String username, password, chatID, targetUser, targetChat;
+	private String username, password, targetUser, targetChat, chatName;
 	private UserInfo userinformation;
 	
 	private String[] params;
@@ -79,9 +79,9 @@ public class Slave extends Thread {
 			break;
 			
 		case "S100": // Broadcast Message
-			chatID = message.getParams()[0];
+			targetChat = message.getParams()[0];
 			String msg = message.getParams()[1];		
-			broadcastToRoom(chatID, msg);
+			broadcastToRoom(targetChat, msg);
 			break;
 		case "S101": // Private Message
 			break;
@@ -127,56 +127,85 @@ public class Slave extends Thread {
 			break;
 			
 		case "G100": // Join Public Chat
-			chatID = message.getParams()[0];
-			Server.db.getPublicRooms().get(chatID).addUser(master.getUsername());
+			targetChat = message.getParams()[0];
+			Server.db.getPublicRooms().get(targetChat).addUser(master.getUsername());
 			
 			// Broadcast the event: User joined chat.
-			onlineUsers = Server.db.generateOnlineUsersData(chatID);
-			broadcastObjectToRoom(chatID, "U103", onlineUsers);
+			onlineUsers = Server.db.generateOnlineUsersData(targetChat);
+			broadcastObjectToRoom(targetChat, "U103", onlineUsers);
 			break;
 		case "G101": // Join Private Chat
-			System.out.println(Server.db.getActiveUsers() + " <<<< ACTIVE USERS");
 			targetUser = message.getParams()[0];
 			
+			// If the users already have a chat going, get it from the server else start a new.
 			if(Server.db.getRegisteredUsers().get(targetUser).getSavedPersonalChats().containsKey(master.getUsername())) {
-				chatID = Server.db.getRegisteredUsers().get(targetUser).getSavedPersonalChats().get(master.getUsername());
+				targetChat = Server.db.getRegisteredUsers().get(targetUser).getSavedPersonalChats().get(master.getUsername());
 			} else {
-				chatID = Server.db.createNewPrivateChat();
+				targetChat = Server.db.createNewPrivateChat();
 			}
 			
 			// Add users to chat
-			Server.db.getPrivateRooms().get(chatID).addUser(master.getUsername());	
-			Server.db.getPrivateRooms().get(chatID).addUser(targetUser);
+			Server.db.getPrivateRooms().get(targetChat).addUser(master.getUsername());	
+			Server.db.getPrivateRooms().get(targetChat).addUser(targetUser);
 			
 			// Generate Success message
 			if(master.isAlive()) {
-				setParams(2, targetUser, chatID);
+				setParams(2, targetUser, targetChat);
 				master.sendMessage("G101", params);
 			}
 			
 			
 			// Annoy target user
 			if(Server.db.getActiveUsers().containsKey(targetUser)) {
-				setParams(2, master.getUsername(), chatID);
+				setParams(2, master.getUsername(), targetChat);
 				Server.db.getActiveUsers().get(targetUser).sendMessage("G101", params);
 			}
 			
-			// Broadcast the event: User joined chat. MAYBE
-			broadcastObjectToRoom(chatID, "U103", Server.db.generateOnlineUsersData(chatID));
+			// Broadcast the event: User joined chat.
+			broadcastObjectToRoom(targetChat, "U103", Server.db.generateOnlineUsersData(targetChat));
 			break;
-		case "G102": // Join Private Group
+		case "G102": // Invitations to private group.
+			targetChat = message.getParams()[0];
+			chatName = message.getParams()[1];
+			// Check if there is more than two users in the chat room.
+			if(Server.db.getPrivateRooms().get(targetChat).getChatUsers().size() > 2) {
+				// If there is more than two users in the room, directly add the invited people to the room.
+				setParams(2, targetChat, chatName);
+				for(int i = 2; i < message.getParams().length; i++) {
+					targetUser = message.getParams()[i];
+					// Add the user to the chat room in the database.
+					Server.db.getPrivateRooms().get(targetChat).addUser(targetUser);
+					// Check if target user is online
+					if(Server.db.getActiveUsers().containsKey(targetUser)) {
+						// Invite target user to the chat room.
+						Server.db.getActiveUsers().get(targetUser).sendMessage("G102", params);
+					}
+				}
+			} else { // Create a new chat room and invite everyone including host.
+				targetChat = Server.db.createNewPrivateChat();
+				Server.db.getPrivateRooms().get(targetChat).addUser(master.getUsername());
+				setParams(2, targetChat, chatName);
+				master.sendMessage("G102", params);
+				for(int i = 2; i < message.getParams().length; i++) {
+					targetUser = message.getParams()[i];
+					Server.db.getPrivateRooms().get(targetChat).addUser(targetUser);
+					if(Server.db.getActiveUsers().containsKey(targetUser)) {
+						Server.db.getActiveUsers().get(targetUser).sendMessage("G102", params);
+					}
+				}
+			}
 			break;
 		case "G103": // Left Public Chat
-			chatID = message.getParams()[0];
-			if(Server.db.getPublicRooms().containsKey(chatID)) {
-				Server.db.getPublicRooms().get(chatID).removeUser(master.getUsername());
-			} else if(Server.db.getPrivateRooms().containsKey(chatID)) {
-				Server.db.getPrivateRooms().get(chatID).removeUser(master.getUsername());
+			targetChat = message.getParams()[0];
+			if(Server.db.getPublicRooms().containsKey(targetChat)) {
+				Server.db.getPublicRooms().get(targetChat).removeUser(master.getUsername());
+			} else if(Server.db.getPrivateRooms().containsKey(targetChat)) {
+				Server.db.getPrivateRooms().get(targetChat).removeUser(master.getUsername());
 			}
 			
 			// Broadcast the event: User left chat.
-			onlineUsers = Server.db.generateOnlineUsersData(chatID);
-			broadcastObjectToRoom(chatID, "U103", onlineUsers);
+			onlineUsers = Server.db.generateOnlineUsersData(targetChat);
+			broadcastObjectToRoom(targetChat, "U103", onlineUsers);
 			break;
 		case "G104": // Remove Person from chat.
 			targetUser = message.getParams()[0];
@@ -207,8 +236,8 @@ public class Slave extends Thread {
 		case "U102": // Get Friends data
 			break;
 		case "U103": // Get online users data
-			chatID = message.getParams()[0];
-			master.sendMessage("U103", null, Server.db.generateOnlineUsersData(chatID));
+			targetChat = message.getParams()[0];
+			master.sendMessage("U103", null, Server.db.generateOnlineUsersData(targetChat));
 			break;
 		case "U104": // Updated profile
 			userinformation = (UserInfo) message.getObject();

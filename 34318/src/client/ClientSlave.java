@@ -11,9 +11,11 @@ import utility.Message;
 
 public class ClientSlave extends Thread {
 	
-	private String chatID;
-	private String reason;
+	private String targetChat;
 	private String targetUser;
+	private String targetChatname;
+	private String reason;
+	
 	
 	private UserInfo profile;
 	
@@ -57,8 +59,8 @@ public class ClientSlave extends Thread {
 				targetUser += " "; 
 			}
 			String msg = targetUser + message.getParams()[1];
-			chatID = message.getParams()[2];
-			PanelRight.chatTabs.get(chatID).appendToTextArea(msg);
+			targetChat = message.getParams()[2];
+			PanelRight.chatTabs.get(targetChat).appendToTextArea(msg);
 			break;
 		case "S101":
 			break;
@@ -87,15 +89,18 @@ public class ClientSlave extends Thread {
 			break;
 		case "G101": // Joining private chat
 			targetUser = message.getParams()[0];
-			chatID = message.getParams()[1];
-			System.out.println(targetUser + " id: " + chatID);
-			MainFrame.client.getProfile().addPersonalChat(targetUser, chatID);
-			ChatRoom newPrivateChat = new ChatRoom(targetUser, chatID);
+			targetChat = message.getParams()[1];
+			MainFrame.client.getProfile().addPersonalChat(targetUser, targetChat);
+			ChatRoom newPrivateChat = new ChatRoom(targetUser, targetChat);
 			MainFrame.rightPanel.addTab(newPrivateChat);
 			break;
 		case "G401":
 			break;
-		case "G102":
+		case "G102": // Joining private group
+			targetChat = message.getParams()[0];
+			targetChatname = message.getParams()[1];
+			ChatRoom newPrivateGroup = new ChatRoom(targetChatname, targetChat);
+			MainFrame.rightPanel.addTab(newPrivateGroup);
 			break;
 		case "G402":
 			break;
@@ -123,8 +128,8 @@ public class ClientSlave extends Thread {
 		case "U102":
 			break;
 		case "U103": // Online users list update.
-			chatID = message.getParams()[0];
-			PanelRight.chatTabs.get(chatID).getOnlineUsers().setList(message.getObject());
+			targetChat = message.getParams()[0];
+			PanelRight.chatTabs.get(targetChat).getOnlineUsers().setList(message.getObject());
 			break;
 		case "U104": // Friend Request Received
 			MainFrame.client.getProfile().addFriendRequest(message.getParams()[0]);
