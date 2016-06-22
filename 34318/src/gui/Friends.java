@@ -16,12 +16,7 @@ import chat.ChatRoom;
 @SuppressWarnings("unchecked")
 public class Friends extends AbstractPanelList implements MouseListener{
 	private static final long serialVersionUID = 1L;
-	private PanelRightUsersInChat parent;
-	
-	public Friends(PanelRightUsersInChat parent){
-		this.parent = parent;
-	}
-	
+
 	@Override
 	public void setVariables() {
 		model = new DefaultListModel<String>(); 

@@ -135,7 +135,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	
 	private void makeFriendFrame(){
 		GUIEngine.mainFrame.disable();
-		friendList = new Friends(onlineUsers);
+		friendList = new Friends();
 		friendList.setList(MainFrame.client.getProfile().getFriends());
 		
 		chatName = new HintTextField("Enter Group-chat name");
@@ -175,7 +175,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	private void sendGroupChat(){	
 		ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
 		String targetChatID = room.getChatID();
-		String[] params = {targetChatID, friendList.list.getModel().getElementAt(friendList.list.getSelectedIndex()).toString()};
+		String[] params = {targetChatID,chatName.getText(), friendList.list.getModel().getElementAt(friendList.list.getSelectedIndex()).toString()};
 		MainFrame.client.sendMessage("G102",params);
 	}
 	
