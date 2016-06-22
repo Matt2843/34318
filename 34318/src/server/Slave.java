@@ -184,17 +184,17 @@ public class Slave extends Thread {
 					}
 				}
 			} else { // Create a new chat room and invite everyone including host.
-				targetChat = Server.db.createNewPrivateChat();
-				Server.db.getPrivateRooms().get(targetChat).addUser(master.getUsername());
-				setParams(2, targetChat, chatName);
+				String newChat = Server.db.createNewPrivateChat();
+				setParams(2, newChat, chatName);
 				for(String username : Server.db.getPrivateRooms().get(targetChat).getChatUsers()) {
+					Server.db.getPrivateRooms().get(newChat).addUser(username);
 					if(Server.db.getActiveUsers().containsKey(username)) {
 						Server.db.getActiveUsers().get(username).sendMessage("G102", params);
 					}
 				}
 				for(int i = 2; i < message.getParams().length; i++) {
 					targetUser = message.getParams()[i];
-					Server.db.getPrivateRooms().get(targetChat).addUser(targetUser);
+					Server.db.getPrivateRooms().get(newChat).addUser(targetUser);
 					if(Server.db.getActiveUsers().containsKey(targetUser)) {
 						Server.db.getActiveUsers().get(targetUser).sendMessage("G102", params);
 						broadcastObjectToRoom(targetChat, "U103", Server.db.generateOnlineUsersData(targetChat));
