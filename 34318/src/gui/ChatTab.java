@@ -3,14 +3,17 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +24,7 @@ import javax.swing.text.BadLocationException;
 import chat.ChatRoom;
 
 @SuppressWarnings("deprecation")
-public class ChatTab extends JPanel implements MouseListener {
+public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	private static final long serialVersionUID = 1L;
 	private Friends friendList;
 	private ChatRoom chatRoom;
@@ -42,6 +45,9 @@ public class ChatTab extends JPanel implements MouseListener {
 	private JLabel JLAddUsers;
 	private JPanel usersInChatRight, JPUsersTop;
 	
+	//The makeFriendFrame
+	private JButton create;
+	private HintTextField chatName;
 	
 	public ChatTab(ChatRoom chatRoom) {
 		this.chatRoom = chatRoom;
@@ -131,7 +137,21 @@ public class ChatTab extends JPanel implements MouseListener {
 		GUIEngine.mainFrame.disable();
 		friendList = new Friends(onlineUsers);
 		friendList.setList(MainFrame.client.getProfile().getFriends());
+		
+		chatName = new HintTextField("Enter Group-chat name");
+		chatName.addActionListener(this);
+		
+		create = new JButton("Create");
+		create.setBackground(Color.white);
+		create.addMouseListener(this);
+		
+		JPanel panelBottom = new JPanel(new GridLayout(3,1));
+		panelBottom.add(new JPanel());
+		panelBottom.add(chatName);
+		panelBottom.add(create);
+		
 		friends = new JFrame();
+		friends.setBackground(Color.white);
 		friends.setAlwaysOnTop(true);
 		friends.addWindowListener(new WindowAdapter()
         {
@@ -146,11 +166,19 @@ public class ChatTab extends JPanel implements MouseListener {
 		friends.setTitle("Add friend");
 		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());		
 		friends.add(friendList, BorderLayout.CENTER);
+		friends.add(panelBottom, BorderLayout.SOUTH);
 		friends.setVisible(true);
 		friends.pack();
 		friends.setLocationRelativeTo(null);
 	}
-
+	
+	private void sendGroupChat(){	
+		ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
+		String targetChatID = room.getChatID();
+		String[] params = {targetChatID, friendList.list.getModel().getElementAt(friendList.list.getSelectedIndex()).toString()};
+		MainFrame.client.sendMessage("G102",params);
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == icon){
@@ -161,6 +189,9 @@ public class ChatTab extends JPanel implements MouseListener {
 		}
 		if(e.getSource() == JLAddUsers){
 			makeFriendFrame();
+		}
+		if(e.getSource() == create){
+			sendGroupChat();
 		}
 		
 	}
@@ -204,6 +235,13 @@ public class ChatTab extends JPanel implements MouseListener {
 
 	public PanelRightUsersInChat getOnlineUsers() {
 		return onlineUsers;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == chatName){
+			sendGroupChat();
+		}
 	}
 	
 	

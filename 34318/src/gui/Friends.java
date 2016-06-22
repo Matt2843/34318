@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 import chat.ChatRoom;
 
@@ -21,13 +22,12 @@ public class Friends extends AbstractPanelList implements MouseListener{
 		this.parent = parent;
 	}
 	
-	
-	
 	@Override
 	public void setVariables() {
 		model = new DefaultListModel<String>(); 
 		list = new JList<String>(model);
 		list.addMouseListener(this);
+		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		scrollPane = new JScrollPane(list);
 		scrollPane.setBackground(Color.WHITE);
 	}
@@ -71,14 +71,14 @@ public class Friends extends AbstractPanelList implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (e.getSource() == list){
-			if (e.getClickCount() == 2) {				
-				ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
-				String targetChatID = room.getChatID();
-				String[] params = {targetChatID, list.getModel().getElementAt(list.getSelectedIndex()).toString()};
-				MainFrame.client.sendMessage("G102",params);
-			}
-		}		
+//		if (e.getSource() == list){
+//			if (e.getClickCount() == 2) {				
+//				ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
+//				String targetChatID = room.getChatID();
+//				String[] params = {targetChatID, list.getModel().getElementAt(list.getSelectedIndex()).toString()};
+//				MainFrame.client.sendMessage("G102",params);
+//			}
+//		}		
 	}
 }
 
