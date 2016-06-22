@@ -1,5 +1,4 @@
 package server;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -8,59 +7,55 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerFTP extends Thread {
-	public static final int BUFFER_SIZE = 10000;
+	public static final int PORT = 1234;
+	public static final int BUFFER_SIZE = 1000000;
 
 	@Override
 	public void run() {
 		try {
-			ServerSocket serverSocket = new ServerSocket(3332);
+			ServerSocket serverSocket = new ServerSocket(PORT);
 
 			while (true) {
 				Socket s = serverSocket.accept();
-				uploadFile(s);
+				saveFile(s);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void uploadFile(Socket socket) throws Exception {
-		ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-		ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-		FileOutputStream fileOutputStream = null;
+	private void saveFile(Socket socket) throws Exception {
+		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+		FileOutputStream fos = null;
 		byte [] buffer = new byte[BUFFER_SIZE];
-
 		// 1. Read file name.
-		Object o = inputStream.readObject();
+		Object o = ois.readObject();
+
 		if (o instanceof String) {
-			fileOutputStream = new FileOutputStream(new File("D:/text.txt"));
+			fos = new FileOutputStream(new File("C:/Users/chris/Desktop/hash2.zip"));
 		} else {
 			throwException("Something is wrong");
 		}
-
 		// 2. Read file to the end.
 		Integer bytesRead = 0;
-		while (bytesRead == BUFFER_SIZE){
-			o = inputStream.readObject();
+		do {
+			o = ois.readObject();
 			if (!(o instanceof Integer)) {
 				throwException("Something is wrong");
 			}
 			bytesRead = (Integer)o;
-			o = inputStream.readObject();
+			o = ois.readObject();
 			if (!(o instanceof byte[])) {
 				throwException("Something is wrong");
 			}
-
 			buffer = (byte[])o;
-
 			// 3. Write data to output file.
-			fileOutputStream.write(buffer, 0, bytesRead);
-		} 
-		
-		System.out.println("File transfer success");
-		fileOutputStream.close();
-		inputStream.close();
-		outputStream.close();
+			fos.write(buffer, 0, bytesRead);
+		} while (bytesRead == BUFFER_SIZE);
+		fos.close();
+		ois.close();
+		oos.close();
 	}
 
 	public static void throwException(String message) throws Exception {
@@ -70,4 +65,4 @@ public class ServerFTP extends Thread {
 	public static void main(String[] args) {
 		new ServerFTP().start();
 	}
-}  
+}
