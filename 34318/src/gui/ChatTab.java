@@ -121,7 +121,6 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	}
 
 	private void configureChatArea(String tabName) {
-		System.out.println(tabName);
 		name = new JLabel(tabName);
 		icon = new JLabel(GeneralProperties.IClose);
 		chatArea = new JTextPane();
@@ -142,13 +141,20 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 		
 		chatName = new HintTextField("Enter Group-chat name");
 		chatName.addActionListener(this);
+		chatName.setBackground(Color.white);
 		
-		create = new JButton("Create");
+		create = new JButton("Add");
 		create.setBackground(Color.white);
 		create.addMouseListener(this);
 		
-		JPanel panelBottom = new JPanel(new GridLayout(3,1));
-		panelBottom.add(new JPanel());
+		JPanel panelBottom = new JPanel(new GridLayout(2,1));
+//		JPanel space = new JPanel(); space.setBackground(Color.white);
+//		panelBottom.add(space);
+		if(onlineUsers.getElements()>2){
+			String name = chatRoom.getChatName();
+			chatName.setText(name);
+			chatName.setEditable(false);
+		}
 		panelBottom.add(chatName);
 		panelBottom.add(create);
 		
@@ -166,7 +172,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
         });
 		friends.setPreferredSize(GeneralProperties.friendsPanelSize);
 		friends.setTitle("Add friend");
-		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());		
+		friends.setIconImage(new ImageIcon("pictures/addFriend.png").getImage());
 		friends.add(friendList, BorderLayout.CENTER);
 		friends.add(panelBottom, BorderLayout.SOUTH);
 		friends.setVisible(true);
@@ -181,6 +187,10 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 		String[] params = new String[list.length+2];
 		params[0] = targetChatID;
 		params[1] = chatName.getText();
+		if(onlineUsers.getElements()>2){
+			String name = chatRoom.getChatName();
+			params[1] = name;
+		}
 		for (int i = 0; i<list.length;i++){
 			params[i+2] = list[i];
 		}

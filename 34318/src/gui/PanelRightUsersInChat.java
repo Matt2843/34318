@@ -15,6 +15,11 @@ import utility.Utilities;
 public class PanelRightUsersInChat extends AbstractPanelList implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	
+	public int getElements(){
+		int users = model.getSize();
+		return users;
+	}
+	
 	@Override
 	public void setVariables() {
 		model = new DefaultListModel<String>();		

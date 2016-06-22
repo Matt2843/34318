@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -20,7 +22,7 @@ import javax.swing.JPanel;
 import client.UserInfo;
 import utility.Utilities;
 
-public class Login extends JFrame implements ActionListener,MouseListener{
+public class Login extends JFrame implements ActionListener,MouseListener,WindowListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel middle;
@@ -38,7 +40,6 @@ public class Login extends JFrame implements ActionListener,MouseListener{
 	}
 	
 	private void setDefaultProperties(){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setLayout(new GridBagLayout());
 		getContentPane().setBackground(Color.white);
@@ -188,7 +189,34 @@ public class Login extends JFrame implements ActionListener,MouseListener{
 	public void mouseReleased(MouseEvent arg0) {
 	}
 
-//	public static void main(String[] args) {
-//		new Login();
-//	}
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		MainFrame.client.sendMessage("X999", null);
+		System.exit(0);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+	}
+
 }
