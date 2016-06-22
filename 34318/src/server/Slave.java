@@ -187,7 +187,11 @@ public class Slave extends Thread {
 				targetChat = Server.db.createNewPrivateChat();
 				Server.db.getPrivateRooms().get(targetChat).addUser(master.getUsername());
 				setParams(2, targetChat, chatName);
-				master.sendMessage("G102", params);
+				for(String username : Server.db.getPrivateRooms().get(targetChat).getChatUsers()) {
+					if(Server.db.getActiveUsers().containsKey(username)) {
+						Server.db.getActiveUsers().get(username).sendMessage("G102", params);
+					}
+				}
 				for(int i = 2; i < message.getParams().length; i++) {
 					targetUser = message.getParams()[i];
 					Server.db.getPrivateRooms().get(targetChat).addUser(targetUser);
