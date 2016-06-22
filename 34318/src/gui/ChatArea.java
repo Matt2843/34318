@@ -29,6 +29,7 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 	private JButton JBSend;
 	private JTextPane JTText;
 	private JScrollPane scrollPane;
+	private ChatRoom room;
 	
 	public ChatArea() {
 		setDefaultProperties();
@@ -55,6 +56,7 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 		JLSmiley.setOpaque(false);
 		
 		JLFile = new JLabel(GeneralProperties.IFile);
+		JLFile.addMouseListener(this);
 		JLFile.setOpaque(false);
 		
 		JBSend = new JButton("Send");
@@ -80,10 +82,15 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 		this.add(JBSend, BorderLayout.EAST);
 	}
 	
+	private String getChatID(){
+		ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
+		return room.getChatID();
+		
+	}
+	
 	private void sendText(String message){
 		JTText.setText(null);
-		ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
-		String targetChatID = room.getChatID();
+		String targetChatID = getChatID();
 		String[] params = {targetChatID, message};
 		MainFrame.client.sendMessage("S100", params);
 	}
@@ -102,7 +109,8 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 			new SmileyMenu(this);
 		}
 		if (e.getSource()==JLFile){
-			MainFrame.client.sendMessage("F100", null);
+			String[] params = {"C:/Users/chris/Desktop/hash.zip",getChatID()};
+			MainFrame.client.sendMessage("F100", params);
 		}
 	}
 
