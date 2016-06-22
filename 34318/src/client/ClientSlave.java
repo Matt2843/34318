@@ -43,13 +43,14 @@ public class ClientSlave extends Thread {
 		case "L402":
 			break;
 			
-		case "F100":
+		case "F100": // UPLOAD FILE SUCCEEDED
+			
 			break;
-		case "F400":
+		case "F400": // UPLOAD FILE FAILED
 			break;
-		case "F101":
+		case "F101": // DOWNLOAD FILE SUCCEEDED
 			break;
-		case "F401":
+		case "F401": // DOWNLOAD FILE FAILED
 			reason = message.getParams()[0];
 			break;
 			
