@@ -204,7 +204,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 		friends.pack();
 		friends.setLocationRelativeTo(null);
 	}
-	
+	 
 	private void sendGroupChat(){	
 		ChatRoom room = ((ChatTab)MainFrame.rightPanel.getSelectedComponent()).getChatRoom();
 		String targetChatID = room.getChatID();
