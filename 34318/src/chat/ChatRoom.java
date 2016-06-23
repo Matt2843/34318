@@ -2,18 +2,23 @@ package chat;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 
 public class ChatRoom implements Serializable {
 	private static final long serialVersionUID = -48495501677067685L;
 	
 	private String chatName = "";
 	private String chatID = "";
-	private String chatHistory = "";
 	
 	private ArrayList<String> chatUsers;
 	private ArrayList<String> blockedUsers;
 	private ArrayList<String> chatModerators;
 	private ArrayList<String> chatAdmins;
+	
+	private StyledDocument chatHistory;
 	
 	public ChatRoom(String chatID) {
 		this.chatID = chatID;
@@ -30,6 +35,16 @@ public class ChatRoom implements Serializable {
 		chatModerators = new ArrayList<String>();
 		chatAdmins = new ArrayList<String>();
 		blockedUsers = new ArrayList<String>();
+	}
+	
+	public void addStringToHistory(String s) {
+		String timestamp = "[" + new Date().toString().substring(11, 16) + "] ";
+		String append = timestamp + "    " + s + "\n";
+		try {
+			chatHistory.insertString(chatHistory.getLength(), append, null);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void blockUser(String user) {
@@ -80,10 +95,6 @@ public class ChatRoom implements Serializable {
 		this.chatAdmins = chatAdmins;
 	}
 	
-	public String getChatHistory(String room) {
-		return chatHistory;
-	}
-	
 	public String getChatID() {
 		return chatID;
 	}
@@ -99,14 +110,18 @@ public class ChatRoom implements Serializable {
 	public void setChatModerators(ArrayList<String> chatModerators) {
 		this.chatModerators = chatModerators;
 	}
-
-	public String getChatHistory() {
-		return chatHistory;
-	}
 	
 	@Override
 	public String toString() {
 		return chatName;
+	}
+
+	public StyledDocument getChatHistory() {
+		return chatHistory;
+	}
+
+	public void setChatHistory(StyledDocument chatHistory) {
+		this.chatHistory = chatHistory;
 	}
 
 }

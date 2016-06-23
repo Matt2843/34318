@@ -146,7 +146,7 @@ public class Slave extends Thread {
 			
 			// If the users already have a chat going, get it from the server else start a new.
 			if(Server.db.getRegisteredUsers().get(targetUser).getSavedPersonalChats().containsKey(master.getUsername())) {
-				targetChat = Server.db.getRegisteredUsers().get(targetUser).getSavedPersonalChats().get(master.getUsername());
+				targetChat = Server.db.getRegisteredUsers().get(targetUser).getSavedGroupChats().get(master.getUsername()).getChatID();
 			} else {
 				targetChat = Server.db.createNewPrivateChat();
 			}
@@ -244,9 +244,9 @@ public class Slave extends Thread {
 			}
 			targetChat = message.getParams()[0];
 			fileName = message.getParams()[1];
-			baos = new ByteArrayOutputStream(100);
+			baos = new ByteArrayOutputStream(20000);
 			break;
-		case "F101":
+		case "F101": // While uploading ...
 			receiveFile(message.getObject(), message.getObjectTwo());
 			break;
 		case "F102": // Download File
@@ -321,9 +321,14 @@ public class Slave extends Thread {
 			}
 		} else if (Server.db.getPrivateRooms().containsKey(chatID)) { // Handle the private rooms broadcast
 			for(String value : Server.db.getPrivateRooms().get(chatID).getChatUsers()) {
-				Server.db.getActiveUsers().get(value).sendMessage("S100", params);
+				if(Server.db.getActiveUsers().containsKey(value)) {
+					Server.db.getActiveUsers().get(value).sendMessage("S100", params);
+				} else {
+					if(!value.equals(master.getUsername()))
+						Server.db.getRegisteredUsers().get(value).getSavedPersonalChats().get(master.getUsername()).addStringToHistory(msg);
+				}
 			}
-		}
+		} 
 	}
 	
 	private void broadcastLinkToRoom() {

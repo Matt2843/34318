@@ -103,8 +103,13 @@ public class ClientSlave extends Thread {
 		case "G101": // Joining private chat
 			targetUser = message.getParams()[0];
 			targetChat = message.getParams()[1];
-			MainFrame.client.getProfile().addPersonalChat(targetUser, targetChat);
-			ChatRoom newPrivateChat = new ChatRoom(targetUser, targetChat);
+			ChatRoom newPrivateChat = null;
+			if(MainFrame.client.getProfile().getSavedPersonalChats().containsKey(targetUser)) {
+				newPrivateChat = MainFrame.client.getProfile().getSavedPersonalChats().get(targetUser);
+			} else {
+				newPrivateChat = new ChatRoom(targetUser, targetChat);
+				MainFrame.client.getProfile().addPersonalChat(targetUser, newPrivateChat);
+			}
 			MainFrame.rightPanel.addTab(newPrivateChat);
 			break;
 		case "G401":
@@ -113,6 +118,7 @@ public class ClientSlave extends Thread {
 			targetChat = message.getParams()[0];
 			targetChatname = message.getParams()[1];
 			ChatRoom newPrivateGroup = new ChatRoom(targetChatname, targetChat);
+			// ADD PRIVATE GRP TO PROFILE...
 			MainFrame.rightPanel.addTab(newPrivateGroup);
 			break;
 		case "G402":

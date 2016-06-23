@@ -229,6 +229,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 		if (e.getSource() == icon){
 			MainFrame.rightPanel.setSelectedComponent(this);
 			MainFrame.rightPanel.removeTab(chatRoom.getChatID());
+			
 			String[] params = {chatRoom.getChatID()};
 			MainFrame.client.sendMessage("G103", params);
 		}

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import chat.ChatRoom;
+
 public class UserInfo implements Serializable {
 	private static final long serialVersionUID = 3863758677993591803L;
 	
@@ -14,8 +16,8 @@ public class UserInfo implements Serializable {
 	private ArrayList<String> blocked;
 	private ArrayList<String> friendRequests;
 	
-	private HashMap<String, String> savedPersonalChats; // K: Username V: ChatID
-	private HashMap<String, String> savedGroupChats; // K: Username V: ChatID
+	private HashMap<String, ChatRoom> savedPersonalChats; // K: Username V: ChatRoom
+	private HashMap<String, ChatRoom> savedGroupChats; 	  // K: ChatID V: ChatRoom
 	
 	public UserInfo() {
 		initializeData();
@@ -39,22 +41,22 @@ public class UserInfo implements Serializable {
 		friends = new ArrayList<String>();
 		blocked = new ArrayList<String>();
 		friendRequests = new ArrayList<String>();
-		savedPersonalChats = new HashMap<String, String>();
-		savedGroupChats = new HashMap<String, String>();
+		savedPersonalChats = new HashMap<String, ChatRoom>();
+		savedGroupChats = new HashMap<String, ChatRoom>();
 	}
-	public void addPersonalChat(String name, String chatID) {
-		if(!savedPersonalChats.containsKey(name)) {
-			savedPersonalChats.put(name, chatID);
+	public void addPersonalChat(String username, ChatRoom chatRoom) {
+		if(!savedPersonalChats.containsKey(username)) {
+			savedPersonalChats.put(username, chatRoom);
 		}
 	}
-	public void removePersonalChat(String name) {
-		if(savedPersonalChats.containsKey(name)) {
-			savedPersonalChats.remove(name);
+	public void removePersonalChat(String username) {
+		if(savedPersonalChats.containsKey(username)) {
+			savedPersonalChats.remove(username);
 		}
 	}
-	public void addGroupChat(String name, String chatID) {
-		if(!savedGroupChats.containsKey(name)) {
-			savedGroupChats.put(name, chatID);
+	public void addGroupChat(String chatID, ChatRoom chatRoom) {
+		if(!savedGroupChats.containsKey(chatID)) {
+			savedGroupChats.put(chatID, chatRoom);
 		}
 	}
 	public void removeGroupChat(String name) {
@@ -122,11 +124,11 @@ public class UserInfo implements Serializable {
 		return friendRequests;
 	}	
 
-	public HashMap<String, String> getSavedPersonalChats() {
+	public HashMap<String, ChatRoom> getSavedPersonalChats() {
 		return savedPersonalChats;
 	}
 	
-	public HashMap<String, String> getSavedGroupChats() {
+	public HashMap<String, ChatRoom> getSavedGroupChats() {
 		return savedGroupChats;
 	}
 }
