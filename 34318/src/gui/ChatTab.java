@@ -191,7 +191,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
             @Override
             public void windowClosing(WindowEvent e)
             {
-                GUIEngine.mainFrame.setEnabled(false);
+                GUIEngine.mainFrame.setEnabled(true);
                 e.getWindow().dispose();
             }
         });
@@ -220,7 +220,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 			params[i+2] = list[i];
 		}
 		MainFrame.client.sendMessage("G102",params);
-		GUIEngine.mainFrame.setEnabled(false);;
+		GUIEngine.mainFrame.setEnabled(true);;
 		friends.dispose();
 	}
 	

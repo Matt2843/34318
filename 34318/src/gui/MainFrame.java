@@ -32,7 +32,7 @@ public class MainFrame extends JFrame implements WindowListener {
 	    addElements(); 
 	    
 	    startDialogLogin();
-	    startClient("localhost", 1234);
+	    startClient("192.168.1.52", 1234);
 //	    startClient("90.184.124.62", 1234);
 	    
 	    pack();
