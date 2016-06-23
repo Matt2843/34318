@@ -2,7 +2,6 @@ package client;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,6 +10,7 @@ import java.net.Socket;
 import java.util.Arrays;
 
 import utility.Message;
+import utility.Utilities;
 
 public class Client extends Thread {
 	private ObjectOutputStream output;
@@ -114,15 +114,14 @@ public class Client extends Thread {
 		}
 	}
 	
-	public void sendFile(String path, String targetRoom) {
-		System.out.println(path);
+	public void sendFile(String path, String targetChat, String fileName) {
 		File file = new File(path);
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream(file);
 			byte [] buffer = new byte[100]; //Størrelsen af bufferen
 			Integer bytesRead = 0;
-			String[] params = {targetRoom};
+			String[] params = Utilities.setParams(2, targetChat, fileName);
 			sendMessage("F100", params);
 			while ((bytesRead = fis.read(buffer)) > 0) {
 				sendMessage("F101", null, bytesRead, Arrays.copyOf(buffer, buffer.length));
@@ -131,6 +130,10 @@ public class Client extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void saveFile(String path) {
+		
 	}
 	
 //	private void saveFile(String path) throws Exception {

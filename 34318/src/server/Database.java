@@ -17,7 +17,7 @@ import utility.Utilities;
 public class Database {
 	private HashMap<String, Connection> activeUsers = new HashMap<String, Connection>(); // K: Username		V: Connection	
 	private HashMap<String, UserInfo> registeredUsers;							 		 // K: Username		V: Userinformation
-	private HashMap<String, Object> storedFiles;									 	 // K: FileID		V: File
+	private HashMap<String, byte[]> storedFiles;									 	 // K: FileID		V: File
 	private HashMap<String, ChatRoom> publicRooms;								 		 // K: ChatID		V: ChatRoom
 	private HashMap<String, ChatRoom> privateRooms;										 // K: ChatID		V: ChatRoom
 
@@ -30,7 +30,7 @@ public class Database {
 			path = "data/privateRooms.db";
 			privateRooms = new File(path).exists() ? (HashMap<String, ChatRoom>) readFileToObject(path) : new HashMap<String, ChatRoom>();
 			path = "data/storedFiles.db";
-			storedFiles = new File(path).exists() ? (HashMap<String, Object>) readFileToObject(path) : new HashMap<String, Object>();
+			storedFiles = new File(path).exists() ? (HashMap<String, byte[]>) readFileToObject(path) : new HashMap<String, byte[]>();
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
@@ -158,7 +158,7 @@ public class Database {
 		return publicRooms;
 	}
 
-	public HashMap<String, Object> getStoredFiles() {
+	public HashMap<String, byte[]> getStoredFiles() {
 		return storedFiles;
 	}
 

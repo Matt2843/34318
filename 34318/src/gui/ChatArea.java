@@ -114,7 +114,7 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 		    int returnVal = chooser.showOpenDialog(GUIEngine.mainFrame);
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
 		       String path = chooser.getSelectedFile().getAbsolutePath();
-		       MainFrame.client.sendFile(path, getChatID());
+		       MainFrame.client.sendFile(path, getChatID(), chooser.getSelectedFile().getName());
 		    }	
 	}
 

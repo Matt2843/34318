@@ -1,9 +1,8 @@
 package server;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,16 +10,17 @@ import java.util.Arrays;
 import chat.ChatRoom;
 import client.UserInfo;
 import utility.Message;
+import utility.Utilities;
 
 public class Slave extends Thread {
 	private Connection master;
 	private Thread updateThread;
 	private boolean updateUser = true;
 	
-	private FileOutputStream fos = null;
+	private ByteArrayOutputStream baos;
 	
 	private ArrayList<String> onlineUsers;
-	private String username, password, targetUser, targetChat, chatName, fileID;
+	private String username, password, targetUser, targetChat, chatName, fileName, fileID;
 	private UserInfo userinformation;
 	
 	private String[] params;
@@ -239,67 +239,17 @@ public class Slave extends Thread {
 			break;
 			
 		case "F100": // Begin Uploading File
-			
-			targetChat = message.getParams()[0];
-			try {
-				fos = new FileOutputStream(new File("C:/Users/Matt/Desktop/Kappa.zip"));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+			fileID = Utilities.generateID(10, Utilities.FILE);
+			while(Server.db.getStoredFiles().containsKey(fileID)) {
+				fileID = Utilities.generateID(10, Utilities.FILE);
 			}
+			targetChat = message.getParams()[0];
+			fileName = message.getParams()[1];
+			baos = new ByteArrayOutputStream(100);
 			break;
 		case "F101":
 			receiveFile(message.getObject(), message.getObjectTwo());
 			break;
-//		case "F101":
-//			Object receivedFile = message.getObject();
-//			try {
-//				FileOutputStream fos = new FileOutputStream(new File("C:/Users/Matt/Desktop/kappa.zip"));
-//				byte [] buffer = new byte[100];
-//				do {
-//					buffer = (byte[])receivedFile;
-//					fos.write(buffer, 0, bytesRead);
-//				} while (bytesRead == 100);
-//				fos.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			break;
-//			try {
-//				ObjectInputStream ois = new ObjectInputStream(master.getClient().getInputStream());
-//				FileOutputStream fos = null;
-//				final int BUFFER_SIZE = 20000;
-//				byte [] buffer = new byte[BUFFER_SIZE];
-//				// 1. Read file name.
-//				Object o = ois.readObject();
-//
-//				if (o instanceof String) {
-//					fos = new FileOutputStream(new File("C:/Users/Matt/Desktop/kappa.zip"));
-//				} else {
-//					System.out.println("Something is wrong");
-//				}
-//				// 2. Read file to the end.
-//				Integer bytesRead = 0;
-//				do {
-//					o = ois.readObject();
-//					if (!(o instanceof Integer)) {
-//						System.out.println("Something is wrong");
-//					}
-//					bytesRead = (Integer)o;
-//					o = ois.readObject();
-//					if (!(o instanceof byte[])) {
-//						System.out.println("Something is wrong");
-//					}
-//					buffer = (byte[])o;
-//					// 3. Write data to output file.
-//					fos.write(buffer, 0, bytesRead);
-//				} while (bytesRead == BUFFER_SIZE);
-//				fos.close();
-//				ois.close();
-//			} catch(IOException | ClassNotFoundException ioe) {
-//				ioe.printStackTrace();
-//			}
-
-			
 		case "F102": // Download File
 			break;
 			
@@ -330,10 +280,13 @@ public class Slave extends Thread {
 		Integer bytesRead = (Integer) object;
 		byte[] buffer = (byte[]) objectTwo;
 		try {
-			fos.write(buffer, 0, bytesRead);
+			baos.write(buffer, 0, bytesRead);
 			if(bytesRead < 100) {
-				System.out.println("File Stream Done!");
-				fos.close();
+				System.out.println("File received, storing the file in the database...!");
+				byte[] receivedFile = baos.toByteArray();
+				Server.db.getStoredFiles().put(fileID, receivedFile);
+				baos.close();
+				broadcastLinkToRoom();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -369,6 +322,17 @@ public class Slave extends Thread {
 		} else if (Server.db.getPrivateRooms().containsKey(chatID)) { // Handle the private rooms broadcast
 			for(String value : Server.db.getPrivateRooms().get(chatID).getChatUsers()) {
 				Server.db.getActiveUsers().get(value).sendMessage("S100", params);
+			}
+		}
+	}
+	
+	private void broadcastLinkToRoom() {
+		setParams(3, targetChat, fileName, fileID);
+		if(Server.db.getPrivateRooms().containsKey(targetChat)) {
+			for(String username : Server.db.getPrivateRooms().get(targetChat).getChatUsers()) {
+				if(Server.db.getActiveUsers().containsKey(username)) {
+					Server.db.getActiveUsers().get(username).sendMessage("F103", params);
+				}
 			}
 		}
 	}

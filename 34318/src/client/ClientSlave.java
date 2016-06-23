@@ -1,5 +1,10 @@
 package client;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import chat.ChatRoom;
 import gui.GUIEngine;
 import gui.MainFrame;
@@ -14,8 +19,10 @@ public class ClientSlave extends Thread {
 	private String targetChat;
 	private String targetUser;
 	private String targetChatname;
-	private String reason;
 	
+	private String fileID;
+	private String fileName;
+	private FileOutputStream fos = null; 
 	
 	private UserInfo profile;
 	
@@ -44,14 +51,20 @@ public class ClientSlave extends Thread {
 			break;
 			
 		case "F100": // UPLOAD FILE SUCCEEDED
-			
 			break;
 		case "F400": // UPLOAD FILE FAILED
 			break;
-		case "F101": // DOWNLOAD FILE SUCCEEDED
+		case "F101": // Start downloading file
+			saveFile();
 			break;
-		case "F401": // DOWNLOAD FILE FAILED
-			reason = message.getParams()[0];
+		case "F102": // Receive file.
+			receiveFile(message.getObject(), message.getObjectTwo());
+			break;
+		case "F103": // Received file link.
+			targetChat = message.getParams()[0];
+			fileName = message.getParams()[1];
+			fileID = message.getParams()[2];
+			PanelRight.chatTabs.get(targetChat).appendToTextArea(fileID);
 			break;
 			
 		case "S100": // Received Message
@@ -142,5 +155,30 @@ public class ClientSlave extends Thread {
 			break;
 		}
 	}
+	
+	private void saveFile() {
+		if(!new File("downloads").exists()) {
+			new File("downloads").mkdirs();
+		}
+		try {
+			fos = new FileOutputStream("downloads");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void receiveFile(Object o, Object o2) {
+		Integer bytesRead = (Integer) o;
+		byte[] buffer = (byte[]) o2;
+        try {
+            fos.write(buffer, 0, bytesRead);
+            if(bytesRead < 100) {
+                System.out.println("File Stream Done!");
+                fos.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
