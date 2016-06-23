@@ -63,7 +63,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 		configureChatArea(chatRoom.toString());
 		setUsersInChat();
 		add(top,BorderLayout.CENTER);
-		add(new ChatArea(), BorderLayout.SOUTH);
+		add(new ChatArea(chatRoom), BorderLayout.SOUTH);
 		validate();
 	}
 	
