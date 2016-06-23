@@ -174,7 +174,7 @@ public class ClientSlave extends Thread {
 		byte[] buffer = (byte[]) o2;
         try {
             fos.write(buffer, 0, bytesRead);
-            if(bytesRead < 100) {
+            if(bytesRead < 20000) {
                 System.out.println("File Stream Done!");
                 fos.close();
             }

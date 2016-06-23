@@ -285,7 +285,7 @@ public class Slave extends Thread {
 		byte[] buffer = (byte[]) objectTwo;
 		try {
 			baos.write(buffer, 0, bytesRead);
-			if(bytesRead < 100) {
+			if(bytesRead < 20000) {
 				System.out.println("File received, storing the file in the database...!");
 				byte[] receivedFile = baos.toByteArray();
 				Server.db.getStoredFiles().put(fileID, receivedFile);
@@ -302,7 +302,7 @@ public class Slave extends Thread {
 		byte[] file = Server.db.getStoredFiles().get(fileID);
 		ByteArrayInputStream bais = new ByteArrayInputStream(file);
 		try {
-			byte [] buffer = new byte[100]; //Størrelsen af bufferen
+			byte [] buffer = new byte[20000]; //Størrelsen af bufferen
 			Integer bytesRead = 0;
 			while ((bytesRead = bais.read(buffer)) > 0) {
 				master.sendMessage("F102", null, bytesRead, Arrays.copyOf(buffer, buffer.length));
