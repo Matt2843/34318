@@ -86,7 +86,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 		StyleConstants.setUnderline(regularBlue, true);
 		regularBlue.addAttribute("linkact", new ChatLinkListener(link));
 		String timestamp = "[" + new Date().toString().substring(11, 16) + "] ";
-		String theLink = timestamp + "    " + username + ": " + link.toString();
+		String theLink = timestamp + "    " + username + ": " + link.toString() + "\n";
 		try {
 			chatDocument.insertString(chatDocument.getLength(), theLink, regularBlue);
 		} catch (BadLocationException e) {
