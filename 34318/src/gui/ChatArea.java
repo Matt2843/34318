@@ -13,7 +13,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,11 +29,12 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 	private JPanel  Menu, JPPictures;
 	private JLabel JLSmiley, JLFile;
 	private JButton JBSend;
-	private JEditorPane JTText;
+	private JTextPane JTText;
 	private JScrollPane scrollPane;
 	private ChatRoom room;
 	
-	public ChatArea() {
+	public ChatArea(ChatRoom room) {
+		this.room = room;
 		setDefaultProperties();
 		setComponents();
 		makeBottomPanel();
@@ -77,7 +77,9 @@ public class ChatArea extends JPanel implements ActionListener, KeyListener, Mou
 	
 	private void makeBottomPanel(){
 		JPPictures.add(JLSmiley);
-		JPPictures.add(JLFile);
+		if (room.getChatID().substring(0, 2).equals("PR")){
+			JPPictures.add(JLFile);
+		}		
 		Menu.add(JPPictures, BorderLayout.WEST);
 		Menu.add(new JLabel(),BorderLayout.CENTER);
 		this.add(Menu, BorderLayout.NORTH);
