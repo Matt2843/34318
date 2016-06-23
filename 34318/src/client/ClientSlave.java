@@ -70,7 +70,7 @@ public class ClientSlave extends Thread {
 			break;
 			
 		case "S100": // Received Message
-			targetUser = message.getParams()[0] + " :";
+			targetUser = message.getParams()[0] + ": ";
 			String msg = targetUser + message.getParams()[1];
 			targetChat = message.getParams()[2];
 			PanelRight.chatTabs.get(targetChat).appendToTextArea(msg);
