@@ -19,11 +19,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Element;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import chat.ChatRoom;
+import utility.FileLink;
 
-@SuppressWarnings("deprecation")
+
 public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	private static final long serialVersionUID = 1L;
 	private Friends friendList;
@@ -39,6 +46,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	private JLabel icon, name;
 	private JPanel tabContent;
 	private JTextPane chatArea;
+	private StyledDocument chatDocument; 
 	private JScrollPane chatScrollPane;
 	
 	// The users-online list elements.
@@ -61,7 +69,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	
 	public void appendToTextArea(String string) {
 		String timestamp = "[" + new Date().toString().substring(11, 16) + "] ";
-		String append = timestamp + "    "+string;
+		String append = timestamp + "    " + string;
 		try {
 			chatArea.getDocument().insertString(chatArea.getDocument().getLength(), append  + "\n", null);
 			replaceWithSmileys(chatArea.getDocument().toString());
@@ -69,6 +77,21 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 			e.printStackTrace();
 		}
 		chatArea.setCaretPosition(chatArea.getDocument().getLength());
+	}
+	
+	public void appendLinkToArea(String username, String fileID, String fileName) {
+		FileLink link = new FileLink(fileID, fileName);
+		Style regularBlue = chatDocument.addStyle("regularBlue", StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE));
+		StyleConstants.setForeground(regularBlue, Color.BLUE);
+		StyleConstants.setUnderline(regularBlue, true);
+		regularBlue.addAttribute("linkact", new ChatLinkListener(link));
+		String timestamp = "[" + new Date().toString().substring(11, 16) + "] ";
+		String theLink = timestamp + "    " + username + ": " + link.toString();
+		try {
+			chatDocument.insertString(chatDocument.getLength(), theLink, regularBlue);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void replaceWithSmileys(String string){
@@ -125,6 +148,8 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 		icon = new JLabel(GeneralProperties.IClose);
 		chatArea = new JTextPane();
 		chatArea.setEditable(false);
+		chatArea.addMouseListener(this);
+		chatDocument = chatArea.getStyledDocument();
 		chatScrollPane = new JScrollPane(chatArea);
 		icon.addMouseListener(this);
 		tabContent = new JPanel(new BorderLayout());
@@ -135,7 +160,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 	}
 	
 	private void makeFriendFrame(){
-		GUIEngine.mainFrame.disable();
+		GUIEngine.mainFrame.setEnabled(false);
 		friendList = new Friends();
 		friendList.setList(MainFrame.client.getProfile().getFriends());
 		
@@ -166,7 +191,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
             @Override
             public void windowClosing(WindowEvent e)
             {
-                GUIEngine.mainFrame.enable();
+                GUIEngine.mainFrame.setEnabled(false);
                 e.getWindow().dispose();
             }
         });
@@ -195,7 +220,7 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 			params[i+2] = list[i];
 		}
 		MainFrame.client.sendMessage("G102",params);
-		GUIEngine.mainFrame.enable();
+		GUIEngine.mainFrame.setEnabled(false);;
 		friends.dispose();
 	}
 	
@@ -212,6 +237,14 @@ public class ChatTab extends JPanel implements MouseListener, ActionListener {
 		}
 		if(e.getSource() == create){
 			sendGroupChat();
+		}
+		if(e.getSource() == chatArea) {
+			Element ele = chatDocument.getCharacterElement(chatArea.viewToModel(e.getPoint()));
+            AttributeSet as = ele.getAttributes();
+            ChatLinkListener cll = (ChatLinkListener) as.getAttribute("linkact");
+            if(cll != null) {
+                cll.execute();
+            }
 		}
 		
 	}
