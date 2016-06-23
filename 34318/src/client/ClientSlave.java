@@ -55,7 +55,8 @@ public class ClientSlave extends Thread {
 		case "F400": // UPLOAD FILE FAILED
 			break;
 		case "F101": // Start downloading file
-			saveFile();
+			fileName = message.getParams()[0];
+			saveFile(fileName);
 			break;
 		case "F102": // Receive file.
 			receiveFile(message.getObject(), message.getObjectTwo());
@@ -64,7 +65,8 @@ public class ClientSlave extends Thread {
 			targetChat = message.getParams()[0];
 			fileName = message.getParams()[1];
 			fileID = message.getParams()[2];
-			PanelRight.chatTabs.get(targetChat).appendToTextArea(fileID);
+			String username = message.getParams()[3];
+			PanelRight.chatTabs.get(targetChat).appendLinkToArea(username, fileID, fileName);
 			break;
 			
 		case "S100": // Received Message
@@ -156,12 +158,12 @@ public class ClientSlave extends Thread {
 		}
 	}
 	
-	private void saveFile() {
+	private void saveFile(String filename) {
 		if(!new File("downloads").exists()) {
 			new File("downloads").mkdirs();
 		}
 		try {
-			fos = new FileOutputStream("downloads");
+			fos = new FileOutputStream("downloads/"+filename);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

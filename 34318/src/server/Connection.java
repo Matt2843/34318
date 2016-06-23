@@ -42,7 +42,6 @@ public class Connection extends Thread {
 			configureStreams();
 			greetUser();
 			do {
-				System.out.println("BLOCKING CONNECTION");
 				message = (Message) input.readObject();
 				System.out.println("FROM CLIENT: " + message.toString());
 				slave.translate(message);

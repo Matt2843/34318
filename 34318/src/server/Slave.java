@@ -1,8 +1,7 @@
 package server;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -251,6 +250,11 @@ public class Slave extends Thread {
 			receiveFile(message.getObject(), message.getObjectTwo());
 			break;
 		case "F102": // Download File
+			fileID = message.getParams()[0];
+			fileName = message.getParams()[1];
+			setParams(1, fileName);
+			master.sendMessage("F101", params);
+			sendFile(fileID);
 			break;
 			
 		case "U100": // Get PublicRooms data
@@ -294,20 +298,16 @@ public class Slave extends Thread {
 		
 	}
 	
-	public void sendFile(String path, String targetRoom) {
-		System.out.println(path);
-		File file = new File(path);
-		FileInputStream fis;
+	public void sendFile(String fileID) {
+		byte[] file = Server.db.getStoredFiles().get(fileID);
+		ByteArrayInputStream bais = new ByteArrayInputStream(file);
 		try {
-			fis = new FileInputStream(file);
 			byte [] buffer = new byte[100]; //Størrelsen af bufferen
 			Integer bytesRead = 0;
-			String[] params = {targetRoom};
-			master.sendMessage("F100", params);
-			while ((bytesRead = fis.read(buffer)) > 0) {
-				master.sendMessage("F101", null, bytesRead, Arrays.copyOf(buffer, buffer.length));
+			while ((bytesRead = bais.read(buffer)) > 0) {
+				master.sendMessage("F102", null, bytesRead, Arrays.copyOf(buffer, buffer.length));
 			}
-			fis.close();
+			bais.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -327,7 +327,7 @@ public class Slave extends Thread {
 	}
 	
 	private void broadcastLinkToRoom() {
-		setParams(3, targetChat, fileName, fileID);
+		setParams(4, targetChat, fileName, fileID, master.getUsername());
 		if(Server.db.getPrivateRooms().containsKey(targetChat)) {
 			for(String username : Server.db.getPrivateRooms().get(targetChat).getChatUsers()) {
 				if(Server.db.getActiveUsers().containsKey(username)) {
